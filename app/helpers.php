@@ -17,6 +17,30 @@ if (! function_exists('app_name')) {
     }
 }
 
+if (! function_exists('app_version')) {
+    /**
+     * Helper to grab the application name
+     *
+     * @return mixed
+     */
+    function app_version()
+    {
+        return config('app.version');
+    }
+}
+
+if (! function_exists('app_real')) {
+    /**
+     * Helper to grab the application name
+     *
+     * @return mixed
+     */
+    function app_real()
+    {
+        return config('app.real');
+    }
+}
+
 if (! function_exists('access')) {
     /**
      * Access (lol) the Access:: facade as a simple function

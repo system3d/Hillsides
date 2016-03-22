@@ -1,44 +1,84 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="_token" content="{{ csrf_token() }}" />
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="{{{ asset('img/steel4web.ico') }}}">
+    <meta name="_token" content="{{ csrf_token() }}" />
 
-        <title>@yield('title', app_name())</title>
+    <title>@yield('title', app_name())</title>
 
-        <!-- Meta -->
-        <meta name="description" content="@yield('meta_description', 'Default Description')">
-        <meta name="author" content="@yield('meta_author', 'Anthony Rappa')">
-        @yield('meta')
+    <!-- Meta -->
+    <meta name="description" content="@yield('meta_description', 'Default Description')">
+    <meta name="author" content="@yield('meta_author', 'System3d')">
 
-        <!-- Styles -->
-        @yield('before-styles-end')
-        {!! Html::style(elixir('css/frontend.css')) !!}
-        @yield('after-styles-end')
+    @yield('meta')
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Lato:100,300,400,700" rel='stylesheet' type='text/css'>
-    </head>
-    <body id="app-layout">
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-        @include('frontend.includes.nav')
+    @include('frontend.includes.styles')
 
-        <div class="container">
-            @include('includes.partials.messages')
-            @yield('content')
-        </div><!-- container -->
+    <!-- Inject the custom styles from view -->
+    @yield('styles')
 
-        <!-- JavaScripts -->
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-        <script>window.jQuery || document.write('<script src="{{asset('js/vendor/jquery/jquery-2.1.4.min.js')}}"><\/script>')</script>
-        {!! Html::script('js/vendor/bootstrap/bootstrap.min.js') !!}
+    
 
-        @yield('before-scripts-end')
-        {!! Html::script(elixir('js/frontend.js')) !!}
-        @yield('after-scripts-end')
 
-        @include('includes.partials.ga')
-    </body>
+</head>
+<body class="hold-transition skin-{!! config('frontend.theme') !!}">
+    <!-- Site wrapper -->
+    <div class="wrapper">
+
+        @include('frontend.includes.header')
+
+        <!-- =============================================== -->
+
+        <!-- Left side column. contains the sidebar -->
+        @include('frontend.includes.sidebar')
+
+        <!-- =============================================== -->
+
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            <!-- Content Header (Page header) -->
+        <!-- <section class="content-header">
+          <h1>
+            Blank page
+            <small>it all starts here</small>
+          </h1>
+          <ol class="breadcrumb">
+            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+            <li><a href="#">Examples</a></li>
+            <li class="active">Blank page</li>
+          </ol>
+      </section> -->
+
+      <!-- Main content -->
+      <section class="content">
+
+        @include('includes.partials.messages')
+
+        @yield('content')
+
+      </section><!-- /.content -->
+  </div><!-- /.content-wrapper -->
+    {{-- @include('frontend.includes.notifications') --}}
+  <footer class="main-footer">
+    <div class="pull-right hidden-xs">
+        <b>Versão</b> {{app_version()}}
+    </div>
+    <small><strong>Copyright &copy; {{ date('Y') }} <a href="http://stee4web.com.br">System3D</a>.</strong> Todos os direitos reservados.</small>
+  </footer>
+ @include('frontend.includes.control-sidebar')
+</div><!-- ./wrapper -->
+
+
+<!-- Includes all the global required JS libs -->
+@include('frontend.includes.scripts')
+
+<!-- Inject the custom scripts from view -->
+@yield('scripts')
+
+</body>
 </html>

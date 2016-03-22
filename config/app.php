@@ -15,6 +15,8 @@ return [
 
     'env' => env('APP_ENV', 'production'),
 
+    'version' => 'Dev 0.1',
+
     /*
 	|--------------------------------------------------------------------------
 	| Application Name
@@ -22,7 +24,7 @@ return [
 	|
 	| The application name for use within the UI of the application
 	*/
-    'name' => 'Laravel 5 Bootstrap',
+    'name' => 'Hillside',
 
     /*
     |--------------------------------------------------------------------------
@@ -112,6 +114,8 @@ return [
     */
 
     'key' => env('APP_KEY'),
+
+    'real' => env('APP_REAL'),
 
     'cipher' => 'AES-256-CBC',
 

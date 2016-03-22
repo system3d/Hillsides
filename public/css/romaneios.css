@@ -1,0 +1,15 @@
+.toMove:hover{
+	cursor: move;
+}
+
+.btn-sm{
+	cursor: pointer !important;
+}
+
+a.disabled {
+    pointer-events: none;
+}
+
+a.disabled:active{
+	pointer-events: none;
+}
