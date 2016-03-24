@@ -2,7 +2,7 @@
         <!-- Logo -->
         <a href="{{ url('/') }}" class="logo">
           <!-- mini logo for sidebar mini 50x50 pixels -->
-          <span class="logo-mini"><b>A</b>LT</span>
+          <span class="logo-mini"><img src="{{ asset('img/icon.png') }}" class='iconHeader' alt="Steel4Web"></span>
           <!-- logo for regular state and mobile devices -->
           <span class="logo-lg">
              <img src="{{ asset('img/lolgo.png') }}" class='logoHeader' alt="Steel4Web">

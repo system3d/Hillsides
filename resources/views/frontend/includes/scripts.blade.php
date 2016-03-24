@@ -15,25 +15,30 @@
     {!! Html::script('plugins/toasts/src/jquery.toast.js') !!}
     <!-- Messages -->
     {!! Html::script('js/messages.js') !!}
+    {!! Html::script('js/modals.js') !!}
     <!-- Jquery UI -->
     {!! Html::script('plugins/jQueryUI/jquery-ui.js') !!}
     <!-- Bootstrap 3.3.5 -->
     {!! Html::script('js/bootstrap.min.js') !!}
+    {!! Html::script('plugins/parsley.js') !!}
+    {!! Html::script('plugins/parsleyBR.js') !!}
     <!-- Datatables -->
     {!! Html::script('plugins/datatables/datatables.min.js') !!}
     <!-- SlimScroll -->
     {!! Html::script('plugins/slimScroll/jquery.slimscroll.min.js') !!}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.7/socket.io.min.js"></script>
+    {!! Html::script('js/websocket.js') !!}
     <!-- Socket.IO  
      <script src="{{ asset('plugins/socket.io.js') }}"></script> -->
      
       <!--  <script src='http://localhost:3000/socket.io/socket.io.js'></script>  -->
     <!-- Notifications --> 
-    {!! Html::script('js/notifications.js') !!}
+   {{--  {!! Html::script('js/notifications.js') !!}
      <!-- Notifications Real Time -->
     @if(app_real() == true)
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.7/socket.io.min.js"></script>
         {!! Html::script('js/notificationsReal.js') !!}
-    @endif
+    @endif --}}
     <!-- FastClick -->
     {!! Html::script('plugins/fastclick/fastclick.min.js') !!}
     <!-- Editable

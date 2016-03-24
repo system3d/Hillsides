@@ -7,15 +7,28 @@
 
           <!-- sidebar menu: : style can be found in sidebar.less -->
           <ul class="sidebar-menu">
-            <li class="header"></li>
             <!-- <li class="header">MAIN NAVIGATION</li> -->
             <li class="{!! Active::pattern('/') !!}">
                 <a href="{!! url('/') !!}"><i class="fa fa-dashboard"></i><span> Painel de Controle</span></a>
             </li>
-            {{--  <li class="header"></li> --}}
+            <li class="{!! Active::pattern('projetos/') !!}">
+                <a href="{!! url('/') !!}"><i class="fa fa-folder-open-o"></i></i><span> Meus Projetos</span></a>
+            </li>
+            <li class="{!! Active::pattern('relatorios/') !!}">
+                <a href="{!! url('/') !!}"><i class="fa fa-print"></i></i><span> Relatórios</span></a>
+            </li>
+            <li class="{!! Active::pattern('access/') !!}">
+                <a href="{!! url('/') !!}"><i class="fa fa-user"></i></i><span> Usuários</span></a>
+            </li>
+            <li class="{!! Active::pattern('equipes/') !!}">
+                <a href="{!! url('/') !!}"><i class="fa fa-users"></i></i><span> Equipes</span></a>
+            </li>
+            <li class="{!! Active::pattern('clientes/') !!}">
+                <a href="{!! url('/') !!}"><i class="fa fa-shopping-bag"></i></i><span> Clientes</span></a>
+            </li>
             
                     
-                </ul>
-            </section>
-            <!-- /.sidebar -->
-        </aside>
+        </ul>
+    </section>
+    <!-- /.sidebar -->
+</aside>

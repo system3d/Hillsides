@@ -35,3 +35,6 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'middleware' => 'ad
     require (__DIR__ . '/Routes/Backend/Access.php');
     require (__DIR__ . '/Routes/Backend/LogViewer.php');
 });
+
+Route::get('teste', array('middleware' => 'web', 'as' => 'teste', 'uses' => 'Frontend\FrontendController@teste'));
+Route::post('projetos/cadastro', array('middleware' => 'web', 'as' => 'projetos/cadastro', 'uses' => 'ProjetosController@cadastro'));

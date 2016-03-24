@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-   
+    $('#loader').addClass('hidden'); 
 
     // Bootstrap Select
     $('.selectpicker').selectpicker({

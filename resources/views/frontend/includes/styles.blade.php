@@ -3,6 +3,7 @@
 	{{Html::style('css/bootstrap.min.css')}}
 	<!-- Style of the extra panels and a bit of stuff -->
 	{{Html::style('css/panels.css')}}
+	{!! Html::style('plugins/parsley.css') !!}
 	{{Html::style('plugins/fawsome_animated.css')}}
 	<!-- Datatable with Bootstrap 3 -->
 	{{Html::style('plugins/datatables/datatables.min.css')}}

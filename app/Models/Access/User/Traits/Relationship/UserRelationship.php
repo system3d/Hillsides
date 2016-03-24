@@ -32,6 +32,46 @@ trait UserRelationship
         return $this->belongsToMany(config('access.permission'), config('access.permission_user_table'), 'user_id', 'permission_id');
     }
 
+    public function locatario() {
+        return $this->belongsTo('App\Locatario');
+    }
+
+    public function clientes() {
+        return $this->hasMany('App\Cliente');
+    }
+
+    public function projetos() {
+        return $this->hasMany('App\Projetos');
+    }
+
+    public function equipes() {
+        return $this->belongsToMany('App\Equipe', 'user_equipe');
+    }
+
+    public function equipes() {
+        return $this->hasMany('App\Equipe');
+    }
+
+    public function sprints() {
+        return $this->hasMany('App\Sprint');
+    }
+
+    public function etapas() {
+        return $this->hasMany('App\Etapa');
+    }
+
+    public function disciplinas() {
+        return $this->hasMany('App\Disciplina');
+    }
+
+    public function tarefas() {
+        return $this->hasMany('App\Tarefa');
+    }
+
+    public function historias() {
+        return $this->hasMany('App\Historia');
+    }
+
     /**
      * @return mixed
      */

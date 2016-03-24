@@ -38,8 +38,7 @@ class Kernel extends HttpKernel
 
         'admin' => [
             'web',
-            'auth',
-            'access.routeNeedsPermission:view-backend',
+            'auth'
         ],
 
         'api' => [
