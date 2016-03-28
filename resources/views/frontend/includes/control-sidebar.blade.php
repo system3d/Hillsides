@@ -9,8 +9,17 @@
         <div class="tab-content">
           <!-- Home tab content -->
           <div class="tab-pane active" id="control-sidebar-home-tab">
-            <h3 class="control-sidebar-heading">Recent Activity</h3>
             <ul class="control-sidebar-menu">
+                  <li class="user-header">
+                      <div class="profile-pic">
+                        <img src="img/avatar/default.png" class="img-circle" alt="User Image">
+                        <div class="edit"><a href="#"><i class="fa fa-pencil fa-lg"></i></a></div>
+                      </div>
+                    <p>
+                      {{access()->user()->name}}
+                      <small>{{access()->user()->roles->first()->name}}</small>
+                    </p>
+                  </li>
               <li>
                 <a href="javascript::;">
                   <i class="menu-icon fa fa-birthday-cake bg-red"></i>
@@ -47,6 +56,7 @@
                   </div>
                 </a>
               </li>
+
             </ul><!-- /.control-sidebar-menu -->
 
             <h3 class="control-sidebar-heading">Tasks Progress</h3>
@@ -96,6 +106,7 @@
                 </a>
               </li>
             </ul><!-- /.control-sidebar-menu -->
+            <a href="{{url('logout')}}" class="btn btn-default btn-block" style='width:80%;margin-left: 10%;margin-top: 20px;'> <i class="fa fa-sign-out"></i>&nbsp;&nbsp; Logout</a>
 
           </div><!-- /.tab-pane -->
           <!-- Stats tab content -->

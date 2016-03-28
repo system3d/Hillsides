@@ -6,14 +6,17 @@
    	event.preventDefault();
    	dd('feiheoug');
    });
-    var socket = io('http://steel4web.com.br:3000');
+     if(app_env == "local")
+	    var socket = io(':3000');
+	  else
+	    var socket = io('http://steel4web.com.br:3000');
  	 socket.on(canal, function(data) {
       dd(data);
     });
 
  	 $('.testedo').click(function(event) {
 
-	getProjetoCadastro();
+	getClienteCadastro();
 });
 
 });

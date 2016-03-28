@@ -76,6 +76,8 @@ class CreateSystemTables extends Migration
             $table->increments('id');
             $table->string('descricao', 255)->nullable();
             $table->mediumText('obs')->nullable();
+            $table->integer('responsavel_id')->unsigned();
+            $table->foreign('responsavel_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('locatario_id')->unsigned();

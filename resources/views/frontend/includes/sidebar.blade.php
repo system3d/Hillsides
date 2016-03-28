@@ -17,14 +17,14 @@
             <li class="{!! Active::pattern('relatorios/') !!}">
                 <a href="{!! url('/') !!}"><i class="fa fa-print"></i></i><span> Relatórios</span></a>
             </li>
-            <li class="{!! Active::pattern('access/') !!}">
-                <a href="{!! url('/') !!}"><i class="fa fa-user"></i></i><span> Usuários</span></a>
+            <li class="{!! Active::pattern('admin/access/*') !!}">
+                <a href="{!! url('admin/access/users') !!}"><i class="fa fa-user"></i></i><span> Usuários</span></a>
             </li>
-            <li class="{!! Active::pattern('equipes/') !!}">
-                <a href="{!! url('/') !!}"><i class="fa fa-users"></i></i><span> Equipes</span></a>
+            <li class="{!! Active::pattern('equipes') !!}">
+                <a href="{!! url('equipes') !!}"><i class="fa fa-users"></i></i><span> Equipes</span></a>
             </li>
-            <li class="{!! Active::pattern('clientes/') !!}">
-                <a href="{!! url('/') !!}"><i class="fa fa-shopping-bag"></i></i><span> Clientes</span></a>
+            <li class="{!! Active::pattern('clientes') !!}">
+                <a href="{!! url('clientes') !!}"><i class="fa fa-shopping-bag"></i></i><span> Clientes</span></a>
             </li>
             
                     

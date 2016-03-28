@@ -18,6 +18,7 @@ use App\Repositories\Backend\Permission\PermissionRepositoryContract;
 use App\Http\Requests\Backend\Access\User\PermanentlyDeleteUserRequest;
 use App\Repositories\Frontend\User\UserContract as FrontendUserContract;
 use App\Http\Requests\Backend\Access\User\ResendConfirmationEmailRequest;
+use App\Models\Access\User\User as userr;
 
 /**
  * Class UserController
@@ -81,11 +82,13 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
+        $email = $request->email;
         $this->users->create(
             $request->except('assignees_roles', 'permission_user'),
             $request->only('assignees_roles'),
             $request->only('permission_user')
         );
+        $updat = userr::where('email',$email)->update(array('locatario_id' => access()->user()->locatario_id));
         return redirect()->route('admin.access.users.index')->withFlashSuccess(trans('alerts.backend.users.created'));
     }
 

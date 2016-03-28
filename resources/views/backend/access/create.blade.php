@@ -1,4 +1,4 @@
-@extends ('backend.layouts.master')
+@extends('frontend.layouts.master')
 
 @section ('title', trans('labels.backend.access.users.management') . ' | ' . trans('labels.backend.access.users.create'))
 
@@ -11,7 +11,7 @@
 
 @section('content')
     {!! Form::open(['route' => 'admin.access.users.store', 'class' => 'form-horizontal', 'role' => 'form', 'method' => 'post']) !!}
-
+        
         <div class="box box-success">
             <div class="box-header with-border">
                 <h3 class="box-title">{{ trans('labels.backend.access.users.create') }}</h3>
@@ -172,7 +172,7 @@
                 <div class="clearfix"></div>
             </div><!-- /.box-body -->
         </div><!--box-->
-
+<input type="hidden" name='locatario_id' value='{{access()->user()->locatario_id}}'>
     {!! Form::close() !!}
 @stop
 

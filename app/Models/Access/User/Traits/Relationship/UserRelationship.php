@@ -48,7 +48,7 @@ trait UserRelationship
         return $this->belongsToMany('App\Equipe', 'user_equipe');
     }
 
-    public function equipes() {
+    public function equipes_creator() {
         return $this->hasMany('App\Equipe');
     }
 

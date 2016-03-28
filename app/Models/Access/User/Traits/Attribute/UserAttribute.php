@@ -145,7 +145,7 @@ trait UserAttribute
     public function getDeleteButtonAttribute()
     {
         if (access()->allow('delete-users')) {
-            return '<a href="' . route('admin.access.users.destroy', $this->id) . '"
+            return '<a href="' . route('admin.access.user.destroy', $this->id) . '"
                  data-method="delete"
                  data-trans-button-cancel="'.trans('buttons.general.cancel').'"
                  data-trans-button-confirm="'.trans('buttons.general.crud.delete').'"

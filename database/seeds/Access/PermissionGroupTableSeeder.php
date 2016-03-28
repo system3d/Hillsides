@@ -27,40 +27,23 @@ class PermissionGroupTableSeeder extends Seeder
         /**
          * Create the Access groups
          */
-        $group_model        = config('access.group');
-        $access             = new $group_model;
-        $access->name       = 'Access';
-        $access->sort       = 1;
-        $access->created_at = Carbon::now();
-        $access->updated_at = Carbon::now();
-        $access->save();
-
         $group_model      = config('access.group');
         $user             = new $group_model;
-        $user->name       = 'User';
+        $user->name       = 'Cadastros';
         $user->sort       = 1;
-        $user->parent_id  = $access->id;
+        $user->parent_id  = 1;
         $user->created_at = Carbon::now();
         $user->updated_at = Carbon::now();
         $user->save();
 
         $group_model      = config('access.group');
         $role             = new $group_model;
-        $role->name       = 'Role';
+        $role->name       = 'App';
         $role->sort       = 2;
-        $role->parent_id  = $access->id;
+        $role->parent_id  = 1;
         $role->created_at = Carbon::now();
         $role->updated_at = Carbon::now();
         $role->save();
-
-        $group_model            = config('access.group');
-        $permission             = new $group_model;
-        $permission->name       = 'Permission';
-        $permission->sort       = 3;
-        $permission->parent_id  = $access->id;
-        $permission->created_at = Carbon::now();
-        $permission->updated_at = Carbon::now();
-        $permission->save();
 
         if (env('DB_CONNECTION') == 'mysql') {
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');

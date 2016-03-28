@@ -36,33 +36,51 @@ class PermissionTableSeeder extends Seeder
          */
 
         /**
-         * Misc Access Permissions
+         * Projetos
          */
         $permission_model          = config('access.permission');
-        $viewBackend               = new $permission_model;
-        $viewBackend->name         = 'view-backend';
-        $viewBackend->display_name = 'View Backend';
-        $viewBackend->system       = true;
-        $viewBackend->group_id     = 1;
-        $viewBackend->sort         = 1;
-        $viewBackend->created_at   = Carbon::now();
-        $viewBackend->updated_at   = Carbon::now();
-        $viewBackend->save();
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'criar-projetos';
+        $new_permission->display_name = 'Criar Projetos';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 1;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
 
-        $permission_model                   = config('access.permission');
-        $viewAccessManagement               = new $permission_model;
-        $viewAccessManagement->name         = 'view-access-management';
-        $viewAccessManagement->display_name = 'View Access Management';
-        $viewAccessManagement->system       = true;
-        $viewAccessManagement->group_id     = 1;
-        $viewAccessManagement->sort         = 2;
-        $viewAccessManagement->created_at   = Carbon::now();
-        $viewAccessManagement->updated_at   = Carbon::now();
-        $viewAccessManagement->save();
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'ver-projetos';
+        $new_permission->display_name = 'Ver Projetos';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 2;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
 
-        /**
-         * Access Permissions
-         */
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'editar-projetos';
+        $new_permission->display_name = 'Editar Projetos';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 3;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'deletar-projetos';
+        $new_permission->display_name = 'Deletar Projetos';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 4;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
 
         /**
          * User
@@ -70,9 +88,9 @@ class PermissionTableSeeder extends Seeder
         $permission_model          = config('access.permission');
         $createUsers               = new $permission_model;
         $createUsers->name         = 'create-users';
-        $createUsers->display_name = 'Create Users';
+        $createUsers->display_name = 'Criar Usuários';
         $createUsers->system       = true;
-        $createUsers->group_id     = 2;
+        $createUsers->group_id     = 1;
         $createUsers->sort         = 5;
         $createUsers->created_at   = Carbon::now();
         $createUsers->updated_at   = Carbon::now();
@@ -81,9 +99,9 @@ class PermissionTableSeeder extends Seeder
         $permission_model        = config('access.permission');
         $editUsers               = new $permission_model;
         $editUsers->name         = 'edit-users';
-        $editUsers->display_name = 'Edit Users';
+        $editUsers->display_name = 'Editar Usuários';
         $editUsers->system       = true;
-        $editUsers->group_id     = 2;
+        $editUsers->group_id     = 1;
         $editUsers->sort         = 6;
         $editUsers->created_at   = Carbon::now();
         $editUsers->updated_at   = Carbon::now();
@@ -92,9 +110,9 @@ class PermissionTableSeeder extends Seeder
         $permission_model          = config('access.permission');
         $deleteUsers               = new $permission_model;
         $deleteUsers->name         = 'delete-users';
-        $deleteUsers->display_name = 'Delete Users';
+        $deleteUsers->display_name = 'Deletar Usuários';
         $deleteUsers->system       = true;
-        $deleteUsers->group_id     = 2;
+        $deleteUsers->group_id     = 1;
         $deleteUsers->sort         = 7;
         $deleteUsers->created_at   = Carbon::now();
         $deleteUsers->updated_at   = Carbon::now();
@@ -103,9 +121,9 @@ class PermissionTableSeeder extends Seeder
         $permission_model                 = config('access.permission');
         $changeUserPassword               = new $permission_model;
         $changeUserPassword->name         = 'change-user-password';
-        $changeUserPassword->display_name = 'Change User Password';
+        $changeUserPassword->display_name = 'Mudar Senha de Usuários';
         $changeUserPassword->system       = true;
-        $changeUserPassword->group_id     = 2;
+        $changeUserPassword->group_id     = 1;
         $changeUserPassword->sort         = 8;
         $changeUserPassword->created_at   = Carbon::now();
         $changeUserPassword->updated_at   = Carbon::now();
@@ -114,9 +132,9 @@ class PermissionTableSeeder extends Seeder
         $permission_model             = config('access.permission');
         $deactivateUser               = new $permission_model;
         $deactivateUser->name         = 'deactivate-users';
-        $deactivateUser->display_name = 'Deactivate Users';
+        $deactivateUser->display_name = 'Desativar Usuários';
         $deactivateUser->system       = true;
-        $deactivateUser->group_id     = 2;
+        $deactivateUser->group_id     = 1;
         $deactivateUser->sort         = 9;
         $deactivateUser->created_at   = Carbon::now();
         $deactivateUser->updated_at   = Carbon::now();
@@ -125,9 +143,9 @@ class PermissionTableSeeder extends Seeder
         $permission_model             = config('access.permission');
         $reactivateUser               = new $permission_model;
         $reactivateUser->name         = 'reactivate-users';
-        $reactivateUser->display_name = 'Re-Activate Users';
+        $reactivateUser->display_name = 'Reativar Usuários';
         $reactivateUser->system       = true;
-        $reactivateUser->group_id     = 2;
+        $reactivateUser->group_id     = 1;
         $reactivateUser->sort         = 11;
         $reactivateUser->created_at   = Carbon::now();
         $reactivateUser->updated_at   = Carbon::now();
@@ -136,9 +154,9 @@ class PermissionTableSeeder extends Seeder
         $permission_model           = config('access.permission');
         $undeleteUser               = new $permission_model;
         $undeleteUser->name         = 'undelete-users';
-        $undeleteUser->display_name = 'Restore Users';
+        $undeleteUser->display_name = 'Restaurar Usuários';
         $undeleteUser->system       = true;
-        $undeleteUser->group_id     = 2;
+        $undeleteUser->group_id     = 1;
         $undeleteUser->sort         = 13;
         $undeleteUser->created_at   = Carbon::now();
         $undeleteUser->updated_at   = Carbon::now();
@@ -147,9 +165,9 @@ class PermissionTableSeeder extends Seeder
         $permission_model                    = config('access.permission');
         $permanentlyDeleteUser               = new $permission_model;
         $permanentlyDeleteUser->name         = 'permanently-delete-users';
-        $permanentlyDeleteUser->display_name = 'Permanently Delete Users';
+        $permanentlyDeleteUser->display_name = 'Deletar Usuários Permanentemente';
         $permanentlyDeleteUser->system       = true;
-        $permanentlyDeleteUser->group_id     = 2;
+        $permanentlyDeleteUser->group_id     = 1;
         $permanentlyDeleteUser->sort         = 14;
         $permanentlyDeleteUser->created_at   = Carbon::now();
         $permanentlyDeleteUser->updated_at   = Carbon::now();
@@ -158,132 +176,353 @@ class PermissionTableSeeder extends Seeder
         $permission_model                      = config('access.permission');
         $resendConfirmationEmail               = new $permission_model;
         $resendConfirmationEmail->name         = 'resend-user-confirmation-email';
-        $resendConfirmationEmail->display_name = 'Resend Confirmation E-mail';
+        $resendConfirmationEmail->display_name = 'Re-Enviar E-mail de Confirmação';
         $resendConfirmationEmail->system       = true;
-        $resendConfirmationEmail->group_id     = 2;
+        $resendConfirmationEmail->group_id     = 1;
         $resendConfirmationEmail->sort         = 15;
         $resendConfirmationEmail->created_at   = Carbon::now();
         $resendConfirmationEmail->updated_at   = Carbon::now();
         $resendConfirmationEmail->save();
 
         /**
-         * Role
+         * Sprints
          */
         $permission_model          = config('access.permission');
-        $createRoles               = new $permission_model;
-        $createRoles->name         = 'create-roles';
-        $createRoles->display_name = 'Create Roles';
-        $createRoles->system       = true;
-        $createRoles->group_id     = 3;
-        $createRoles->sort         = 2;
-        $createRoles->created_at   = Carbon::now();
-        $createRoles->updated_at   = Carbon::now();
-        $createRoles->save();
-
-        $permission_model        = config('access.permission');
-        $editRoles               = new $permission_model;
-        $editRoles->name         = 'edit-roles';
-        $editRoles->display_name = 'Edit Roles';
-        $editRoles->system       = true;
-        $editRoles->group_id     = 3;
-        $editRoles->sort         = 3;
-        $editRoles->created_at   = Carbon::now();
-        $editRoles->updated_at   = Carbon::now();
-        $editRoles->save();
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'criar-sprints';
+        $new_permission->display_name = 'Criar Sprints';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 16;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
 
         $permission_model          = config('access.permission');
-        $deleteRoles               = new $permission_model;
-        $deleteRoles->name         = 'delete-roles';
-        $deleteRoles->display_name = 'Delete Roles';
-        $deleteRoles->system       = true;
-        $deleteRoles->group_id     = 3;
-        $deleteRoles->sort         = 4;
-        $deleteRoles->created_at   = Carbon::now();
-        $deleteRoles->updated_at   = Carbon::now();
-        $deleteRoles->save();
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'ver-sprints';
+        $new_permission->display_name = 'Ver Sprints';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 17;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'editar-sprints';
+        $new_permission->display_name = 'Editar Sprints';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 18;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'deletar-sprints';
+        $new_permission->display_name = 'Deletar Sprints';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 19;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
 
         /**
-         * Permission Group
+         * Etapas
          */
-        $permission_model                     = config('access.permission');
-        $createPermissionGroups               = new $permission_model;
-        $createPermissionGroups->name         = 'create-permission-groups';
-        $createPermissionGroups->display_name = 'Create Permission Groups';
-        $createPermissionGroups->system       = true;
-        $createPermissionGroups->group_id     = 4;
-        $createPermissionGroups->sort         = 1;
-        $createPermissionGroups->created_at   = Carbon::now();
-        $createPermissionGroups->updated_at   = Carbon::now();
-        $createPermissionGroups->save();
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'criar-etapas';
+        $new_permission->display_name = 'Criar Etapas';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 20;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
 
-        $permission_model                   = config('access.permission');
-        $editPermissionGroups               = new $permission_model;
-        $editPermissionGroups->name         = 'edit-permission-groups';
-        $editPermissionGroups->display_name = 'Edit Permission Groups';
-        $editPermissionGroups->system       = true;
-        $editPermissionGroups->group_id     = 4;
-        $editPermissionGroups->sort         = 2;
-        $editPermissionGroups->created_at   = Carbon::now();
-        $editPermissionGroups->updated_at   = Carbon::now();
-        $editPermissionGroups->save();
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'ver-etapas';
+        $new_permission->display_name = 'Ver Etapas';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 21;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
 
-        $permission_model                     = config('access.permission');
-        $deletePermissionGroups               = new $permission_model;
-        $deletePermissionGroups->name         = 'delete-permission-groups';
-        $deletePermissionGroups->display_name = 'Delete Permission Groups';
-        $deletePermissionGroups->system       = true;
-        $deletePermissionGroups->group_id     = 4;
-        $deletePermissionGroups->sort         = 3;
-        $deletePermissionGroups->created_at   = Carbon::now();
-        $deletePermissionGroups->updated_at   = Carbon::now();
-        $deletePermissionGroups->save();
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'editar-etapas';
+        $new_permission->display_name = 'Editar Etapas';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 22;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
 
-        $permission_model                   = config('access.permission');
-        $sortPermissionGroups               = new $permission_model;
-        $sortPermissionGroups->name         = 'sort-permission-groups';
-        $sortPermissionGroups->display_name = 'Sort Permission Groups';
-        $sortPermissionGroups->system       = true;
-        $sortPermissionGroups->group_id     = 4;
-        $sortPermissionGroups->sort         = 4;
-        $sortPermissionGroups->created_at   = Carbon::now();
-        $sortPermissionGroups->updated_at   = Carbon::now();
-        $sortPermissionGroups->save();
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'deletar-etapas';
+        $new_permission->display_name = 'Deletar Etapas';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 23;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
 
         /**
-         * Permission
+         * Disciplinas
          */
-        $permission_model                = config('access.permission');
-        $createPermissions               = new $permission_model;
-        $createPermissions->name         = 'create-permissions';
-        $createPermissions->display_name = 'Create Permissions';
-        $createPermissions->system       = true;
-        $createPermissions->group_id     = 4;
-        $createPermissions->sort         = 5;
-        $createPermissions->created_at   = Carbon::now();
-        $createPermissions->updated_at   = Carbon::now();
-        $createPermissions->save();
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'criar-disciplinas';
+        $new_permission->display_name = 'Criar Disciplinas';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 24;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
 
-        $permission_model              = config('access.permission');
-        $editPermissions               = new $permission_model;
-        $editPermissions->name         = 'edit-permissions';
-        $editPermissions->display_name = 'Edit Permissions';
-        $editPermissions->system       = true;
-        $editPermissions->group_id     = 4;
-        $editPermissions->sort         = 6;
-        $editPermissions->created_at   = Carbon::now();
-        $editPermissions->updated_at   = Carbon::now();
-        $editPermissions->save();
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'ver-disciplinas';
+        $new_permission->display_name = 'Ver Disciplinas';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 25;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
 
-        $permission_model                = config('access.permission');
-        $deletePermissions               = new $permission_model;
-        $deletePermissions->name         = 'delete-permissions';
-        $deletePermissions->display_name = 'Delete Permissions';
-        $deletePermissions->system       = true;
-        $deletePermissions->group_id     = 4;
-        $deletePermissions->sort         = 7;
-        $deletePermissions->created_at   = Carbon::now();
-        $deletePermissions->updated_at   = Carbon::now();
-        $deletePermissions->save();
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'editar-disciplinas';
+        $new_permission->display_name = 'Editar Disciplinas';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 26;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'deletar-disciplinas';
+        $new_permission->display_name = 'Deletar Disciplinas';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 27;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        /**
+         * Clientes
+         */
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'criar-clientes';
+        $new_permission->display_name = 'Criar Clientes';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 28;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'ver-clientes';
+        $new_permission->display_name = 'Ver Clientes';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 29;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'editar-clientes';
+        $new_permission->display_name = 'Editar Clientes';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 30;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'deletar-clientes';
+        $new_permission->display_name = 'Deletar Clientes';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 31;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        /**
+         * Equipes
+         */
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'criar-equipes';
+        $new_permission->display_name = 'Criar Equipes';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 32;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'ver-equipes';
+        $new_permission->display_name = 'Ver Equipes';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 33;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'editar-equipes';
+        $new_permission->display_name = 'Editar Equipes';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 34;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'deletar-equipes';
+        $new_permission->display_name = 'Deletar Equipes';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 35;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        /**
+         * Tarefas
+         */
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'criar-tarefas';
+        $new_permission->display_name = 'Criar Tarefas';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 36;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'ver-tarefas';
+        $new_permission->display_name = 'Ver Tarefas';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 37;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'editar-tarefas';
+        $new_permission->display_name = 'Editar Tarefas';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 38;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'deletar-tarefas';
+        $new_permission->display_name = 'Deletar Tarefas';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 39;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        /**
+         * App
+         */
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'ver-relatorios';
+        $new_permission->display_name = 'Ver Relatorios';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 2;
+        $new_permission->sort         = 40;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'tarefa-propia';
+        $new_permission->display_name = 'Avançar Tarefas';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 2;
+        $new_permission->sort         = 41;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'tarefa-equipe';
+        $new_permission->display_name = 'Avançar Tarefas da Equipe';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 2;
+        $new_permission->sort         = 42;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'tarefa-geral';
+        $new_permission->display_name = 'Avançar Qualquer Tarefa';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 2;
+        $new_permission->sort         = 43;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'config-geral';
+        $new_permission->display_name = 'Setar Configurações Gerais';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 2;
+        $new_permission->sort         = 44;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
 
         if (env('DB_CONNECTION') == 'mysql') {
             DB::statement('SET FOREIGN_KEY_CHECKS=1;');

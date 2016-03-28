@@ -35,6 +35,18 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'middleware' => 'ad
     require (__DIR__ . '/Routes/Backend/Access.php');
     require (__DIR__ . '/Routes/Backend/LogViewer.php');
 });
-
+Route::get('cadastro/getClientes', array('middleware' => 'admin', 'as' => 'cadastro/getClientes', 'uses' => 'ClienteController@getClientes'));
 Route::get('teste', array('middleware' => 'web', 'as' => 'teste', 'uses' => 'Frontend\FrontendController@teste'));
-Route::post('projetos/cadastro', array('middleware' => 'web', 'as' => 'projetos/cadastro', 'uses' => 'ProjetosController@cadastro'));
+Route::post('cadastro/projeto', array('middleware' => 'admin', 'as' => 'cadastro/projeto', 'uses' => 'ClienteController@projeto'));
+Route::post('cadastro/cliente', array('middleware' => 'admin', 'as' => 'cadastro/cliente', 'uses' => 'ClienteController@cliente'));
+Route::post('cadastro/store', array('middleware' => 'admin', 'as' => 'cadastro/store', 'uses' => 'ClienteController@store'));
+Route::get('clientes', array('middleware' => 'admin', 'as' => 'clientes', 'uses' => 'ClienteController@clientesIndex'));
+Route::post('cadastro/clienteinfo', array('middleware' => 'admin', 'as' => 'cadastro/clienteinfo', 'uses' => 'ClienteController@clienteinfo'));
+Route::post('cadastro/clienteEdit', array('middleware' => 'admin', 'as' => 'cadastro/clienteEdit', 'uses' => 'ClienteController@clienteEdit'));
+Route::post('cadastro/clienteUpdate', array('middleware' => 'admin', 'as' => 'cadastro/clienteUpdate', 'uses' => 'ClienteController@clienteUpdate'));
+Route::post('cadastro/clienteDelete', array('middleware' => 'admin', 'as' => 'cadastro/clienteDelete', 'uses' => 'ClienteController@clienteDelete'));
+
+Route::get('equipes', array('middleware' => 'admin', 'as' => 'equipes', 'uses' => 'EquipesController@index'));
+Route::get('equipes/getEquipes', array('middleware' => 'admin', 'as' => 'equipes/getEquipes', 'uses' => 'EquipesController@getEquipes'));
+Route::post('equipes/info', array('middleware' => 'admin', 'as' => 'cadastro/equipes/info', 'uses' => 'EquipesController@info'));
+

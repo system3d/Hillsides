@@ -28,6 +28,7 @@
     {!! Html::script('plugins/slimScroll/jquery.slimscroll.min.js') !!}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.7/socket.io.min.js"></script>
     {!! Html::script('js/websocket.js') !!}
+
     <!-- Socket.IO  
      <script src="{{ asset('plugins/socket.io.js') }}"></script> -->
      
@@ -67,4 +68,5 @@
     {!! Html::script('plugins/datepicker/locales/bootstrap-datepicker.pt-BR.js') !!}
 
     <!-- Main Scripts -->
+    {!! Html::script('js/tables.js') !!}
     {!! Html::script('js/script.js') !!}

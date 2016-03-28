@@ -1,5 +1,18 @@
 $(document).ready(function() {
 
+    $(".cep").mask("99.999-999");
+
+    var FoneMaskBehavior = function (val) {
+      return val.replace(/\D/g, '').length === 11 ? '(00) 00000-0000' : '(00) 0000-00009';
+    },
+    foneOptions = {
+      onKeyPress: function(val, e, field, options) {
+          field.mask(FoneMaskBehavior.apply({}, arguments), options);
+        }
+    };
+
+    $('.telefone').mask(FoneMaskBehavior, foneOptions);
+
     $('#loader').addClass('hidden'); 
 
     // Bootstrap Select
@@ -15,6 +28,13 @@ $(document).ready(function() {
     });
 
 });
+
+$.fn.serializeAndEncode = function() {
+      return $.map(this.serializeArray(), function(val) {
+        return [val.name, encodeURIComponent(val.value)].join('=');
+      }).join('&');
+    };
+
 
 
 function number_format(numero, decimal, decimal_separador, milhar_separador) {

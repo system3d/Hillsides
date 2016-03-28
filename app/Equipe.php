@@ -19,7 +19,11 @@ class Equipe extends Model
     }
 
 	public function user() {
-		return $this->belongsTo('App\Model\Access\User\User');
+		return $this->belongsTo('App\Models\Access\User\User');
+	}
+
+	public function responsavel() {
+		return $this->belongsTo('App\Models\Access\User\User');
 	}
 
 	public function locatario() {
@@ -31,6 +35,6 @@ class Equipe extends Model
 	}
 
 	public function users() {
-		return $this->belongsToMany('App\Model\Access\User\User', 'user_equipe');
+		return $this->belongsToMany('App\Models\Access\User\User', 'user_equipe');
 	}
 }

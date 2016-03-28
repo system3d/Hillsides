@@ -360,13 +360,13 @@ div.dataTables_wrapper div.dataTables_processing {
 .logoHeader{
     width: 200px;
     height: 40px;
-    margin-top: 5px;
+    margin-bottom: 3px;
 }
 
 .iconHeader{
     width: 32px;
     height: 40px;
-    margin-top: 4.5px;
+    margin-bottom: 2px;
 }
 
 .loading {
@@ -433,10 +433,69 @@ div.dataTables_wrapper div.dataTables_processing {
 .modal_form input[type="text"] {
     width: 80%;
 }
+.modal_form input[type="email"] {
+    width: 80%;
+}
+.modal_form input[type="url"] {
+    width: 80%;
+}
 .modal_form textarea {
     width: 80%;
 }
 
 .modal_form select {
     width: 80%;
+}
+
+#control-sidebar-home-tab li.user-header {
+  height: 175px;
+  padding: 10px;
+  text-align: center;
+}
+.profile-pic > img {
+  z-index: 5;
+  height: 90px;
+  width: 90px;
+  border: 3px solid;
+  border-color: transparent;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+#control-sidebar-home-tab li.user-header > p {
+  z-index: 5;
+  color: #fff;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 17px;
+  margin-top: 10px;
+}
+#control-sidebar-home-tab li.user-header > p > small {
+  display: block;
+  font-size: 12px;
+}
+
+.profile-pic {
+    position: relative;
+    display: inline-block;
+}
+
+.profile-pic:hover .edit {
+    display: block;
+}
+
+.edit {
+    position: absolute;
+   top:33px;
+   left:40px;
+   font-size:16px;
+    display: none;
+}
+
+.edit a {
+    
+    color: #DCDCDC;
+    text-shadow: 1 1 1 #000;
+}
+
+.edit a:hover {
+    color: #52CAC6;
+    text-shadow: 1 1 1 #fff;
 }

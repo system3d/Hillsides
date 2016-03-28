@@ -105,5 +105,3 @@ if (! function_exists('getLanguageBlock')) {
         }
     }
 }
-
-require __DIR__.'/modals.php';
