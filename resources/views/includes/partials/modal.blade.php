@@ -1,5 +1,5 @@
 <div class="modal fade" id="modal" data-backdrop="static" data-keyboard="false">
-    <div class="modal-dialog">
+    <div class="modal-dialog" style='width:60%'>
     	<div class="modal-content" id="modal-content">
 			
 		</div>

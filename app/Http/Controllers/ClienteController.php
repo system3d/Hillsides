@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Cliente as cliente;
 use App\Projeto as projeto;
+use App\Equipe as equipe;
+use App\Models\Access\User\User as user;
 
 class ClienteController extends Controller
 {
@@ -40,7 +42,14 @@ class ClienteController extends Controller
     		if(isset($new->id)) return('%success&Projeto Cadastrado com Sucesso');
     		else return('%error&Erro ao Cadastrar Projeto');
     		break;
-    		break;
+    	
+      case 'equipes':
+        $new = equipe::create($check);
+        $resp = user::find($check['responsavel_id']);
+        $new->users()->attach($resp);
+          if(isset($new->id)) return('%success&Equipe Cadastrada com Sucesso&E');
+          else return('%error&Erro ao Cadastrar Equipe');
+        break;
     	default:
     		return('%error&Erro ao Armazenar dados');
     		break;

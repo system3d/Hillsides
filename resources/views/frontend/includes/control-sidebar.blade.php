@@ -12,7 +12,7 @@
             <ul class="control-sidebar-menu">
                   <li class="user-header">
                       <div class="profile-pic">
-                        <img src="img/avatar/default.png" class="img-circle" alt="User Image">
+                        <img src="{{ asset('img/avatar/'.access()->user()->avatar) }}" class="img-circle" alt="User Image">
                         <div class="edit"><a href="#"><i class="fa fa-pencil fa-lg"></i></a></div>
                       </div>
                     <p>
@@ -117,33 +117,82 @@
               <h3 class="control-sidebar-heading">Configurações Gerais</h3>
               <div class="form-group">
                 <label class="control-sidebar-subheading">
-                  Report panel usage
-                  <input type="checkbox" class="pull-right" checked>
+                  Estágios
+                  <i class="fa fa-plus-square pull-right fa-sidebar" id='fa-estagios-sidebar'></i>
                 </label>
-                <p>
-                  Some information about this general settings option
-                </p>
+
+                <div class='settings-content hidden' id='set-est-side'>
+                  <small>Novo:</small> <br>
+                  <div class="row">
+                    <div class="col-xs-8">
+                      <input type="text" id='novo-estagio-set' class='form-control input-sm'>
+                      </div>
+                      <div class="col-xs-4">
+                        <a href="#" class="btn btn-xs btn-success pull-left" id='new-est-side'><i class="fa fa-check"></i></a>
+                     </div>
+                  </div>
+                  <br>
+                  <p>Backlog <a href='#' class="pull-right text-muted" data-toggle="tooltip" data-html="true" title='Sistema'><i class="fa fa-trash"></i></a></p>
+                  <div id="estagios-sets-wrap">
+                    @foreach(access()->user()->locatario->estagios_default->sortBy('ordem') as $estag)
+                      <p id='EsO{{$estag->id}}'>{{$estag->descricao}} <a href="#" data-toggle="tooltip" data-html="true" title='Deletar' class="pull-right delete-estagio text-red"><i class="fa fa-trash"></i></a></p>
+                    @endforeach
+                  </div>
+                  <p>Arquivado <a href="#" class="pull-right text-muted" data-toggle="tooltip" data-html="true" title='Sistema'><i class="fa fa-trash"></i></a></p>
+                </div>
               </div><!-- /.form-group -->
 
               <div class="form-group">
                 <label class="control-sidebar-subheading">
-                  Allow mail redirect
-                  <input type="checkbox" class="pull-right" checked>
+                  Status de Projeto
+                  <i class="fa fa-plus-square pull-right fa-sidebar" id='fa-stp-sidebar'></i>
                 </label>
-                <p>
-                  Other sets of options are available
-                </p>
+
+               <div class='settings-content hidden' id='set-stp-side'>
+                  <small>Novo:</small> <br>
+                  <div class="row">
+                    <div class="col-xs-8">
+                      <input type="text" id='novo-stp-set' class='form-control input-sm'>
+                      </div>
+                      <div class="col-xs-4">
+                        <a href="#" class="btn btn-xs btn-success pull-left" id='new-stp-side'><i class="fa fa-check"></i></a>
+                     </div>
+                  </div>
+                  <br>
+                  <div id="stp-sets-wrap">
+                    @foreach(access()->user()->locatario->status_projeto_default as $stp)
+                      <p data-id='{{$stp->id}}'>{{$stp->descricao}} <a href="#" data-toggle="tooltip" data-html="true" title='Deletar' class="pull-right delete-stp text-red"><i class="fa fa-trash"></i></a></p>
+                    @endforeach
+                  </div>
+                </div>
               </div><!-- /.form-group -->
 
               <div class="form-group">
                 <label class="control-sidebar-subheading">
-                  Expose author name in posts
-                  <input type="checkbox" class="pull-right" checked>
+                  Tipos de Tarefas
+                  <i class="fa fa-plus-square pull-right fa-sidebar" id='fa-trp-sidebar'></i>
                 </label>
-                <p>
-                  Allow the user to show his name in blog posts
-                </p>
+
+                <div class='settings-content hidden' id='set-trp-side'>
+                  <small>Novo:</small> <br>
+                  <div class="row">
+                    <div class="col-xs-8">
+                      <input type="text" id='novo-trp-set' class='form-control input-sm'>
+                      </div>
+                      <div class="col-xs-4">
+                        <a href="#" class="btn btn-xs btn-success pull-left" id='new-trp-side'><i class="fa fa-check"></i></a>
+                     </div>
+                  </div>
+                  <br>
+                  <div id="trp-sets-wrap">
+                    @foreach(access()->user()->locatario->tipo_tarefa_default as $trp)
+                      <p data-id='{{$trp->id}}'>{{$trp->descricao}} <a href="#" data-toggle="tooltip" data-html="true" title='Deletar' class="pull-right delete-trp text-red"><i class="fa fa-trash"></i></a></p>
+                    @endforeach
+                  </div>
+                </div>
               </div><!-- /.form-group -->
+
+              
 
               <h3 class="control-sidebar-heading">Chat Settings</h3>
 

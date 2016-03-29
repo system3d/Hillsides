@@ -23,7 +23,7 @@ class Contato extends Model
 	}
 
 	public function user() {
-		return $this->belongsTo('App\Model\Access\User\User');
+		return $this->belongsTo('App\Models\Access\User\User');
 	}
 
 	public function locatario() {

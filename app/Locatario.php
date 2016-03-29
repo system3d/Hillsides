@@ -11,7 +11,7 @@ class Locatario extends Model
 	protected $fillable = ['razao', 'fantasia', 'documento', 'inscricao', 'fone', 'endereco', 'cep', 'responsavel', 'email', 'site', 'logo', 'cidade'];
 
 	public function users() {
-		return $this->hasMany('App\Model\Access\User\User');
+		return $this->hasMany('App\Models\Access\User\User');
 	}
 
 	public function clientes() {

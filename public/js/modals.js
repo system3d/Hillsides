@@ -24,12 +24,24 @@ function getClienteCadastro(){
 	$('#loader').addClass('hidden'); 
 }
 
-function drawModal(data){
+function drawModal(data, widtth){
+	var wideth =  widtth != undefined ? widtth : '60%';
+	$('#modal-content').parent('.modal-dialog').css('width', wideth);
 	$('#modal-content').html(data);
   	$('#modal').modal("show");
 }
 
  $(document).ready(function(){
+
+ 	$(document).on('click', '#voltar_modal', function(event) {
+ 		event.preventDefault();
+ 		if(modal_history){
+ 			$('#modal-content').parent('.modal-dialog').css('width', modal_width);
+ 			$('#modal-content').html(modal_history);
+ 		}else
+		$('#modal').modal("hide");
+ 	});
+
  	$(document).on('submit', '.modal_form', function(event) {
  		$('#modal_loader').removeClass('hidden');
  		var values = $(this).serializeAndEncode();
@@ -49,6 +61,8 @@ function drawModal(data){
         if(res[2]){
         	if(res[2] == 'C'){
         		$('#clientesTable').DataTable().ajax.reload();
+        	}else if(res[2] == 'E'){
+        		$('#equipesTable').DataTable().ajax.reload();
         	}
         }
         $('#modal_loader').addClass('hidden');

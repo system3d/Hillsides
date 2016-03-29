@@ -9,7 +9,7 @@ class Equipe extends Model
 {
     protected $table = 'equipes';
     public $timestamps = true;
-	protected $fillable = ['descricao', 'obs', 'user_id', 'locatario_id'];
+	protected $fillable = ['descricao', 'obs', 'responsavel_id','user_id', 'locatario_id'];
 
 	protected static function boot()
     {

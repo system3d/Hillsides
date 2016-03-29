@@ -1,5 +1,5 @@
 	{{Html::style('fonts/stylesheet.css')}}
-	<!-- Bootstrap 3.3.5 -->
+	 <!-- Bootstrap 3.3.5 -->
 	{{Html::style('css/bootstrap.min.css')}}
 	<!-- Style of the extra panels and a bit of stuff -->
 	{{Html::style('css/panels.css')}}

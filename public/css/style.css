@@ -426,10 +426,6 @@ div.dataTables_wrapper div.dataTables_processing {
     border-radius: 4px;
 }
 
-#modal .modal-dialog {
-  width: 60% !important;
-}
-
 .modal_form input[type="text"] {
     width: 80%;
 }
@@ -498,4 +494,41 @@ div.dataTables_wrapper div.dataTables_processing {
 .edit a:hover {
     color: #52CAC6;
     text-shadow: 1 1 1 #fff;
+}
+
+#membros-wrapper p{
+    margin-bottom: 0 !important;
+}
+
+.fa-sidebar{
+    margin-top: 3px;
+    margin-right: 25px;
+}
+
+.fa-sidebar:hover{
+    color: #C5C5C5;
+    cursor: pointer;
+}
+
+.settings-content input{
+    padding: 1px 3px;
+    height: 25px;
+}
+
+.settings-content .btn-xs{
+    margin-left: 0 !important;
+}
+
+#estagios-sets-wrap p:hover{
+    cursor: move;
+}
+
+.ui-sortable-helper
+{
+   background:#b8c7ce;  
+   color: #222d32; 
+}
+
+.placeholderWrapper{
+    background: #fff;
 }

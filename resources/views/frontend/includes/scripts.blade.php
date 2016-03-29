@@ -1,6 +1,7 @@
    <script type="text/javascript">
         var urlbaseGeral = {!! json_encode(url('/')) !!};
-
+        var modal_history = false;
+        var modal_width = '60%';
     </script>
 
     <script type="text/javascript"> var app_env = '{!! env('APP_ENV') !!}' </script>
@@ -26,8 +27,8 @@
     {!! Html::script('plugins/datatables/datatables.min.js') !!}
     <!-- SlimScroll -->
     {!! Html::script('plugins/slimScroll/jquery.slimscroll.min.js') !!}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.7/socket.io.min.js"></script>
-    {!! Html::script('js/websocket.js') !!}
+   <!--  <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.7/socket.io.min.js"></script>
+    {!! Html::script('js/websocket.js') !!} -->
 
     <!-- Socket.IO  
      <script src="{{ asset('plugins/socket.io.js') }}"></script> -->
@@ -69,4 +70,5 @@
 
     <!-- Main Scripts -->
     {!! Html::script('js/tables.js') !!}
+     {!! Html::script('js/settings.js') !!}
     {!! Html::script('js/script.js') !!}

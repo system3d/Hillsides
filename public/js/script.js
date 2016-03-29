@@ -1,5 +1,21 @@
 $(document).ready(function() {
 
+  $('.fa-sidebar').click(function(event) { 
+    $(this).toggleClass('fa-plus-square fa-minus-square');
+  });
+
+  $('#fa-estagios-sidebar').click(function(event) {
+    $('#set-est-side').toggleClass('hidden');
+  });
+
+   $('#fa-stp-sidebar').click(function(event) {
+    $('#set-stp-side').toggleClass('hidden');
+  });
+
+   $('#fa-trp-sidebar').click(function(event) {
+    $('#set-trp-side').toggleClass('hidden');
+  });
+
     $(".cep").mask("99.999-999");
 
     var FoneMaskBehavior = function (val) {

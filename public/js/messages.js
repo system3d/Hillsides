@@ -22,6 +22,8 @@ function flashMessage(style, text, title, transition, close, hide, stack, positi
 	if(style == 'danger') style == 'error';
 	var defaults = text+"&"+title+"&"+transition+"&"+close+"&"+hide+"&"+stack+"&"+position+"&"+align+"&"+loader;
 	var data = setDefaults(defaults);
+	if(style == 'error')
+		data[4] = false;
 	if(style == 'none'){
 		$.toast({
 	    text: data[0], // Text that is to be shown in the toast

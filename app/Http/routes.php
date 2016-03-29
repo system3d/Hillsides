@@ -49,4 +49,20 @@ Route::post('cadastro/clienteDelete', array('middleware' => 'admin', 'as' => 'ca
 Route::get('equipes', array('middleware' => 'admin', 'as' => 'equipes', 'uses' => 'EquipesController@index'));
 Route::get('equipes/getEquipes', array('middleware' => 'admin', 'as' => 'equipes/getEquipes', 'uses' => 'EquipesController@getEquipes'));
 Route::post('equipes/info', array('middleware' => 'admin', 'as' => 'cadastro/equipes/info', 'uses' => 'EquipesController@info'));
+Route::post('equipes/criar', array('middleware' => 'admin', 'as' => 'equipes/criar', 'uses' => 'EquipesController@criar'));
+Route::post('equipes/editar', array('middleware' => 'admin', 'as' => 'equipes/editar', 'uses' => 'EquipesController@editar'));
+Route::post('equipes/update', array('middleware' => 'admin', 'as' => 'equipes/update', 'uses' => 'EquipesController@update'));
+Route::post('equipes/delete', array('middleware' => 'admin', 'as' => 'equipes/delete', 'uses' => 'EquipesController@delete'));
+Route::post('equipes/novoMembro', array('middleware' => 'admin', 'as' => 'equipes/novoMembro', 'uses' => 'EquipesController@novoMembro'));
+Route::post('equipes/removerMembro', array('middleware' => 'admin', 'as' => 'equipes/removerMembro', 'uses' => 'EquipesController@removerMembro'));
+
+Route::post('settings/gravarEstagio', array('middleware' => 'admin', 'as' => 'settings/gravarEstagio', 'uses' => 'SettingsController@gravarEstagio'));
+Route::post('settings/deleteEstagio', array('middleware' => 'admin', 'as' => 'settings/deleteEstagio', 'uses' => 'SettingsController@deleteEstagio'));
+Route::post('settings/setOrder', array('middleware' => 'admin', 'as' => 'settings/setOrder', 'uses' => 'SettingsController@setOrder'));
+
+Route::post('settings/gravarStp', array('middleware' => 'admin', 'as' => 'settings/gravarStp', 'uses' => 'SettingsController@gravarStp'));
+Route::post('settings/deleteStp', array('middleware' => 'admin', 'as' => 'settings/deleteStp', 'uses' => 'SettingsController@deleteStp'));
+
+Route::post('settings/gravarTrp', array('middleware' => 'admin', 'as' => 'settings/gravarTrp', 'uses' => 'SettingsController@gravarTrp'));
+Route::post('settings/deleteTrp', array('middleware' => 'admin', 'as' => 'settings/deleteTrp', 'uses' => 'SettingsController@deleteTrp'));
 

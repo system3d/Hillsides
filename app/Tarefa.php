@@ -19,7 +19,7 @@ class Tarefa extends Model
     }
 
 	public function user() {
-		return $this->belongsTo('App\Model\Access\User\User');
+		return $this->belongsTo('App\Models\Access\User\User');
 	}
 
 	public function locatario() {
@@ -35,7 +35,7 @@ class Tarefa extends Model
 	}
 
 	public function assignee() {
-		return $this->belongsTo('App\Model\Access\User\User');
+		return $this->belongsTo('App\Models\Access\User\User');
 	}
 
 	public function tipo() {
