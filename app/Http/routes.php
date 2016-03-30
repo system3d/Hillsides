@@ -65,4 +65,8 @@ Route::post('settings/deleteStp', array('middleware' => 'admin', 'as' => 'settin
 
 Route::post('settings/gravarTrp', array('middleware' => 'admin', 'as' => 'settings/gravarTrp', 'uses' => 'SettingsController@gravarTrp'));
 Route::post('settings/deleteTrp', array('middleware' => 'admin', 'as' => 'settings/deleteTrp', 'uses' => 'SettingsController@deleteTrp'));
+Route::post('settings/setIcon', array('middleware' => 'admin', 'as' => 'settings/setIcon', 'uses' => 'SettingsController@setIcon'));
+Route::post('settings/storeIcon', array('middleware' => 'admin', 'as' => 'settings/storeIcon', 'uses' => 'SettingsController@storeIcon'));
 
+Route::get('projetos', array('middleware' => 'admin', 'as' => 'projetos', 'uses' => 'ProjetosController@index'));
+Route::post('projetos/criar', array('middleware' => 'admin', 'as' => 'projetos/criar', 'uses' => 'ProjetosController@criar'));

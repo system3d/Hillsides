@@ -186,7 +186,14 @@
                   <br>
                   <div id="trp-sets-wrap">
                     @foreach(access()->user()->locatario->tipo_tarefa_default as $trp)
-                      <p data-id='{{$trp->id}}'>{{$trp->descricao}} <a href="#" data-toggle="tooltip" data-html="true" title='Deletar' class="pull-right delete-trp text-red"><i class="fa fa-trash"></i></a></p>
+                      <p data-id='{{$trp->id}}'>{{$trp->descricao}} 
+                        <span class="pull-right">
+                        <a href="#" data-id='{{$trp->id}}' data-toggle="tooltip" data-html="true" title='Trocar Icone' class='icon-t-change'>
+                          <img class='img-circle img-icon' src="{{ asset('img/icones/'.$trp->icone) }}" id='t-icon-{{$trp->id}}'>
+                        </a>
+                        <a href="#" data-toggle="tooltip" data-html="true" title='Deletar' class="delete-trp text-red"><i class="fa fa-trash"></i></a>
+                        </span>
+                      </p>
                     @endforeach
                   </div>
                 </div>

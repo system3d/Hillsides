@@ -142,4 +142,40 @@ class SettingsController extends Controller
     		$ordem++;
     	}
     }
+
+    public function setIcon(request $request){
+    	$id = $request['id'];
+    	$tarefa = trd::find($id);
+    	return view('backend.modals.settings.icon', compact('tarefa'));
+    }
+
+    public function storeIcon(request $request){
+    	$dados = $request->all();
+    	$image = $dados['icon'];
+    	$tarefa = trd::find($dados['tarefa']);
+		 $exts = array('jpg', 'jpeg', 'png', 'gif', 'jpe', 'jif', 'jfif', 'jfi');
+	        $extension = $image->getClientOriginalExtension();
+	        if(!in_array($extension, $exts)){
+	           $response['msg'] = 'Extensão Invalida';
+			   $response['status'] = 'error';
+			   return $response;
+	        }
+	    $name = $tarefa->id.'default.'.$extension;
+	    $path = 'public/img/icones/';
+	    $request->file('icon')->move($path, $name);
+	 	if(file_exists($path.$name)){
+	 		$toUp = array('icone' => $name);
+	 		$tarefa->update($toUp);
+	 		if($tarefa){
+	 			$response['msg'] = 'Icone Atualizado com Sucesso';
+		    	$response['status'] = 'success';
+		    	$response['img'] =  asset('img/icones/'.$name);
+		    	$response['idt'] = $tarefa->id;
+	 		}
+	 	}else{
+	 	    $response['msg'] = 'Error ao salvar imagem';
+		    $response['status'] = 'error';
+	 	}
+	 	return $response;
+    }
 }

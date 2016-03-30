@@ -11,8 +11,8 @@
             <li class="{!! Active::pattern('/') !!}">
                 <a href="{!! url('/') !!}"><i class="fa fa-dashboard"></i><span> Painel de Controle</span></a>
             </li>
-            <li class="{!! Active::pattern('projetos/') !!}">
-                <a href="{!! url('/') !!}"><i class="fa fa-folder-open-o"></i></i><span> Meus Projetos</span></a>
+            <li class="{!! Active::pattern('projetos') !!}">
+                <a href="{!! url('projetos') !!}"><i class="fa fa-folder-open-o"></i></i><span> Meus Projetos</span></a>
             </li>
             <li class="{!! Active::pattern('relatorios/') !!}">
                 <a href="{!! url('/') !!}"><i class="fa fa-print"></i></i><span> Relatórios</span></a>
