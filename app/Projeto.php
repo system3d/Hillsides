@@ -10,7 +10,7 @@ class Projeto extends Model
 {
     protected $table = 'projetos';
     public $timestamps = true;
-	protected $fillable = ['descricao', 'obs', 'client_id', 'tipo_id', 'status_id', 'user_id', 'locatario_id'];
+	protected $fillable = ['descricao', 'obs', 'favorito', 'cliente_id', 'tipo_id', 'status_id', 'user_id', 'locatario_id'];
 
 	protected static function boot()
     {
@@ -37,6 +37,10 @@ class Projeto extends Model
 
 	public function status() {
 		return $this->belongsTo('App\Status_Projeto');
+	}
+
+	public function statuses() {
+		return $this->hasMany('App\Status_Projeto');
 	}
 
 	public function status_tarefa() {

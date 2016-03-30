@@ -21,9 +21,7 @@
 							<th>Descrição</th>
 							<th>Cliente</th>
 							<th>Status</th>
-							<th>Ações</th>
 					</thead>
-						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>

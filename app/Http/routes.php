@@ -63,6 +63,9 @@ Route::post('settings/setOrder', array('middleware' => 'admin', 'as' => 'setting
 Route::post('settings/gravarStp', array('middleware' => 'admin', 'as' => 'settings/gravarStp', 'uses' => 'SettingsController@gravarStp'));
 Route::post('settings/deleteStp', array('middleware' => 'admin', 'as' => 'settings/deleteStp', 'uses' => 'SettingsController@deleteStp'));
 
+Route::post('settings/gravarSfp', array('middleware' => 'admin', 'as' => 'settings/gravarSfp', 'uses' => 'SettingsController@gravarSfp'));
+Route::post('settings/deleteSfp', array('middleware' => 'admin', 'as' => 'settings/deleteSfp', 'uses' => 'SettingsController@deleteSfp'));
+
 Route::post('settings/gravarTrp', array('middleware' => 'admin', 'as' => 'settings/gravarTrp', 'uses' => 'SettingsController@gravarTrp'));
 Route::post('settings/deleteTrp', array('middleware' => 'admin', 'as' => 'settings/deleteTrp', 'uses' => 'SettingsController@deleteTrp'));
 Route::post('settings/setIcon', array('middleware' => 'admin', 'as' => 'settings/setIcon', 'uses' => 'SettingsController@setIcon'));
@@ -70,3 +73,8 @@ Route::post('settings/storeIcon', array('middleware' => 'admin', 'as' => 'settin
 
 Route::get('projetos', array('middleware' => 'admin', 'as' => 'projetos', 'uses' => 'ProjetosController@index'));
 Route::post('projetos/criar', array('middleware' => 'admin', 'as' => 'projetos/criar', 'uses' => 'ProjetosController@criar'));
+Route::post('projetos/store', array('middleware' => 'admin', 'as' => 'projetos/store', 'uses' => 'ProjetosController@store'));
+Route::post('projetos/getProjetos', array('middleware' => 'admin', 'as' => 'projetos/getProjetos', 'uses' => 'ProjetosController@getProjetos'));
+Route::post('projetos/info', array('middleware' => 'admin', 'as' => 'projetos/info', 'uses' => 'ProjetosController@info'));
+Route::post('projetos/toggleFavorite', array('middleware' => 'admin', 'as' => 'projetos/toggleFavorite', 'uses' => 'ProjetosController@toggleFavorite'));
+Route::post('projetos/editar', array('middleware' => 'admin', 'as' => 'projetos/editar', 'uses' => 'ProjetosController@editar'));

@@ -16,7 +16,7 @@ $(document).ready(function() {
 	    	flashMessage(r.status, r.msg);
 		    if(r.status == 'success'){
 		    	$('#novo-estagio-set').val('');
-		    	$('#estagios-sets-wrap').append('<p id="EsO'+r.id+'">'+r.desc+' <a href="#" data-toggle="tooltip" data-html="true" title="Deletar" class="pull-right delete-estagio text-red"><i class="fa fa-trash"></i></a></p>');
+		    	$('#estagios-sets-wrap').append('<p data-id="'+r.id+'">'+r.desc+' <a href="#" data-toggle="tooltip" data-html="true" title="Deletar" class="pull-right delete-estagio text-red"><i class="fa fa-trash"></i></a></p>');
 		    }
 		  	thisLink.toggleClass('fa-spinner fa-check').removeClass('fa-spin');
 		    });
@@ -72,6 +72,47 @@ $(document).ready(function() {
 		var thisP = $(this).closest('p');
 		$.ajax({
 		    url: urlbaseGeral+"/settings/deleteStp",
+		     type: 'POST',
+		    data: {id:idx},
+		    dataType: 'json',
+	    }).done(function(r) {
+    	 	flashMessage(r.status, r.msg);
+    	 	if(r.status == 'success'){
+    	 		thisP.remove();
+    	 	}
+	    });
+	});
+
+	$(document).on('click', '#new-sfp-side', function(event) {
+		event.preventDefault();
+		var thisLink = $(this).find('i');
+		var value = $('#novo-sfp-set').val();
+		if(value.length > 0){
+			$(this).find('i').toggleClass('fa-check fa-spinner').addClass('fa-spin');
+			$.ajax({
+		    url: urlbaseGeral+"/settings/gravarSfp",
+		    type: 'POST',
+		    data: {value:value},
+		    dataType: 'json',
+		    }).done(function(r) {
+	    	flashMessage(r.status, r.msg);
+		    if(r.status == 'success'){
+		    	$('#novo-sfp-set').val('');
+		    	$('#sfp-sets-wrap').append('<p data-id="'+r.id+'">'+r.desc+' <a href="#" data-toggle="tooltip" data-html="true" title="Deletar" class="pull-right delete-sfp text-red"><i class="fa fa-trash"></i></a></p>');
+		    }
+		  	thisLink.toggleClass('fa-spinner fa-check').removeClass('fa-spin');
+		    });
+		}else{
+			flashMessage('error', 'Nenhum Valor Informado');
+		}
+	});
+
+	$(document).on('click', '.delete-sfp', function(event) {
+		event.preventDefault();
+		var idx = $(this).closest('p').attr('data-id');
+		var thisP = $(this).closest('p');
+		$.ajax({
+		    url: urlbaseGeral+"/settings/deleteSfp",
 		     type: 'POST',
 		    data: {id:idx},
 		    dataType: 'json',

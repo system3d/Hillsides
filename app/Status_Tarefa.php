@@ -7,7 +7,7 @@ use App\LocatarioScope;
 
 class Status_Tarefa extends Model
 {
-    protected $table = 'status_projeto';
+    protected $table = 'status_tarefa';
     public $timestamps = true;
 	protected $fillable = ['descricao', 'projeto_id', 'user_id', 'locatario_id'];
 

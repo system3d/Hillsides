@@ -89,6 +89,8 @@ class CreateSystemTables extends Migration
         Schema::create('status_projeto', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descricao', 255)->nullable();
+            $table->integer('projeto_id')->unsigned();
+            $table->foreign('projeto_id')->references('id')->on('projetos')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('locatario_id')->unsigned();
@@ -109,21 +111,18 @@ class CreateSystemTables extends Migration
         Schema::create('tipos_projeto', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descricao', 255)->nullable();
-            $table->integer('locatario_id')->unsigned();
-            $table->foreign('locatario_id')->references('id')->on('locatarios')->onDelete('cascade');
-
-            $table->timestamps();
         });
 
         Schema::create('projetos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descricao', 255)->nullable();
             $table->mediumText('obs')->nullable();
-            $table->integer('cliente_id')->unsigned();
+            $table->integer('favorito')->default(0)
+            $table->integer('cliente_id')->nullable();
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
-            $table->integer('tipo_id')->unsigned();
+            $table->integer('tipo_id')->nullable();
             $table->foreign('tipo_id')->references('id')->on('tipos_projeto')->onDelete('cascade');
-            $table->integer('status_id')->unsigned();
+            $table->integer('status_id')->nullable();
             $table->foreign('status_id')->references('id')->on('status_projeto')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -451,9 +450,6 @@ class CreateSystemTables extends Migration
             $table->dropForeign('projetos_locatario_id_foreign');
         });
         Schema::drop('projetos');
-        Schema::table('tipos_projeto', function (Blueprint $table) {
-            $table->dropForeign('projetos_locatario_id_foreign');
-        });
         Schema::drop('tipos_projeto');
         Schema::table('status_projeto', function (Blueprint $table) {
             $table->dropForeign('status_projeto_user_id_foreign');
@@ -461,6 +457,7 @@ class CreateSystemTables extends Migration
         });
         Schema::drop('status_projeto');
         Schema::table('status_projeto_default', function (Blueprint $table) {
+            $table->dropForeign('status_projeto_default_projeto_id_foreign');
             $table->dropForeign('status_projeto_default_locatario_id_foreign');
         });
         Schema::drop('status_projeto_default');

@@ -1,5 +1,10 @@
 $(document).ready(function() {
 
+  $( document ).ajaxError(function() {
+    flashMessage('error', 'Erro na resposta do servidor');
+    $('#modal_loader').addClass('hidden');
+  });
+
   $('.fa-sidebar').click(function(event) { 
     $(this).toggleClass('fa-plus-square fa-minus-square');
   });
@@ -14,6 +19,10 @@ $(document).ready(function() {
 
    $('#fa-trp-sidebar').click(function(event) {
     $('#set-trp-side').toggleClass('hidden');
+  });
+
+   $('#fa-sfp-sidebar').click(function(event) {
+    $('#set-sfp-side').toggleClass('hidden');
   });
 
     $(".cep").mask("99.999-999");

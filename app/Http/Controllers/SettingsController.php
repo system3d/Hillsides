@@ -8,6 +8,7 @@ use App\Http\Requests;
 
 use App\Estagio_Default as esdef;
 use App\Status_Projeto_Default as spd;
+use App\Status_Tarefa_Default as sfd;
 use App\Tipo_Tarefa_Default as trd;
 
 class SettingsController extends Controller
@@ -82,6 +83,45 @@ class SettingsController extends Controller
     	$dados = $request->all();
     	$id = $dados['id'];
     	$new = spd::find($id)->delete();
+    	if($new){
+			$response['status'] = 'success';
+			$response['msg'] = 'Status Deletado com Sucesso';
+		}else{
+			$response['msg'] = 'Erro ao Deletar Status';
+			$response['status'] = 'error';
+		}
+		return $response;
+    }
+
+    public function gravarSfp(request $request){
+     	$value = ucfirst($request['value']);
+    	$data = array(
+    		'descricao'    => $value,
+    		'locatario_id' => access()->user()->locatario_id
+		);
+		$check = sfd::where('descricao', $value)->first();
+		if(!empty($check->id)){
+			$response['msg'] = 'Este nome ja esta sendo usado';
+			$response['status'] = 'error';
+			return $response;
+		}
+		$new = sfd::create($data);
+		if($new){
+			$response['status'] = 'success';
+			$response['msg'] = 'Status Adicionado com Sucesso';
+			$response['id']  = $new->id;
+			$response['desc'] = $new->descricao;
+		}else{
+			$response['msg'] = 'Erro ao Adicionar Status';
+			$response['status'] = 'error';
+		}
+		return $response;
+     }
+
+     public function deleteSfp(request $request){
+    	$dados = $request->all();
+    	$id = $dados['id'];
+    	$new = sfd::find($id)->delete();
     	if($new){
 			$response['status'] = 'success';
 			$response['msg'] = 'Status Deletado com Sucesso';

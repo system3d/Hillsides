@@ -548,6 +548,21 @@ div.dataTables_wrapper div.dataTables_processing {
     margin-left: 30px;
 }
 
+.proj-row:hover{
+    cursor: pointer;
+}
+
+.btn-default-purple{
+    background: #fff;
+    color: #605ca8;
+    border: 1px solid #605ca8;
+}
+
+.btn-default-purple:hover{
+    color: #605ca8;
+    background: #E9E9E9;
+}
+
 textarea {
     resize: vertical;
 }

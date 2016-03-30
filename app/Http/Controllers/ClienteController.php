@@ -10,6 +10,7 @@ use App\Projeto as projeto;
 use App\Equipe as equipe;
 use App\Models\Access\User\User as user;
 
+
 class ClienteController extends Controller
 {
 
@@ -36,11 +37,6 @@ class ClienteController extends Controller
     		$new = cliente::create($check);
     		if(isset($new->id)) return '%success&Cliente Cadastrado com Sucesso&C';
     		else return '%error&Erro ao Cadastrar Cliente';
-    		break;
-    	case 'projetos':
-    		$new = projeto::create($check);
-    		if(isset($new->id)) return('%success&Projeto Cadastrado com Sucesso');
-    		else return('%error&Erro ao Cadastrar Projeto');
     		break;
     	
       case 'equipes':

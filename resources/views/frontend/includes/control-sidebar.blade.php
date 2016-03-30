@@ -115,6 +115,8 @@
           <div class="tab-pane" id="control-sidebar-settings-tab">
             <form method="post">
               <h3 class="control-sidebar-heading">Configurações Gerais</h3>
+              <small>Configurações a serem aplicadas na criação do projeto.</small>
+              <br> <br>
               <div class="form-group">
                 <label class="control-sidebar-subheading">
                   Estágios
@@ -135,7 +137,7 @@
                   <p>Backlog <a href='#' class="pull-right text-muted" data-toggle="tooltip" data-html="true" title='Sistema'><i class="fa fa-trash"></i></a></p>
                   <div id="estagios-sets-wrap">
                     @foreach(access()->user()->locatario->estagios_default->sortBy('ordem') as $estag)
-                      <p id='EsO{{$estag->id}}'>{{$estag->descricao}} <a href="#" data-toggle="tooltip" data-html="true" title='Deletar' class="pull-right delete-estagio text-red"><i class="fa fa-trash"></i></a></p>
+                      <p data-id='{{$estag->id}}'>{{$estag->descricao}} <a href="#" data-toggle="tooltip" data-html="true" title='Deletar' class="pull-right delete-estagio text-red"><i class="fa fa-trash"></i></a></p>
                     @endforeach
                   </div>
                   <p>Arquivado <a href="#" class="pull-right text-muted" data-toggle="tooltip" data-html="true" title='Sistema'><i class="fa fa-trash"></i></a></p>
@@ -159,9 +161,36 @@
                      </div>
                   </div>
                   <br>
+                  <p>Ativo <a href='#' class="pull-right text-muted" data-toggle="tooltip" data-html="true" title='Sistema'><i class="fa fa-trash"></i></a></p>
                   <div id="stp-sets-wrap">
                     @foreach(access()->user()->locatario->status_projeto_default as $stp)
                       <p data-id='{{$stp->id}}'>{{$stp->descricao}} <a href="#" data-toggle="tooltip" data-html="true" title='Deletar' class="pull-right delete-stp text-red"><i class="fa fa-trash"></i></a></p>
+                    @endforeach
+                  </div>
+                </div>
+              </div><!-- /.form-group -->
+
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Status de Tarefas
+                  <i class="fa fa-plus-square pull-right fa-sidebar" id='fa-sfp-sidebar'></i>
+                </label>
+
+               <div class='settings-content hidden' id='set-sfp-side'>
+                  <small>Nova:</small> <br>
+                  <div class="row">
+                    <div class="col-xs-8">
+                      <input type="text" id='novo-sfp-set' class='form-control input-sm'>
+                      </div>
+                      <div class="col-xs-4">
+                        <a href="#" class="btn btn-xs btn-success pull-left" id='new-sfp-side'><i class="fa fa-check"></i></a>
+                     </div>
+                  </div>
+                  <br>
+                  <p>Aberta <a href='#' class="pull-right text-muted" data-toggle="tooltip" data-html="true" title='Sistema'><i class="fa fa-trash"></i></a></p>
+                  <div id="sfp-sets-wrap">
+                    @foreach(access()->user()->locatario->status_tarefa_default as $sfp)
+                      <p data-id='{{$sfp->id}}'>{{$sfp->descricao}} <a href="#" data-toggle="tooltip" data-html="true" title='Deletar' class="pull-right delete-sfp text-red"><i class="fa fa-trash"></i></a></p>
                     @endforeach
                   </div>
                 </div>
@@ -184,6 +213,12 @@
                      </div>
                   </div>
                   <br>
+                  <p>Sem Classificação
+                        <span class="pull-right">
+                          <img class='img-circle img-icon' src="{{ asset('img/icones/default.png') }}">
+                        <a href="#" data-toggle="tooltip" data-html="true" title='Sistema' class="text-muted"><i class="fa fa-trash"></i></a>
+                        </span>
+                      </p>
                   <div id="trp-sets-wrap">
                     @foreach(access()->user()->locatario->tipo_tarefa_default as $trp)
                       <p data-id='{{$trp->id}}'>{{$trp->descricao}} 
@@ -198,7 +233,7 @@
                   </div>
                 </div>
               </div><!-- /.form-group -->
-
+              
               
 
               <h3 class="control-sidebar-heading">Chat Settings</h3>
