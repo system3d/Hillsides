@@ -249,4 +249,10 @@ class ProjetosController extends Controller
     $response['id'] = $eid;
     return $response;
   }
+
+  public function sprints(request $request){
+    $id = $request['id'];
+    $projeto = proj::find($id);
+     return view('backend.modals.projetos.sprints', compact('projeto'));
+  }
 }

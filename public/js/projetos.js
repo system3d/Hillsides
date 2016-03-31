@@ -260,4 +260,26 @@
       });
  	  });
 
+
+
+
+  $(document).on('click', '.projeto-sprints', function(event) {
+    event.preventDefault();
+     var id = $(this).attr('data-id');
+      $.ajax({
+        url: urlbaseGeral+"/projetos/sprints",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response);
+         $('#sprintsTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+      });
+  });
+
  });
+

@@ -573,6 +573,14 @@ div.dataTables_wrapper div.dataTables_processing {
     padding-bottom: 0;
 }
 
+.empty-row{
+    background: #f4f4f4;
+}
+
+.empty-row:hover{
+    background: whitesmoke;
+}
+
 textarea {
     resize: vertical;
 }

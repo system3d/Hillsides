@@ -80,6 +80,9 @@ Route::post('projetos/info', array('middleware' => 'admin', 'as' => 'projetos/in
 Route::post('projetos/toggleFavorite', array('middleware' => 'admin', 'as' => 'projetos/toggleFavorite', 'uses' => 'ProjetosController@toggleFavorite'));
 Route::post('projetos/editar', array('middleware' => 'admin', 'as' => 'projetos/editar', 'uses' => 'ProjetosController@editar'));
 Route::post('projetos/update', array('middleware' => 'admin', 'as' => 'projetos/update', 'uses' => 'ProjetosController@update'));
+
 Route::post('projetos/equipes', array('middleware' => 'admin', 'as' => 'projetos/equipes', 'uses' => 'ProjetosController@equipes'));
 Route::post('projetos/novaEquipe', array('middleware' => 'admin', 'as' => 'projetos/novaEquipe', 'uses' => 'ProjetosController@novaEquipe'));
 Route::post('projetos/removerEquipe', array('middleware' => 'admin', 'as' => 'projetos/removerEquipe', 'uses' => 'ProjetosController@removerEquipe'));
+
+Route::post('projetos/sprints', array('middleware' => 'admin', 'as' => 'projetos/sprints', 'uses' => 'ProjetosController@sprints'));
