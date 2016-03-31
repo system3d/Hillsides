@@ -118,9 +118,9 @@
               <small>Configurações a serem aplicadas na criação do projeto.</small>
               <br> <br>
               <div class="form-group">
-                <label class="control-sidebar-subheading">
+                <label class="control-sidebar-subheading fa-side-drop" id='fa-estagios-sidebar'>
                   Estágios
-                  <i class="fa fa-plus-square pull-right fa-sidebar" id='fa-estagios-sidebar'></i>
+                  <i class="fa fa-plus-square pull-right fa-sidebar"></i>
                 </label>
 
                 <div class='settings-content hidden' id='set-est-side'>
@@ -145,9 +145,9 @@
               </div><!-- /.form-group -->
 
               <div class="form-group">
-                <label class="control-sidebar-subheading">
+                <label class="control-sidebar-subheading fa-side-drop" id='fa-stp-sidebar'>
                   Status de Projeto
-                  <i class="fa fa-plus-square pull-right fa-sidebar" id='fa-stp-sidebar'></i>
+                  <i class="fa fa-plus-square pull-right fa-sidebar"></i>
                 </label>
 
                <div class='settings-content hidden' id='set-stp-side'>
@@ -171,9 +171,9 @@
               </div><!-- /.form-group -->
 
               <div class="form-group">
-                <label class="control-sidebar-subheading">
+                <label class="control-sidebar-subheading fa-side-drop" id='fa-sfp-sidebar'>
                   Status de Tarefas
-                  <i class="fa fa-plus-square pull-right fa-sidebar" id='fa-sfp-sidebar'></i>
+                  <i class="fa fa-plus-square pull-right fa-sidebar"></i>
                 </label>
 
                <div class='settings-content hidden' id='set-sfp-side'>
@@ -197,9 +197,9 @@
               </div><!-- /.form-group -->
 
               <div class="form-group">
-                <label class="control-sidebar-subheading">
+                <label class="control-sidebar-subheading fa-side-drop" id='fa-trp-sidebar'>
                   Tipos de Tarefas
-                  <i class="fa fa-plus-square pull-right fa-sidebar" id='fa-trp-sidebar'></i>
+                  <i class="fa fa-plus-square pull-right fa-sidebar"></i>
                 </label>
 
                 <div class='settings-content hidden' id='set-trp-side'>

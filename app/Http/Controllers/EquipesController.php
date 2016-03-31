@@ -45,6 +45,13 @@ class EquipesController extends Controller
   	return view('backend.modals.equipes.info', compact('equipe', 'membros'));
   }
 
+  public function infoSmall(Request $request){
+    $id = str_replace('EID', '', $request['id']);
+    $equipe = equipe::find($id);
+
+    return view('backend.modals.equipes.info-small', compact('equipe'));
+  }
+
   public function criar(){
       return view('backend.modals.equipes.criar');
    }
@@ -96,8 +103,10 @@ class EquipesController extends Controller
     $user = user::find($id);
     if(isset($user) && isset($equipe))
       $equipe->users()->attach($user);
-    else
-      return '%error&Erro ao Atualizar Equipe';
+    else{
+      $response['msg'] = '%error&Erro ao Atualizar Equipe';
+      return $response;
+    }
 
     $response['msg'] = '%success&Equipe Atualizada com Sucesso';
     $response['id'] = 'EID'.$eid;

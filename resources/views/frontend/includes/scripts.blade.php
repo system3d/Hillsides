@@ -1,7 +1,7 @@
    <script type="text/javascript">
         var urlbaseGeral = {!! json_encode(url('/')) !!};
-        var modal_history = false;
-        var modal_width = '60%';
+        var modal_history = [false];
+        var modal_width = ['60%'];
     </script>
 
     <script type="text/javascript"> var app_env = '{!! env('APP_ENV') !!}' </script>
@@ -16,7 +16,7 @@
     {!! Html::script('plugins/toasts/src/jquery.toast.js') !!}
     <!-- Messages -->
     {!! Html::script('js/messages.js') !!}
-    {!! Html::script('js/modals.js') !!}
+    
     <!-- Jquery UI -->
     {!! Html::script('plugins/jQueryUI/jquery-ui.js') !!}
     <!-- Bootstrap 3.3.5 -->
@@ -72,3 +72,4 @@
     {!! Html::script('js/tables.js') !!}
      {!! Html::script('js/settings.js') !!}
     {!! Html::script('js/script.js') !!}
+    {!! Html::script('js/modals.js') !!}

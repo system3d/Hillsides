@@ -13,7 +13,7 @@
 
      <div class="form-group">
          <label class="control-label">Cliente:</label>
-        <p class="form-static">{{$projeto->cliente->razao}}</p>
+        <p class="form-static"><a href="#" data-id='{{$projeto->cliente_id}}' id="cliente-proj-info">{{$projeto->cliente->razao}}</a></p>
      </div>
 
 		<div class="form-group">
@@ -47,7 +47,7 @@
             <button class="btn {{$fav}} projeto-favorite" data-toggle="tooltip" data-html="true" title='{{$favT}}' data-id="{{$projeto->id}}"><i class="fa fa-star"></i></button>
             <button type="button" class="btn btn-success kanbam-projeto" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Kanbam do Projeto'><i class="fa fa-th-large"></i></button>
             <button type="button" class="btn btn-primary info-edit-projeto" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Editar'><i class="fa fa-pencil"></i></button>
-            <button class="btn btn-google projeto-equipes" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Equipes do Projeto'><i class="fa fa-users" ></i></button>
+            <button class="btn bg-orange projeto-equipes" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Equipes do Projeto'><i class="fa fa-users" ></i></button>
             <button class="btn btn-info projeto-sprints" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Sprints'><i class="fa fa-refresh" ></i></button>
             <button class="btn bg-maroon projeto-historias" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Historias'><i class="fa fa-book"></i></button>
             <button class="btn bg-olive projeto-disciplinas" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Disciplinas'><i class="fa fa-bookmark"></i></i></button>
@@ -66,7 +66,7 @@
                   <li><a href="#">Tipos de Tarefas</a></li>
                 </ul>
             </span>
-            <button data-dismiss="modal" aria-hidden="true" class="btn bg-orange pull-right" data-toggle="tooltip" data-html="true" title='Fechar Janela'><i class="fa fa-times"></i></button>
+            <button data-dismiss="modal" aria-hidden="true" class="btn btn-google pull-right" data-toggle="tooltip" data-html="true" title='Fechar Janela'><i class="fa fa-times"></i></button>
             
             <input type="hidden" id="PD{{$projeto->id}}">
         </div>

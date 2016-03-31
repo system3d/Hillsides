@@ -26,7 +26,7 @@
                 </div>
                 <br><br>
                 <div class="form-group">
-                  <button type="submit" class="btn btn-primary">Gravar</button> <button data-dismiss="modal" aria-hidden="true" class="btn btn-danger">Cancelar</button>
+                  <button type="submit" class="btn btn-primary">Gravar</button> <a href='#' id='voltar_modal' class="btn btn-danger">Cancelar</a>
               </div>
        		</div>
        	</div> 

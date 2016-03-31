@@ -563,6 +563,16 @@ div.dataTables_wrapper div.dataTables_processing {
     background: #E9E9E9;
 }
 
+.fa-side-drop:hover{
+    color: #C3C3C3 !important;
+    cursor: pointer;
+}
+
+#modal .panel-body{
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
+
 textarea {
     resize: vertical;
 }

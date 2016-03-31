@@ -67,6 +67,10 @@ class Projeto extends Model
 		return $this->hasMany('App\Etapa');
 	}
 
+	public function equipes() {
+		return $this->belongsToMany('App\Equipe', 'projeto_equipe');
+	}
+
 	public function historias(){
         return $this->hasManyThrough('App\Historia', 'App\Sprint');
     }

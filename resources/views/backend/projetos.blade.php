@@ -33,6 +33,8 @@
 
 @section('scripts')
 
+{!! Html::script('js/equipes.js') !!}
+{!! Html::script('js/clientes.js') !!}
 {!! Html::script('js/projetos.js') !!}
 
 @endsection

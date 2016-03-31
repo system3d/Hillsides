@@ -5,24 +5,24 @@ $(document).ready(function() {
     $('#modal_loader').addClass('hidden');
   });
 
-  $('.fa-sidebar').click(function(event) { 
-    $(this).toggleClass('fa-plus-square fa-minus-square');
-  });
-
   $('#fa-estagios-sidebar').click(function(event) {
     $('#set-est-side').toggleClass('hidden');
+    $(this).find('.fa-sidebar').toggleClass('fa-plus-square fa-minus-square');
   });
 
    $('#fa-stp-sidebar').click(function(event) {
     $('#set-stp-side').toggleClass('hidden');
+    $(this).find('.fa-sidebar').toggleClass('fa-plus-square fa-minus-square');
   });
 
    $('#fa-trp-sidebar').click(function(event) {
     $('#set-trp-side').toggleClass('hidden');
+    $(this).find('.fa-sidebar').toggleClass('fa-plus-square fa-minus-square');
   });
 
    $('#fa-sfp-sidebar').click(function(event) {
     $('#set-sfp-side').toggleClass('hidden');
+    $(this).find('.fa-sidebar').toggleClass('fa-plus-square fa-minus-square');
   });
 
     $(".cep").mask("99.999-999");
@@ -53,6 +53,14 @@ $(document).ready(function() {
     });
 
 });
+
+Array.prototype.last = function() {
+    return this[this.length-1];
+}
+
+Array.prototype.befLast = function() {
+    return this[this.length-2];
+}
 
 $.fn.serializeAndEncode = function() {
       return $.map(this.serializeArray(), function(val) {

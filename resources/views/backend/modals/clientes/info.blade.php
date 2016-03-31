@@ -36,7 +36,7 @@
 		@endif         
        <br/><br/>
 		<div class="form-group">
-                <button type="button" class="btn btn-primary info-edit-cliente" id="CDI{{$cliente->id}}">Editar</button> <button class="btn btn-danger cliente-delete" id="DCI{{$cliente->id}}">Excluir</button> <button data-dismiss="modal" aria-hidden="true" class="btn btn-warning">Cancelar</button>
+                <button type="button" class="btn btn-primary info-edit-cliente" id="CDI{{$cliente->id}}">Editar</button> <button class="btn btn-danger cliente-delete" id="DCI{{$cliente->id}}">Excluir</button> <a href='#' id='voltar_modal' class="btn btn-warning">Cancelar</a>
                 <input type="hidden" id="CX{{$cliente->id}}">
             </div>
 		</div>

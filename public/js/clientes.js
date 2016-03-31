@@ -46,8 +46,6 @@
 		  })
 		  .done(function(response) {
 		  	drawModal(response);
-		  	modal_history = response;
-		  	modal_width = '60%';
 		  });
  	});
 

@@ -49,6 +49,7 @@ Route::post('cadastro/clienteDelete', array('middleware' => 'admin', 'as' => 'ca
 Route::get('equipes', array('middleware' => 'admin', 'as' => 'equipes', 'uses' => 'EquipesController@index'));
 Route::get('equipes/getEquipes', array('middleware' => 'admin', 'as' => 'equipes/getEquipes', 'uses' => 'EquipesController@getEquipes'));
 Route::post('equipes/info', array('middleware' => 'admin', 'as' => 'cadastro/equipes/info', 'uses' => 'EquipesController@info'));
+Route::post('equipes/infoSmall', array('middleware' => 'admin', 'as' => 'equipes/infoSmall', 'uses' => 'EquipesController@infoSmall'));
 Route::post('equipes/criar', array('middleware' => 'admin', 'as' => 'equipes/criar', 'uses' => 'EquipesController@criar'));
 Route::post('equipes/editar', array('middleware' => 'admin', 'as' => 'equipes/editar', 'uses' => 'EquipesController@editar'));
 Route::post('equipes/update', array('middleware' => 'admin', 'as' => 'equipes/update', 'uses' => 'EquipesController@update'));
@@ -78,3 +79,7 @@ Route::post('projetos/getProjetos', array('middleware' => 'admin', 'as' => 'proj
 Route::post('projetos/info', array('middleware' => 'admin', 'as' => 'projetos/info', 'uses' => 'ProjetosController@info'));
 Route::post('projetos/toggleFavorite', array('middleware' => 'admin', 'as' => 'projetos/toggleFavorite', 'uses' => 'ProjetosController@toggleFavorite'));
 Route::post('projetos/editar', array('middleware' => 'admin', 'as' => 'projetos/editar', 'uses' => 'ProjetosController@editar'));
+Route::post('projetos/update', array('middleware' => 'admin', 'as' => 'projetos/update', 'uses' => 'ProjetosController@update'));
+Route::post('projetos/equipes', array('middleware' => 'admin', 'as' => 'projetos/equipes', 'uses' => 'ProjetosController@equipes'));
+Route::post('projetos/novaEquipe', array('middleware' => 'admin', 'as' => 'projetos/novaEquipe', 'uses' => 'ProjetosController@novaEquipe'));
+Route::post('projetos/removerEquipe', array('middleware' => 'admin', 'as' => 'projetos/removerEquipe', 'uses' => 'ProjetosController@removerEquipe'));

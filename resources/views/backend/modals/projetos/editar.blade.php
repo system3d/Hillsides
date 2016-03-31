@@ -4,7 +4,7 @@
        <h4>Editar Projeto</h4>
    </div>
    <div class="panel-body">
-       <form id="equipe_atualizar" data-parsley-validate="">
+       <form id="projeto_atualizar" data-parsley-validate="">
        	<div class="row">
        		<div class="col-md-12">
        			<div class="form-group">

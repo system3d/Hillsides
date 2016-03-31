@@ -15,6 +15,7 @@ use App\Estagio as es;
 use App\Status_Projeto as sp;
 use App\Status_Tarefa as sf;
 use App\Tipo_Tarefa as tr;
+use App\Equipe as equipe;
 
 class ProjetosController extends Controller
 {
@@ -174,4 +175,78 @@ class ProjetosController extends Controller
    	 $tipos = tproj::all();
    	 return view('backend.modals.projetos.editar', compact('projeto', 'tipos'));
    }
+
+   public function update(Request $request){
+    $Alldados = $request->all();
+    $dadosBefore = urldecode($Alldados['dados']);
+    $dados = explode('&', $dadosBefore);
+    foreach($dados as $dado){
+        $check2 = explode('=',$dado);
+        if($check2[1] != ''){
+          $check[$check2[0]] = $check2[1];
+        }
+    } 
+    $id = $check['id'];
+    unset($check['id']);
+    $new = proj::find($id)->update($check);
+    if(!isset($new)){
+      $response['msg'] = 'Erro ao Atualizar Projeto';
+      $response['status'] = 'error';
+    }else{
+      $response['msg'] = 'Projeto Atualizado com Sucesso';
+      $response['status'] = 'success';
+    }
+    
+     return $response;
+  }
+
+  public function equipes(request $request){
+     $id = $request['id'];
+     $projeto = proj::find($id);
+     $equipes = equipe::all();
+     if($projeto->equipes){
+       foreach($equipes as $key => $equipe){
+          if($projeto->equipes->contains($equipe)){
+            $equipes->forget($key);
+          }
+       }
+     }
+     return view('backend.modals.projetos.equipes', compact('projeto', 'equipes'));
+   }
+
+   public function novaEquipe(request $request){
+    $id = $request['id'];
+    $pid = $request['proj_id'];
+    $projeto = proj::find($pid);
+    $equipe = equipe::find($id);
+    if(isset($equipe) && isset($projeto))
+      $projeto->equipes()->attach($equipe);
+    else{
+      $response['msg'] = '%error&Erro ao Adicionar Equipe';
+      return $response;
+    }
+      
+
+    $response['msg'] = '%success&Equipe Adicionada com Sucesso';
+    $response['id'] =  $pid;
+    return $response;
+   }
+
+   public function removerEquipe(Request $request){
+    $dados = $request->all();
+    $id = $dados['id'];
+    $eid = $dados['proj_id'];
+    $equipe = equipe::find($id);
+    $projeto = proj::find($eid);
+    if(isset($projeto) && isset($equipe))
+      $projeto->equipes()->detach($equipe);
+    else{
+       $response['msg'] = '%error&Erro ao Remover Equipe';
+       return $response;
+     }
+
+    $response['msg'] = '%success&Equipe Atualizada com Sucesso';
+    $response['id'] = $eid;
+    return $response;
+  }
 }

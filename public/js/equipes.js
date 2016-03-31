@@ -28,8 +28,6 @@
 		  })
 		  .done(function(response) {
 		  	drawModal(response, '40%');
-            modal_history = response;
-            modal_width = '40%';
 		  });
  	});
 
@@ -134,8 +132,6 @@
           })
           .done(function(response) {
             drawModal(response, '40%');
-            modal_history = response;
-            modal_width = '40%';
             $('#equipesTable').DataTable().ajax.reload();
           });
       });
@@ -167,8 +163,6 @@
           })
           .done(function(response) {
             drawModal(response, '40%');
-            modal_history = response;
-            modal_width = '40%';
             $('#equipesTable').DataTable().ajax.reload();
           });
       });
