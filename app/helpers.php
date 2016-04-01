@@ -1,5 +1,27 @@
 <?php
 
+if (! function_exists('check_permission')) {
+    /**
+     * Helper to grab the application name
+     *
+     * @return mixed
+     */
+    function check_permission($permission, $handle = 'modal')
+    {
+        if(!access()->user()->allow($permission)){
+            if($handle == 'msg'){
+
+            }elseif($handle == 'msga'){
+
+            }elseif($handle == 'return'){
+
+            }elseif($handle == 'modal'){
+                
+            }
+        }
+    }
+}
+
 /**
  * Global helpers file with misc functions
  *

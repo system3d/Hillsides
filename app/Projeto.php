@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use App\LocatarioScope;
 use App\Tarefa;
+use App\Historia;
 
 class Projeto extends Model
 {
@@ -72,7 +73,13 @@ class Projeto extends Model
 	}
 
 	public function historias(){
-        return $this->hasManyThrough('App\Historia', 'App\Sprint');
+       $id = $this->id;
+       $historias = Historia::all();
+       $historias = $historias->filter(function ($item) use ($id) {
+			return ($item->sprint->projeto_id == $id);
+		});
+       
+	return $historias;
     }
 
     public function tarefas(){

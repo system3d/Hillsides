@@ -4,6 +4,7 @@ $(document).ready(function() {
     flashMessage('error', 'Erro na resposta do servidor');
     $('#modal_loader').addClass('hidden');
   });
+  
 
   $('#fa-estagios-sidebar').click(function(event) {
     $('#set-est-side').toggleClass('hidden');

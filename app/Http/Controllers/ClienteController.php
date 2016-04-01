@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Cliente as cliente;
 use App\Projeto as projeto;
 use App\Equipe as equipe;
+use App\Sprint as sprint;
 use App\Models\Access\User\User as user;
 
 
@@ -45,6 +46,11 @@ class ClienteController extends Controller
         $new->users()->attach($resp);
           if(isset($new->id)) return('%success&Equipe Cadastrada com Sucesso&E&'.$new->id);
           else return('%error&Erro ao Cadastrar Equipe');
+        break;
+      case 'sprints':
+        $new = sprint::create($check);
+          if(isset($new->id)) return('%success&Sprint Cadastrado com Sucesso&S&'.$new->projeto_id);
+          else return('%error&Erro ao Cadastrar Sprint');
         break;
     	default:
     		return('%error&Erro ao Armazenar dados');

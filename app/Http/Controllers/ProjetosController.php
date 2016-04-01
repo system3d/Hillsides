@@ -16,6 +16,7 @@ use App\Status_Projeto as sp;
 use App\Status_Tarefa as sf;
 use App\Tipo_Tarefa as tr;
 use App\Equipe as equipe;
+use App\Sprint as sprint;
 
 class ProjetosController extends Controller
 {
@@ -148,7 +149,8 @@ class ProjetosController extends Controller
 			'nome'     => '<a href="#" class="projeto-info" data-id="'.$projeto->id.'">'.$projeto->descricao.'</a>',
 			'desc'     => $projeto->obs,
 			'cliente'  => $projeto->cliente->razao,
-			'status'   => $projeto->status->descricao
+			'status'   => $projeto->status->descricao,
+      'criado'   => date('d/m/Y', strtotime($projeto->created_at))
 		);
 	}
 	$total = empty($projetos) ? 0 : $projetos->count();
@@ -255,4 +257,80 @@ class ProjetosController extends Controller
     $projeto = proj::find($id);
      return view('backend.modals.projetos.sprints', compact('projeto'));
   }
+
+  public function criarSprint(request $request){
+    $id = $request['id'];
+    $projeto = proj::find($id);
+    return view('backend.modals.projetos.criar-sprint', compact('projeto'));
+  }
+
+  public function editarSprint(request $request){
+    $id = $request['id'];
+    $sprint = sprint::find($id);
+    return view('backend.modals.projetos.editar-sprint', compact('sprint'));
+  }
+
+  public function updateSprint(request $request){
+    $Alldados = $request->all();
+    $dadosBefore = urldecode($Alldados['dados']);
+    $dados = explode('&', $dadosBefore);
+    foreach($dados as $dado){
+        $check2 = explode('=',$dado);
+        if($check2[1] != ''){
+          $check[$check2[0]] = $check2[1];
+        }
+    } 
+    $id = $check['id'];
+    unset($check['id']);
+    $sprint = sprint::find($id);
+    $new = $sprint->update($check);
+    if(!isset($new)){
+      $response['msg'] = 'Erro ao Atualizar Sprint';
+      $response['status'] = 'error';
+    }else{
+      $response['msg'] = 'Projeto Atualizado com Sucesso';
+      $response['status'] = 'success';
+       $response['id'] = $sprint->projeto_id;
+    }
+    
+     return $response;
+  }
+
+  public function excluirSprint(Request $request){
+    $id = $request['id'];
+    $new = sprint::find($id);
+    $proj_id = $new->projeto_id;
+    $new->delete();
+    $response['msg'] = 'Sprint Excluido com Sucesso';
+    $response['status'] = 'success';
+    $response['id'] = $proj_id;
+    return $response;
+  }
+
+  public function historias(request $request){
+    $id = $request['id'];
+    $tipo = $request['tipo'];
+    if($tipo == 'sprint'){
+      $obj = sprint::find($id);
+      $historias = $obj->historias;
+    }
+    else{
+      $obj = proj::find($id);
+      $historias = $obj->historias();
+    }
+    return view('backend.modals.projetos.historias', compact('obj','tipo','historias'));
+  }
+
+  public function criarHistoria(request $request){
+    $id = $request['id'];
+    $tipo = $request['tipo'];
+    if($tipo == 'sprint'){
+      $obj = sprint::find($id);
+    }
+    else{
+      $obj = proj::find($id);
+    }
+    return view('backend.modals.projetos.historias', compact('obj','tipo'));
+  }
+
 }

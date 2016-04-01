@@ -20,8 +20,10 @@
 							<th>Nome</th>
 							<th>Descrição</th>
 							<th>Cliente</th>
+							<th>Criado</th>
 							<th>Status</th>
 					</thead>
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>

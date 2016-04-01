@@ -49,7 +49,7 @@
             <button type="button" class="btn btn-primary info-edit-projeto" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Editar'><i class="fa fa-pencil"></i></button>
             <button class="btn bg-orange projeto-equipes" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Equipes do Projeto'><i class="fa fa-users" ></i></button>
             <button class="btn btn-info projeto-sprints" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Sprints'><i class="fa fa-refresh" ></i></button>
-            <button class="btn bg-maroon projeto-historias" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Historias'><i class="fa fa-book"></i></button>
+            <button class="btn bg-maroon projeto-historias" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Historias' id='hist-proj'><i class="fa fa-book"></i></button>
             <button class="btn bg-olive projeto-disciplinas" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Disciplinas'><i class="fa fa-bookmark"></i></i></button>
             <button class="btn btn-github projeto-etapas" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Etapas'><i class="fa fa-map-signs"></i></button>
             <button class="btn btn-danger projeto-delete" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Excluir'><i class="fa fa-trash"></i></button>

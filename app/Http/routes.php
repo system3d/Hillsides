@@ -86,3 +86,8 @@ Route::post('projetos/novaEquipe', array('middleware' => 'admin', 'as' => 'proje
 Route::post('projetos/removerEquipe', array('middleware' => 'admin', 'as' => 'projetos/removerEquipe', 'uses' => 'ProjetosController@removerEquipe'));
 
 Route::post('projetos/sprints', array('middleware' => 'admin', 'as' => 'projetos/sprints', 'uses' => 'ProjetosController@sprints'));
+Route::post('projetos/criarSprint', array('middleware' => 'admin', 'as' => 'projetos/criarSprint', 'uses' => 'ProjetosController@criarSprint'));
+Route::post('projetos/editarSprint', array('middleware' => 'admin', 'as' => 'projetos/editarSprint', 'uses' => 'ProjetosController@editarSprint'));
+Route::post('projetos/updateSprint', array('middleware' => 'admin', 'as' => 'projetos/updateSprint', 'uses' => 'ProjetosController@updateSprint'));
+Route::post('projetos/excluirSprint', array('middleware' => 'admin', 'as' => 'projetos/excluirSprint', 'uses' => 'ProjetosController@excluirSprint'));
+Route::post('projetos/historias', array('middleware' => 'admin', 'as' => 'projetos/historias', 'uses' => 'ProjetosController@historias'));

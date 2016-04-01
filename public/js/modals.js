@@ -44,6 +44,12 @@ function drawModal(data, widtth, no){
  			$('#modal-content').html(window.modal_history.befLast());
  			window.modal_history.pop();
  			window.modal_width.pop();
+	 		if($(event.target).hasClass('voltar-sprint')){
+	 			$('#sprintsTable').DataTable({
+	            responsive: true,
+	            "iDisplayLength": 25,
+	        });
+ 		}
  		}else{
  			window.modal_history = [false];
         	window.modal_width = ['60%'];
@@ -76,7 +82,21 @@ function drawModal(data, widtth, no){
 		  .done(function(response) {
 		  	drawModal(response, '40%');
 		  });
-	  	}else{
+	  	}else if(res[2] == 'S'){
+        	$.ajax({
+		    url: urlbaseGeral+"/projetos/sprints",
+		    type: 'POST',
+		    data: {id:res[3]},
+		    dataType: 'html',
+		  })
+		  .done(function(response) {
+		  	drawModal(response, '60%',true);
+		  	 $('#sprintsTable').DataTable({
+	            responsive: true,
+	            "iDisplayLength": 25,
+	        });
+		  });
+    	}else{
 	  		$('#modal').modal("hide");
 	  	}
 	  

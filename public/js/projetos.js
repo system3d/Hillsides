@@ -10,7 +10,8 @@
             { "data": "nome" },
             { "data": "desc"},
             { "data": "cliente" },
-            { "data": "status" }
+            { "data": "criado" },
+            { "data": "status" },
         ],
         "iDisplayLength": 25,
             "language": {
@@ -273,8 +274,131 @@
         dataType: 'html',
       })
       .done(function(response) {
-        drawModal(response);
+        drawModal(response,'60%');
          $('#sprintsTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+      });
+  });
+
+  $(document).on('click', '.create-sprint', function(event) {
+    event.preventDefault();
+     var proj_id = $(this).attr('data-proj-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/criarSprint",
+        type: 'POST',
+        data: {id:proj_id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'30%',true);
+      });
+  });
+
+  $(document).on('click', '#editar-sprint', function(event) {
+    event.preventDefault();
+     var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/editarSprint",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'30%',true);
+      });
+  });
+
+  $(document).on('submit', '#sprint_editar', function(event) {
+    event.preventDefault();
+    $('#modal_loader').removeClass('hidden');
+    var values = $(this).serializeAndEncode();
+    
+    $.ajax({
+      url: urlbaseGeral+"/projetos/updateSprint",
+      data: {dados: values},
+      type: 'POST',
+      dataType: 'json',
+    }).done(function(r){
+      flashMessage(r.status, r.msg);
+        var sid = r.id;
+        $.ajax({
+        url: urlbaseGeral+"/projetos/sprints",
+        type: 'POST',
+        data: {id:sid},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'60%',true);
+         $('#sprintsTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+          $('#modal_loader').addClass('hidden');
+      });
+    })
+  });
+
+  $(document).on('click', '#excluir-sprint', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/excluirSprint",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'json',
+      })
+      .done(function(r) {
+       flashMessage(r.status, r.msg);
+        var sid = r.id;
+        $.ajax({
+        url: urlbaseGeral+"/projetos/sprints",
+        type: 'POST',
+        data: {id:sid},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'60%',true);
+         $('#sprintsTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+          $('#modal_loader').addClass('hidden');
+      });
+      });
+  });
+
+  $(document).on('click', '#hist-sprint', function(event) {
+    event.preventDefault();
+     var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/historias",
+        type: 'POST',
+        data: {id:id, tipo:'sprint'},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'60%');
+           $('#storyTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+      });
+  });
+
+  $(document).on('click', '#hist-proj', function(event) {
+    event.preventDefault();
+     var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/historias",
+        type: 'POST',
+        data: {id:id, tipo:'projeto'},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'60%');
+           $('#storyTable').DataTable({
             responsive: true,
             "iDisplayLength": 25,
         });
