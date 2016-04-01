@@ -12,7 +12,7 @@
             <div class="form-group" style='margin-right: 80px;'>
               <a href="#" class="pull-right btn-xs btn-google remove-equipe-proj" data-id='{{$peq->id}}' data-projeto-id='{{$projeto->id}}' data-toggle="tooltip" data-html="true" title='Remover Equipe'>
                 <i class="fa fa-trash"></i></a>
-               <label class="control-label"><a href="#" data-id='{{$peq->id}}' class='ver-equipe'>{{$peq->descricao}}</a></label>
+               <label class="control-label">{{$peq->descricao}}</label>
                 <p class="form-static">Membros:  <br>
                   <small>
                   <strong data-toggle="tooltip" data-html="true" title='Responsavel'>{{$peq->responsavel->name}}</strong> - {{$peq->responsavel->roles()->first()->name}}

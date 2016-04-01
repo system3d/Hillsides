@@ -32,6 +32,7 @@ function drawModal(data, widtth, no){
 	var wideth =  widtth != undefined ? widtth : '60%';
 	$('#modal-content').parent('.modal-dialog').css('width', wideth);
 	$('#modal-content').html(data);
+	startPlugins();
   	$('#modal').modal("show");
 }
 
@@ -44,8 +45,8 @@ function drawModal(data, widtth, no){
  			$('#modal-content').html(window.modal_history.befLast());
  			window.modal_history.pop();
  			window.modal_width.pop();
-	 		if($(event.target).hasClass('voltar-sprint')){
-	 			$('#sprintsTable').DataTable({
+	 		if($(event.target).hasClass('voltar-table')){
+	 			$('#modalTable').DataTable({
 	            responsive: true,
 	            "iDisplayLength": 25,
 	        });
@@ -59,6 +60,10 @@ function drawModal(data, widtth, no){
 
  	$(document).on('submit', '.modal_form', function(event) {
  		$('#modal_loader').removeClass('hidden');
+ 		window.modal_history.pop();
+ 		window.modal_width.pop();
+ 		window.modal_history.pop();
+ 		window.modal_width.pop();
  		var values = $(this).serializeAndEncode();
  		event.preventDefault();
  		$.ajax({
@@ -68,7 +73,7 @@ function drawModal(data, widtth, no){
 	    dataType: 'html',
 	  })
 	  .done(function(rp) {
-	  		var rex = rp.split('%');
+	    var rex = rp.split('%');
 	  	r =  rex[1];
 	  	var res = r.split("&");
         flashMessage(res[0], res[1]);
@@ -90,12 +95,54 @@ function drawModal(data, widtth, no){
 		    dataType: 'html',
 		  })
 		  .done(function(response) {
-		  	drawModal(response, '60%',true);
-		  	 $('#sprintsTable').DataTable({
+		  	drawModal(response, '60%');
+		  	 $('#modalTable').DataTable({
 	            responsive: true,
 	            "iDisplayLength": 25,
 	        });
 		  });
+    	}else if(res[2] == 'H'){
+    			$.ajax({
+		        url: urlbaseGeral+"/projetos/historias",
+		        type: 'POST',
+		        data: {id:res[4], tipo:res[3]},
+		        dataType: 'html',
+		      })
+		      .done(function(response) {
+		        drawModal(response,'60%');
+		           $('#modalTable').DataTable({
+		            responsive: true,
+		            "iDisplayLength": 25,
+		        });
+             });
+    	}else if(res[2] == 'D'){
+    			$.ajax({
+		        url: urlbaseGeral+"/projetos/disciplinas",
+		        type: 'POST',
+		        data: {id:res[3]},
+		        dataType: 'html',
+		      })
+		      .done(function(response) {
+		        drawModal(response,'60%');
+		           $('#modalTable').DataTable({
+		            responsive: true,
+		            "iDisplayLength": 25,
+		        });
+             });
+    	}else if(res[2] == 'ET'){
+    			$.ajax({
+		        url: urlbaseGeral+"/projetos/etapas",
+		        type: 'POST',
+		        data: {id:res[3]},
+		        dataType: 'html',
+		      })
+		      .done(function(response) {
+		        drawModal(response,'60%');
+		           $('#modalTable').DataTable({
+		            responsive: true,
+		            "iDisplayLength": 25,
+		        });
+             });
     	}else{
 	  		$('#modal').modal("hide");
 	  	}
@@ -111,3 +158,15 @@ function drawModal(data, widtth, no){
 	  });
  	});
  });
+
+function startPlugins(){
+	   $('.datePicker').datepicker({
+        format: "dd/mm/yyyy",
+        language: "pt-BR",
+        autoclose: true,
+        todayHighlight: true,
+        todayBtn: "linked",
+        showOnFocus: true,
+        immediateUpdates: true,
+    });
+}

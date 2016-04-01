@@ -2,6 +2,7 @@ $(document).ready(function() {
 
   $( document ).ajaxError(function() {
     flashMessage('error', 'Erro na resposta do servidor');
+    $('#modal').modal("hide");
     $('#modal_loader').addClass('hidden');
   });
   

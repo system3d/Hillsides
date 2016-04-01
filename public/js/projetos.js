@@ -275,7 +275,7 @@
       })
       .done(function(response) {
         drawModal(response,'60%');
-         $('#sprintsTable').DataTable({
+         $('#modalTable').DataTable({
             responsive: true,
             "iDisplayLength": 25,
         });
@@ -292,7 +292,7 @@
         dataType: 'html',
       })
       .done(function(response) {
-        drawModal(response,'30%',true);
+        drawModal(response,'30%');
       });
   });
 
@@ -306,7 +306,7 @@
         dataType: 'html',
       })
       .done(function(response) {
-        drawModal(response,'30%',true);
+        drawModal(response,'30%');
       });
   });
 
@@ -330,8 +330,12 @@
         dataType: 'html',
       })
       .done(function(response) {
-        drawModal(response,'60%',true);
-         $('#sprintsTable').DataTable({
+        window.modal_history.pop();
+        window.modal_width.pop();
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'60%');
+         $('#modalTable').DataTable({
             responsive: true,
             "iDisplayLength": 25,
         });
@@ -359,8 +363,10 @@
         dataType: 'html',
       })
       .done(function(response) {
-        drawModal(response,'60%',true);
-         $('#sprintsTable').DataTable({
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'60%');
+         $('#modalTable').DataTable({
             responsive: true,
             "iDisplayLength": 25,
         });
@@ -380,7 +386,7 @@
       })
       .done(function(response) {
         drawModal(response,'60%');
-           $('#storyTable').DataTable({
+           $('#modalTable').DataTable({
             responsive: true,
             "iDisplayLength": 25,
         });
@@ -398,12 +404,328 @@
       })
       .done(function(response) {
         drawModal(response,'60%');
-           $('#storyTable').DataTable({
+           $('#modalTable').DataTable({
             responsive: true,
             "iDisplayLength": 25,
         });
       });
   });
+
+  $(document).on('click', '.criar-historia', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+    var tipo = $(this).attr('data-tipo');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/criarHistoria",
+        type: 'POST',
+        data: {id:id, tipo:tipo},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'30%');
+      });
+  });
+
+    $(document).on('click', '#editar-historia', function(event) {
+    event.preventDefault();
+     var id = $(this).attr('data-id');
+     var tipo = $(this).attr('data-tipo');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/editarHistoria",
+        type: 'POST',
+        data: {id:id, tipo:tipo},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'30%');
+      });
+  });
+
+    $(document).on('submit', '#historia_editar', function(event) {
+    event.preventDefault();
+    $('#modal_loader').removeClass('hidden');
+    var values = $(this).serializeAndEncode();
+    
+    $.ajax({
+      url: urlbaseGeral+"/projetos/updateHistoria",
+      data: {dados: values},
+      type: 'POST',
+      dataType: 'json',
+    }).done(function(r){
+      flashMessage(r.status, r.msg);
+        $.ajax({
+        url: urlbaseGeral+"/projetos/historias",
+        type: 'POST',
+        data: {id:r.id, tipo: r.tipo},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        window.modal_history.pop();
+        window.modal_width.pop();
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'60%');
+         $('#modalTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+          $('#modal_loader').addClass('hidden');
+      });
+    })
+  });
+
+    $(document).on('click', '#excluir-historia', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+    var tipo = $(this).attr('data-tipo');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/excluirHistoria",
+        type: 'POST',
+        data: {id:id, tipo:tipo},
+        dataType: 'json',
+      })
+      .done(function(r) {
+       flashMessage(r.status, r.msg);
+        var sid = r.id;
+        $.ajax({
+        url: urlbaseGeral+"/projetos/historias",
+        type: 'POST',
+        data: {id:sid, tipo:r.tipo},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'60%');
+         $('#modalTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+          $('#modal_loader').addClass('hidden');
+      });
+      });
+  });
+
+      $(document).on('click', '.projeto-disciplinas', function(event) {
+    event.preventDefault();
+     var id = $(this).attr('data-id');
+      $.ajax({
+        url: urlbaseGeral+"/projetos/disciplinas",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'60%');
+         $('#modalTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+      });
+  });
+
+  $(document).on('click', '.criar-disciplina', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/criarDisciplinas",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'30%');
+      });
+  });
+
+      $(document).on('click', '#editar-disciplina', function(event) {
+    event.preventDefault();
+     var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/editarDisciplinas",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'30%');
+      });
+  });
+
+  $(document).on('submit', '#editar_disciplina', function(event) {
+    event.preventDefault();
+    $('#modal_loader').removeClass('hidden');
+    var values = $(this).serializeAndEncode();
+    
+    $.ajax({
+      url: urlbaseGeral+"/projetos/updateDisciplinas",
+      data: {dados: values},
+      type: 'POST',
+      dataType: 'json',
+    }).done(function(r){
+      flashMessage(r.status, r.msg);
+        $.ajax({
+        url: urlbaseGeral+"/projetos/disciplinas",
+        type: 'POST',
+        data: {id:r.id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        window.modal_history.pop();
+        window.modal_width.pop();
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'60%');
+         $('#modalTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+          $('#modal_loader').addClass('hidden');
+      });
+    })
+  });
+
+  $(document).on('click', '#excluir-disciplina', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/excluirDisciplinas",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'json',
+      })
+      .done(function(r) {
+       flashMessage(r.status, r.msg);
+      $.ajax({
+       url: urlbaseGeral+"/projetos/disciplinas",
+        type: 'POST',
+        data: {id:r.id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'60%');
+         $('#modalTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+          $('#modal_loader').addClass('hidden');
+      });
+      });
+  });
+
+  ///////
+
+  $(document).on('click', '.projeto-etapas', function(event) {
+    event.preventDefault();
+     var id = $(this).attr('data-id');
+      $.ajax({
+        url: urlbaseGeral+"/projetos/etapas",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'60%');
+         $('#modalTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+      });
+  });
+
+  $(document).on('click', '.criar-etapa', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/criarEtapas",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'30%');
+      });
+  });
+
+      $(document).on('click', '#editar-etapa', function(event) {
+    event.preventDefault();
+     var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/editarEtapas",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'30%');
+      });
+  });
+
+  $(document).on('submit', '#editar_etapa', function(event) {
+    event.preventDefault();
+    $('#modal_loader').removeClass('hidden');
+    var values = $(this).serializeAndEncode();
+    
+    $.ajax({
+      url: urlbaseGeral+"/projetos/updateEtapas",
+      data: {dados: values},
+      type: 'POST',
+      dataType: 'json',
+    }).done(function(r){
+      flashMessage(r.status, r.msg);
+        $.ajax({
+        url: urlbaseGeral+"/projetos/etapas",
+        type: 'POST',
+        data: {id:r.id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        window.modal_history.pop();
+        window.modal_width.pop();
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'60%');
+         $('#modalTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+          $('#modal_loader').addClass('hidden');
+      });
+    })
+  });
+
+  $(document).on('click', '#excluir-etapa', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/excluirEtapas",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'json',
+      })
+      .done(function(r) {
+       flashMessage(r.status, r.msg);
+      $.ajax({
+       url: urlbaseGeral+"/projetos/etapas",
+        type: 'POST',
+        data: {id:r.id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'60%');
+         $('#modalTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+          $('#modal_loader').addClass('hidden');
+      });
+      });
+  });
+
 
  });
 

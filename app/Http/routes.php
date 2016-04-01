@@ -90,4 +90,21 @@ Route::post('projetos/criarSprint', array('middleware' => 'admin', 'as' => 'proj
 Route::post('projetos/editarSprint', array('middleware' => 'admin', 'as' => 'projetos/editarSprint', 'uses' => 'ProjetosController@editarSprint'));
 Route::post('projetos/updateSprint', array('middleware' => 'admin', 'as' => 'projetos/updateSprint', 'uses' => 'ProjetosController@updateSprint'));
 Route::post('projetos/excluirSprint', array('middleware' => 'admin', 'as' => 'projetos/excluirSprint', 'uses' => 'ProjetosController@excluirSprint'));
+
 Route::post('projetos/historias', array('middleware' => 'admin', 'as' => 'projetos/historias', 'uses' => 'ProjetosController@historias'));
+Route::post('projetos/criarHistoria', array('middleware' => 'admin', 'as' => 'projetos/criarHistoria', 'uses' => 'ProjetosController@criarHistoria'));
+Route::post('projetos/editarHistoria', array('middleware' => 'admin', 'as' => 'projetos/editarHistoria', 'uses' => 'ProjetosController@editarHistoria'));
+Route::post('projetos/updateHistoria', array('middleware' => 'admin', 'as' => 'projetos/updateHistoria', 'uses' => 'ProjetosController@updateHistoria'));
+Route::post('projetos/excluirHistoria', array('middleware' => 'admin', 'as' => 'projetos/excluirHistoria', 'uses' => 'ProjetosController@excluirHistoria'));
+
+Route::post('projetos/disciplinas', array('middleware' => 'admin', 'as' => 'projetos/disciplinas', 'uses' => 'ProjetosController@disciplinas'));
+Route::post('projetos/criarDisciplinas', array('middleware' => 'admin', 'as' => 'projetos/criarDisciplinas', 'uses' => 'ProjetosController@criarDisciplinas'));
+Route::post('projetos/editarDisciplinas', array('middleware' => 'admin', 'as' => 'projetos/editarDisciplinas', 'uses' => 'ProjetosController@editarDisciplinas'));
+Route::post('projetos/updateDisciplinas', array('middleware' => 'admin', 'as' => 'projetos/updateDisciplinas', 'uses' => 'ProjetosController@updateDisciplinas'));
+Route::post('projetos/excluirDisciplinas', array('middleware' => 'admin', 'as' => 'projetos/excluirDisciplinas', 'uses' => 'ProjetosController@excluirDisciplinas'));
+
+Route::post('projetos/etapas', array('middleware' => 'admin', 'as' => 'projetos/etapas', 'uses' => 'ProjetosController@etapas'));
+Route::post('projetos/criarEtapas', array('middleware' => 'admin', 'as' => 'projetos/criarEtapas', 'uses' => 'ProjetosController@criarEtapas'));
+Route::post('projetos/editarEtapas', array('middleware' => 'admin', 'as' => 'projetos/editarEtapas', 'uses' => 'ProjetosController@editarEtapas'));
+Route::post('projetos/updateEtapas', array('middleware' => 'admin', 'as' => 'projetos/updateEtapas', 'uses' => 'ProjetosController@updateEtapas'));
+Route::post('projetos/excluirEtapas', array('middleware' => 'admin', 'as' => 'projetos/excluirEtapas', 'uses' => 'ProjetosController@excluirEtapas'));

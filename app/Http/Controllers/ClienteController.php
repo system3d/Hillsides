@@ -9,6 +9,9 @@ use App\Cliente as cliente;
 use App\Projeto as projeto;
 use App\Equipe as equipe;
 use App\Sprint as sprint;
+use App\Historia as historia;
+use App\Disciplina as disciplina;
+use App\Etapa as etapa;
 use App\Models\Access\User\User as user;
 
 
@@ -47,11 +50,42 @@ class ClienteController extends Controller
           if(isset($new->id)) return('%success&Equipe Cadastrada com Sucesso&E&'.$new->id);
           else return('%error&Erro ao Cadastrar Equipe');
         break;
+
       case 'sprints':
+        if(!empty($check['inicio']))
+            $check['inicio'] = date_format(date_create_from_format('d/m/Y', $check['inicio']), 'Y-m-d');
+       if(!empty($check['termino']))
+          $check['termino'] = date_format(date_create_from_format('d/m/Y', $check['termino']), 'Y-m-d');
         $new = sprint::create($check);
           if(isset($new->id)) return('%success&Sprint Cadastrado com Sucesso&S&'.$new->projeto_id);
           else return('%error&Erro ao Cadastrar Sprint');
         break;
+
+      case 'historias':
+          $tipo = $check['tipo'];
+          unset($check['tipo']);
+          $new = historia::create($check);
+          if($tipo == 'sprint'){
+            $ide = $new->sprint_id;
+          }else{
+            $ide = $new->sprint->projeto_id;
+          }
+          if(isset($new->id)) return('%success&Historia Cadastrada com Sucesso&H&'.$tipo.'&'.$ide);
+          else return('%error&Erro ao Cadastrar Historia');
+        break;
+
+      case 'disciplinas':
+        $new = disciplina::create($check);
+          if(isset($new->id)) return('%success&Disciplina Cadastrada com Sucesso&D&'.$new->projeto_id);
+          else return('%error&Erro ao Cadastrar Disciplina');
+      break;
+
+      case 'etapas':
+        $new = etapa::create($check);
+          if(isset($new->id)) return('%success&Etapa Cadastrada com Sucesso&ET&'.$new->projeto_id);
+          else return('%error&Erro ao Cadastrar Etapa');
+      break;
+
     	default:
     		return('%error&Erro ao Armazenar dados');
     		break;

@@ -9,7 +9,7 @@ class Historia extends Model
 {
     protected $table = 'historias';
     public $timestamps = true;
-	protected $fillable = ['descricao', 'ordem', 'sprint_id', 'user_id', 'locatario_id'];
+	protected $fillable = ['descricao', 'obs', 'sprint_id', 'user_id', 'locatario_id'];
 
 	protected static function boot()
     {

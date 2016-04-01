@@ -13,6 +13,24 @@
                      <input type="text" class="form-control" required="" data-parsley-trigger="change" name="descricao" style='width:100%' value='{{$sprint->descricao}}'>
                 </div>
 
+                 <div class="form-group">
+                   <label for="fullname" class="control-label">Custo Previsto(R$):</label>
+                     <input type="number" class="form-control"  name="custo" style='width:100%' value='{{$sprint->custo}}'>
+                </div>
+
+                 <div class="form-group">
+                   <div class="row">
+                     <div class="col-md-6">
+                        <label for="fullname" class="control-label">Data de Início:</label>
+                        <input type="text" class="form-control datePicker"  name="inicio" style='width:100%' value='<?php if(!empty($sprint->termino)) echo date("d/m/Y", strtotime ($sprint->inicio)); ?>'>
+                     </div>
+                     <div class="col-md-6">
+                        <label for="fullname" class="control-label">Previsão de Término:</label>
+                        <input type="text" class="form-control datePicker"  name="termino" style='width:100%' value='<?php if(!empty($sprint->termino)) echo date("d/m/Y", strtotime ($sprint->termino)); ?>'>
+                     </div>
+                   </div>
+                </div>
+
                 <div class="form-group">
                    <label for="fullname" class="control-label">Observações:</label>
                       <textarea id="message" rows="3" class="form-control" data-parsley-trigger="keyup" name="obs" style='width:100%'>{{$sprint->obs}}</textarea>

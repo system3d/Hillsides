@@ -1,6 +1,6 @@
 <div class="form-group">
 	<a href="#" class="pull-right btn-xs btn-google close-info-small"><i class="fa fa-times"></i></a>
-   <label class="control-label"><a href="#" data-id='{{$equipe->id}}' class='ver-equipe'>{{$equipe->descricao}}</a></label>
+   <label class="control-label">{{$equipe->descricao}}</label>
     <p class="form-static">Membros:  <br>
       <small>
       <strong data-toggle="tooltip" data-html="true" title='Responsavel'>{{$equipe->responsavel->name}}</strong> - {{$equipe->responsavel->roles()->first()->name}}

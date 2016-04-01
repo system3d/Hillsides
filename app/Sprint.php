@@ -9,7 +9,7 @@ class Sprint extends Model
 {
     protected $table = 'sprints';
     public $timestamps = true;
-	protected $fillable = ['descricao', 'obs', 'projeto_id', 'user_id', 'locatario_id'];
+	protected $fillable = ['descricao', 'obs', 'inicio', 'termino', 'custo', 'projeto_id', 'user_id', 'locatario_id'];
 
 	protected static function boot()
     {
@@ -26,7 +26,7 @@ class Sprint extends Model
 		return $this->belongsTo('App\Locatario');
 	}
 
-	public function sprint() {
+	public function projeto() {
 		return $this->belongsTo('App\Projeto');
 	}
 

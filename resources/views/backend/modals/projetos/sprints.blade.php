@@ -7,13 +7,15 @@
 	   <div class="row">
 	   		<div class="col-md-12">
 	   			<div class="table-responsive">
-	   			<table class="table table-striped table-bordered dt-responsive nowrap table-hover" cellspacing="0" width="100%" id="sprintsTable">
+	   			<table class="table table-striped table-bordered dt-responsive nowrap table-hover" cellspacing="0" width="100%" id="modalTable">
 					<thead>
 						<tr>
-							<th width='25%'>Nome</th>
-							<th width='50%'>Observações</th>
-							<th width='15%'>Criado</th>
-							<th width='10%'></th>
+							<th>Nome</th>
+							<th>Observações</th>
+							<th>Data de Início</th>
+							<th>Previsão de Término</th>
+							<th>Custo Previsto</th>
+							<th></th>
 						</tr>
 					</thead>
 					@if(isset($projeto->sprints->first()->id))
@@ -21,7 +23,25 @@
 							<tr>
 							<td>{{$sprint->descricao}}</td>
 							<td>{{$sprint->obs}}</td>
-							<td>{{date('d/m/Y',strtotime($sprint->created_at))}}</td>
+							<td>
+								@if(!empty($sprint->inicio))
+									{{date('d/m/Y',strtotime($sprint->inicio))}}</td>
+								@else
+								 - 
+								@endif
+							<td>
+								@if(!empty($sprint->termino))
+									{{date('d/m/Y',strtotime($sprint->termino))}}</td>
+								@else
+								 - 
+								@endif
+							<td>
+								@if(!empty($sprint->custo))
+									{{$sprint->custo}} R$
+								@else
+									 - 
+								@endif
+							</td>
 							<td style="text-align:center">
 								<a href="#" class="btn btn-primary btn-xs" data-id='{{$sprint->id}}' data-toggle="tooltip" data-html="true" id='editar-sprint' title='Editar'><i class="fa fa-pencil"></i></a>
 								<a href="#" class="btn btn-info btn-xs" data-id='{{$sprint->id}}' data-toggle="tooltip" data-html="true" id='hist-sprint' title='Historias'><i class="fa fa-book"></i></a>

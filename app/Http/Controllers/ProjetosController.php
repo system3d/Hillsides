@@ -17,6 +17,9 @@ use App\Status_Tarefa as sf;
 use App\Tipo_Tarefa as tr;
 use App\Equipe as equipe;
 use App\Sprint as sprint;
+use App\historia as historia;
+use App\Disciplina as disc;
+use App\Etapa as etapa;
 
 class ProjetosController extends Controller
 {
@@ -282,6 +285,10 @@ class ProjetosController extends Controller
     } 
     $id = $check['id'];
     unset($check['id']);
+    if(!empty($check['inicio']))
+        $check['inicio'] = date_format(date_create_from_format('d/m/Y', $check['inicio']), 'Y-m-d');
+   if(!empty($check['termino']))
+      $check['termino'] = date_format(date_create_from_format('d/m/Y', $check['termino']), 'Y-m-d');
     $sprint = sprint::find($id);
     $new = $sprint->update($check);
     if(!isset($new)){
@@ -330,7 +337,178 @@ class ProjetosController extends Controller
     else{
       $obj = proj::find($id);
     }
-    return view('backend.modals.projetos.historias', compact('obj','tipo'));
+    return view('backend.modals.projetos.criar-historia', compact('obj','tipo'));
   }
+
+  public function editarHistoria(request $request){
+    $id = $request['id'];
+    $tipo = $request['tipo'];
+    $historia = historia::find($id);
+    $sprints = $historia->sprint->projeto->sprints;
+    return view('backend.modals.projetos.editar-historia', compact('historia','tipo','sprints'));
+  }
+
+    public function updateHistoria(request $request){
+    $Alldados = $request->all();
+    $dadosBefore = urldecode($Alldados['dados']);
+    $dados = explode('&', $dadosBefore);
+    foreach($dados as $dado){
+        $check2 = explode('=',$dado);
+        if($check2[1] != ''){
+          $check[$check2[0]] = $check2[1];
+        }
+    } 
+    $id = $check['id'];
+    unset($check['id']);
+     $tipo = $check['tipo'];
+    unset($check['tipo']);
+
+    $historia = historia::find($id);
+    $idgo = ($tipo == 'sprint') ? $historia->sprint_id : $historia->sprint->projeto_id;
+    $new = $historia->update($check);
+    if(!isset($new)){
+      $response['msg'] = 'Erro ao Atualizar Historia';
+      $response['status'] = 'error';
+    }else{
+      $response['msg'] = 'Historia Atualizado com Sucesso';
+      $response['status'] = 'success';
+       $response['id'] = $idgo;
+       $response['tipo'] = $tipo;
+    }
+    
+     return $response;
+  }
+
+  public function excluirHistoria(request $request){
+    $id = $request['id'];
+    $tipo = $request['tipo'];
+    $new = historia::find($id);
+    $idgo = ($tipo == 'sprint') ? $new->sprint_id : $new->sprint->projeto_id;
+    $new->delete();
+    $response['msg'] = 'Historia Excluida com Sucesso';
+    $response['status'] = 'success';
+    $response['id'] = $idgo;
+    $response['tipo'] = $tipo;
+    return $response;
+  }
+
+    public function disciplinas(request $request){
+    $id = $request['id'];
+   $projeto = proj::find($id);
+     return view('backend.modals.projetos.disciplinas', compact('projeto'));
+  }
+
+    public function criarDisciplinas(request $request){
+    $id = $request['id'];
+    $projeto = proj::find($id);
+    return view('backend.modals.projetos.criar-disciplina', compact('projeto'));
+  }
+
+    public function editarDisciplinas(request $request){
+    $id = $request['id'];
+    $disciplina = disc::find($id);
+    return view('backend.modals.projetos.editar-disciplina', compact('disciplina'));
+  }
+
+      public function updateDisciplinas(request $request){
+    $Alldados = $request->all();
+    $dadosBefore = urldecode($Alldados['dados']);
+    $dados = explode('&', $dadosBefore);
+    foreach($dados as $dado){
+        $check2 = explode('=',$dado);
+        if($check2[1] != ''){
+          $check[$check2[0]] = $check2[1];
+        }
+    } 
+    $id = $check['id'];
+    unset($check['id']);
+
+    $disciplina = disc::find($id);
+
+    $new = $disciplina->update($check);
+    if(!isset($new)){
+      $response['msg'] = 'Erro ao Atualizar Disciplina';
+      $response['status'] = 'error';
+    }else{
+      $response['msg'] = 'Disciplina Atualizado com Sucesso';
+      $response['status'] = 'success';
+       $response['id'] = $disciplina->projeto_id;
+    }
+    
+     return $response;
+  }
+
+   public function excluirDisciplinas(request $request){
+    $id = $request['id'];
+    $new = disc::find($id);
+    $idgo = $new->projeto_id;
+    $new->delete();
+    $response['msg'] = 'Disciplina Excluida com Sucesso';
+    $response['status'] = 'success';
+    $response['id'] = $idgo;
+    return $response;
+  }
+
+
+  ///////
+
+
+  public function etapas(request $request){
+    $id = $request['id'];
+   $projeto = proj::find($id);
+     return view('backend.modals.projetos.etapas', compact('projeto'));
+  }
+
+    public function criarEtapas(request $request){
+    $id = $request['id'];
+    $projeto = proj::find($id);
+    return view('backend.modals.projetos.criar-etapa', compact('projeto'));
+  }
+
+    public function editarEtapas(request $request){
+    $id = $request['id'];
+    $etapa = etapa::find($id);
+    return view('backend.modals.projetos.editar-etapa', compact('etapa'));
+  }
+
+      public function updateEtapas(request $request){
+    $Alldados = $request->all();
+    $dadosBefore = urldecode($Alldados['dados']);
+    $dados = explode('&', $dadosBefore);
+    foreach($dados as $dado){
+        $check2 = explode('=',$dado);
+        if($check2[1] != ''){
+          $check[$check2[0]] = $check2[1];
+        }
+    } 
+    $id = $check['id'];
+    unset($check['id']);
+
+    $etapa = etapa::find($id);
+
+    $new = $etapa->update($check);
+    if(!isset($new)){
+      $response['msg'] = 'Erro ao Atualizar Etapa';
+      $response['status'] = 'error';
+    }else{
+      $response['msg'] = 'Etapa Atualizado com Sucesso';
+      $response['status'] = 'success';
+       $response['id'] = $etapa->projeto_id;
+    }
+    
+     return $response;
+  }
+
+   public function excluirEtapas(request $request){
+    $id = $request['id'];
+    $new = etapa::find($id);
+    $idgo = $new->projeto_id;
+    $new->delete();
+    $response['msg'] = 'Etapa Excluida com Sucesso';
+    $response['status'] = 'success';
+    $response['id'] = $idgo;
+    return $response;
+  }
+
 
 }
