@@ -529,8 +529,16 @@ div.dataTables_wrapper div.dataTables_processing {
    color: #222d32; 
 }
 
+#sorEstagiosBody tr:hover{
+    cursor: move;
+}
+
 .placeholderWrapper{
     background: #fff;
+}
+
+.placeholderWrapper2{
+    background: #FF9393 !important;
 }
 
 .img-icon{
@@ -540,6 +548,15 @@ div.dataTables_wrapper div.dataTables_processing {
     -webkit-box-shadow: 0px 0px 3px -1px rgba(255,255,255,1);
     -moz-box-shadow: 0px 0px 3px -1px rgba(255,255,255,1);
     box-shadow: 0px 0px 3px -1px rgba(255,255,255,1);
+}
+
+.img-p-icon{
+     width:18px;
+    height:18px;
+    margin-right: 8px;
+    -webkit-box-shadow: 0px 0px 3px -1px rgba(0,0,0,1);
+    -moz-box-shadow: 0px 0px 3px -1px rgba(0,0,0,1);
+    box-shadow: 0px 0px 3px -1px rgba(0,0,0,1);
 }
 
 .img-modal{
@@ -581,6 +598,56 @@ div.dataTables_wrapper div.dataTables_processing {
     background: whitesmoke;
 }
 
+.edit-conf-estag:hover{
+    cursor: pointer;
+}
+
 textarea {
     resize: vertical;
+}
+
+.hoverPointer:hover{
+    cursor: pointer;
+}
+
+#estagiosTable tbody{
+    border-bottom: none;
+    border-top: none;
+}
+
+.back-t-change{
+    display: inline-block;
+    border:1px solid #F6F6F6;
+    border-radius: 100%;
+    margin-right: 5px;
+    width:15px;
+    height:15px;
+    vertical-align: bottom !important;
+}
+
+.back-t-change:hover{
+    cursor: pointer;
+}
+
+.Tableodd{
+    background-color: #fff !important;
+}
+
+.Tableodd:hover{
+    background-color: #f5f5f5 !important;
+}
+
+.back-tp-change{
+    display: inline-block;
+    border:1px solid #A6A6A6;
+    border-radius: 100%;
+    margin-right: 8px;
+    width:18px;
+    height:18px;
+    vertical-align: bottom !important;
+    margin-bottom: 2px;
+}
+
+.back-tp-change:hover{
+    cursor: pointer;
 }

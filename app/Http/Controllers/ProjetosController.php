@@ -126,6 +126,7 @@ class ProjetosController extends Controller
     	$stfrs = array(
     		'descricao'    => $fr->descricao,
     		'icone'        => $fr->icone,
+        'cor'          => $fr->cor,
     		'projeto_id'   => $new->id,
     		'locatario_id' => $check['locatario_id']
 		);
@@ -203,6 +204,27 @@ class ProjetosController extends Controller
     }
     
      return $response;
+  }
+
+  public function excluir(request $request){
+    $iid = $request->all();
+    $id = $iid['id'];
+    $check = sprint::where('projeto_id',$id)->get();
+   if(!empty($check->first()->id)){
+      $response['msg'] = 'Projetos com Sprints não podem ser excluídos.';
+      $response['status'] = 'error';
+      return $response;
+    }else{
+      $deleted = proj::find($id)->delete();
+      if($deleted){
+        $response['msg'] = 'Projeto Excluído com Sucesso.';
+        $response['status'] = 'success';
+      }else{
+        $response['msg'] = 'Erro ao excluir projeto.';
+        $response['status'] = 'error';
+      }
+      return $response;
+    } 
   }
 
   public function equipes(request $request){
@@ -509,6 +531,12 @@ class ProjetosController extends Controller
     $response['id'] = $idgo;
     return $response;
   }
+
+
+  ////
+
+
+
 
 
 }

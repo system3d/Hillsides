@@ -27,6 +27,8 @@
 
 	<!-- datepicker -->
     {!! Html::style('plugins/datepicker/bootstrap-datepicker3.min.css') !!}
+    {!! Html::style('plugins/colorpicker/bootstrap-colorpicker.css') !!}
+
 
 	<!-- Main Styles -->
 	{{Html::style('css/style.css')}}

@@ -215,6 +215,7 @@
                   <br>
                   <p>Sem Classificação
                         <span class="pull-right">
+                          <span class='back-t-change' style='background:#fff'></span>
                           <img class='img-circle img-icon' src="{{ asset('img/icones/default.png') }}">
                         <a href="#" data-toggle="tooltip" data-html="true" title='Sistema' class="text-muted"><i class="fa fa-trash"></i></a>
                         </span>
@@ -223,9 +224,13 @@
                     @foreach(access()->user()->locatario->tipo_tarefa_default as $trp)
                       <p data-id='{{$trp->id}}'>{{$trp->descricao}} 
                         <span class="pull-right">
-                        <a href="#" data-id='{{$trp->id}}' data-toggle="tooltip" data-html="true" title='Trocar Icone' class='icon-t-change'>
+                          <a href="#" data-id='{{$trp->id}}' data-toggle="tooltip" data-html="true" title='Cor de Fundo' class='fire-bck-change'>
+                            <span id='BTCS{{$trp->id}}' class="back-t-change" style='background:{{$trp->cor}}'></span>
+                          </a> 
+                        <a href="#" data-id='{{$trp->id}}' data-toggle="tooltip" data-html="true" title='Icone' class='icon-t-change'>
                           <img class='img-circle img-icon' src="{{ asset('img/icones/'.$trp->icone) }}" id='t-icon-{{$trp->id}}'>
                         </a>
+                        
                         <a href="#" data-toggle="tooltip" data-html="true" title='Deletar' class="delete-trp text-red"><i class="fa fa-trash"></i></a>
                         </span>
                       </p>

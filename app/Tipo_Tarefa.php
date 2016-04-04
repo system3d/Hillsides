@@ -9,7 +9,7 @@ class Tipo_Tarefa extends Model
 {
     protected $table = 'tipos_tarefa';
     public $timestamps = true;
-	protected $fillable = ['descricao', 'icone', 'projeto_id', 'locatario_id'];
+	protected $fillable = ['descricao', 'icone', 'cor', 'projeto_id', 'locatario_id'];
 
 	protected static function boot()
     {
@@ -27,6 +27,6 @@ class Tipo_Tarefa extends Model
 	}
 
 	public function tarefas() {
-		return $this->hasMany('App\Tarefa');
+		return $this->hasMany('App\Tarefa', 'tipo_id');
 	}
 }

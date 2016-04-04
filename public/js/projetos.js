@@ -726,6 +726,574 @@
       });
   });
 
+  $(document).on('click', '.projeto-delete', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/excluir",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'json',
+      }).done(function(r){
+        flashMessage(r.status, r.msg);
+        if(r.status == 'success'){
+          $('#projetosTable').DataTable().ajax.reload();
+          $('#modal').modal('hide');
+        }
+      });
+  });
+
+    $(document).on('click', '#drop-estagio', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral + "/projetos/conf/estagios",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'html',
+      }).done(function(response){
+        drawModal(response,'30%');
+          $("#sorEstagiosBody").sortable({
+        tolerance: 'pointer',
+       placeholder: "placeholderWrapper2",
+        axis: "y",
+         cursor: "move",
+         revert: true,
+        forceHelperSize: true,
+        forcePlaceholderSize: true,
+        helper: 'clone',
+        start: function( event, ui ) {
+          $('.excluir-conf-estag').addClass('hidden');
+        },
+         stop: function( event, ui ) {
+          $('.excluir-conf-estag').removeClass('hidden');
+          var sorted = $( "#sorEstagiosBody" ).sortable( "toArray", { attribute: 'data-id' } );
+          $.ajax({
+         url: urlbaseGeral+"/projetos/conf/setOrder",
+         type: 'POST',
+        data: {sorted:sorted},
+        })
+        },
+    });
+      });
+  });
+
+ $(document).on('click', '.edit-conf-estag', function(event) {
+   event.preventDefault();
+   $(this).addClass('hidden');
+   $(this).parent('td').find('.edit-conf-form').removeClass('hidden');
+ });
+
+ $(document).on('submit', '.edit-conf-form', function(event) {
+   event.preventDefault();
+   var form = $(this);
+   var values = $(this).serializeAndEncode();
+      $.ajax({
+      url: urlbaseGeral+"/projetos/conf/estagioEdit",
+      data: {dados: values},
+      type: 'POST',
+      dataType: 'json',
+    })
+    .done(function(r) {
+      flashMessage(r.status, r.msg);
+      if(r.status == 'success'){
+        var sid = r.id;
+         $.ajax({
+        url: urlbaseGeral + "/projetos/conf/estagios",
+        type: 'POST',
+        data: {id:sid},
+        dataType: 'html',
+      }).done(function(response){
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'30%');
+        $("#sorEstagiosBody").sortable({
+        tolerance: 'pointer',
+       placeholder: "placeholderWrapper2",
+        axis: "y",
+         cursor: "move",
+         revert: true,
+        forceHelperSize: true,
+        forcePlaceholderSize: true,
+        helper: 'clone',
+        start: function( event, ui ) {
+          $('.excluir-conf-estag').addClass('hidden');
+        },
+         stop: function( event, ui ) {
+          $('.excluir-conf-estag').removeClass('hidden');
+          var sorted = $( "#sorEstagiosBody" ).sortable( "toArray", { attribute: 'data-id' } );
+          $.ajax({
+         url: urlbaseGeral+"/projetos/conf/setOrder",
+         type: 'POST',
+        data: {sorted:sorted},
+        })
+        },
+    });
+      });
+    };
+      
+    });
+ });
+
+ $(document).on('click', '.hide-conf-edit-estag', function(event) {
+   event.preventDefault();
+    $(this).parent('form').parent('td').find('.edit-conf-estag').removeClass('hidden');
+    $(this).parent('form').addClass('hidden');
+ });
+
+ $(document).on('click', '.create-conf-estag', function(event) {
+   event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/conf/estagioNovo",
+        type: 'POST',
+        dataType: 'html',
+        data:{id:id},
+      })
+      .done(function(response) {
+        drawModal(response, '30%');
+      });
+ });
+
+
+  $(document).on('click', '.excluir-conf-estag', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/conf/estagioExcluir",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'json',
+      })
+      .done(function(r) {
+       flashMessage(r.status, r.msg);
+       if(r.status == 'success'){
+        var sid = r.id;
+         $.ajax({
+        url: urlbaseGeral + "/projetos/conf/estagios",
+        type: 'POST',
+        data: {id:sid},
+        dataType: 'html',
+      }).done(function(response){
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'30%');
+        $("#sorEstagiosBody").sortable({
+        tolerance: 'pointer',
+       placeholder: "placeholderWrapper2",
+        axis: "y",
+         cursor: "move",
+         revert: true,
+        forceHelperSize: true,
+        forcePlaceholderSize: true,
+        helper: 'clone',
+        start: function( event, ui ) {
+          $('.excluir-conf-estag').addClass('hidden');
+        },
+         stop: function( event, ui ) {
+          $('.excluir-conf-estag').removeClass('hidden');
+          var sorted = $( "#sorEstagiosBody" ).sortable( "toArray", { attribute: 'data-id' } );
+          $.ajax({
+         url: urlbaseGeral+"/projetos/conf/setOrder",
+         type: 'POST',
+        data: {sorted:sorted},
+        })
+        },
+    });
+         var sorted = $( "#sorEstagiosBody" ).sortable( "toArray", { attribute: 'data-id' } );
+          $.ajax({
+         url: urlbaseGeral+"/projetos/conf/setOrder",
+         type: 'POST',
+        data: {sorted:sorted},
+        })
+      });
+    };
+      });
+  });
+
+  $(document).on('click', '#drop-st-projeto', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral + "/projetos/conf/stProjeto",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'html',
+      }).done(function(response){
+        drawModal(response,'30%');
+      });
+    });
+
+   $(document).on('click', '.create-conf-status', function(event) {
+   event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/conf/stNovo",
+        type: 'POST',
+        dataType: 'html',
+        data:{id:id},
+      })
+      .done(function(response) {
+        drawModal(response, '30%');
+      });
+ });
+
+    $(document).on('click', '.edit-conf-status', function(event) {
+   event.preventDefault();
+   $(this).addClass('hidden');
+   $(this).parent('td').find('.edit-conf-status-form').removeClass('hidden');
+ });
+
+ $(document).on('click', '.hide-conf-edit-status', function(event) {
+    event.preventDefault();
+    $(this).parent('form').parent('td').find('.edit-conf-status').removeClass('hidden');
+    $(this).parent('form').addClass('hidden');
+ });
+
+ $(document).on('submit', '.edit-conf-status-form', function(event) {
+   event.preventDefault();
+   var form = $(this);
+   var values = $(this).serializeAndEncode();
+      $.ajax({
+      url: urlbaseGeral+"/projetos/conf/stEdit",
+      data: {dados: values},
+      type: 'POST',
+      dataType: 'json',
+    })
+    .done(function(r) {
+      flashMessage(r.status, r.msg);
+      if(r.status == 'success'){
+        var sid = r.id;
+         $.ajax({
+        url: urlbaseGeral + "/projetos/conf/stProjeto",
+        type: 'POST',
+        data: {id:sid},
+        dataType: 'html',
+      }).done(function(response){
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'30%');
+      });
+    };
+      
+    });
+ });
+
+   $(document).on('click', '.excluir-conf-status', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/conf/stExcluir",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'json',
+      })
+      .done(function(r) {
+       flashMessage(r.status, r.msg);
+       if(r.status == 'success'){
+        var sid = r.id;
+         $.ajax({
+        url: urlbaseGeral + "/projetos/conf/stProjeto",
+        type: 'POST',
+        data: {id:sid},
+        dataType: 'html',
+      }).done(function(response){
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'30%');
+      });
+    };
+      });
+  });
+
+   ////////
+
+    $(document).on('click', '#drop-st-tarefa', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral + "/projetos/conf/srTarefa",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'html',
+      }).done(function(response){
+        drawModal(response,'30%');
+      });
+    });
+
+   $(document).on('click', '.create-conf-tarefa', function(event) {
+   event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/conf/srNovo",
+        type: 'POST',
+        dataType: 'html',
+        data:{id:id},
+      })
+      .done(function(response) {
+        drawModal(response, '30%');
+      });
+ });
+
+    $(document).on('click', '.edit-conf-tarefa', function(event) {
+   event.preventDefault();
+   $(this).addClass('hidden');
+   $(this).parent('td').find('.edit-conf-tarefa-form').removeClass('hidden');
+ });
+
+ $(document).on('click', '.hide-conf-edit-tarefa', function(event) {
+    event.preventDefault();
+    $(this).parent('form').parent('td').find('.edit-conf-tarefa').removeClass('hidden');
+    $(this).parent('form').addClass('hidden');
+ });
+
+ $(document).on('submit', '.edit-conf-tarefa-form', function(event) {
+   event.preventDefault();
+   var form = $(this);
+   var values = $(this).serializeAndEncode();
+      $.ajax({
+      url: urlbaseGeral+"/projetos/conf/srEdit",
+      data: {dados: values},
+      type: 'POST',
+      dataType: 'json',
+    })
+    .done(function(r) {
+      flashMessage(r.status, r.msg);
+      if(r.status == 'success'){
+        var sid = r.id;
+         $.ajax({
+        url: urlbaseGeral + "/projetos/conf/srTarefa",
+        type: 'POST',
+        data: {id:sid},
+        dataType: 'html',
+      }).done(function(response){
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'30%');
+      });
+    };
+      
+    });
+ });
+
+   $(document).on('click', '.excluir-conf-tarefa', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/conf/srExcluir",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'json',
+      })
+      .done(function(r) {
+       flashMessage(r.status, r.msg);
+       if(r.status == 'success'){
+        var sid = r.id;
+         $.ajax({
+        url: urlbaseGeral + "/projetos/conf/srTarefa",
+        type: 'POST',
+        data: {id:sid},
+        dataType: 'html',
+      }).done(function(response){
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'30%');
+      });
+    };
+      });
+  });
+
+
+   /////////
+
+      $(document).on('click', '#drop-tarefa', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral + "/projetos/conf/tpTarefa",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'html',
+      }).done(function(response){
+        drawModal(response,'30%');
+      });
+    });
+
+      $(document).on('click', '.fire-bckt-change', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+    dd(id);
+    $.ajax({
+      url: urlbaseGeral+"/projetos/conf/setColor",
+      type: 'POST',
+      data:{id:id},
+      dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response, '25%');
+        $('.colorPickBck').colorpicker();
+        $('.colorPickBck').colorpicker().on('changeColor.colorpicker', function(event){
+          var color = event.color.toHex();
+        $('#colorSelected').css('background', color);
+      });
+    
+      });
+  });
+
+     $(document).on('submit', '#trocar_cor_proj', function(event) {
+      event.preventDefault();
+      var values = $(this).serializeAndEncode();
+      $.ajax({
+        url: urlbaseGeral+"/projetos/conf/storeColor",
+        data: {dados: values},
+        type: 'POST',
+        dataType: 'json',
+      }).done(function(r){
+        flashMessage(r.status, r.msg);
+        if(r.status == 'success'){
+          var sid = r.id;
+         $.ajax({
+        url: urlbaseGeral + "/projetos/conf/tpTarefa",
+        type: 'POST',
+        data: {id:sid},
+        dataType: 'html',
+      }).done(function(response){
+        window.modal_history.pop();
+        window.modal_width.pop();
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'25%');
+      });
+        }
+      })
+     });
+
+     $(document).on('click', '.icon-tp-change', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+    $.ajax({
+      url: urlbaseGeral+"/projetos/conf/setIcon",
+      type: 'POST',
+      data:{id:id},
+      dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response, '25%');
+      });
+  });
+
+         $(document).on('submit', '#trocar_icone_proj', function(event) {
+      event.preventDefault();
+      var formData = new FormData(this);
+       $.ajax({
+            type:'POST',
+            url: urlbaseGeral+"/projetos/conf/storeIcon",
+            data:formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+        }).done(function(r) {
+        flashMessage(r.status, r.msg);
+        if(r.status == 'success'){
+         var sid = r.id;
+         $.ajax({
+        url: urlbaseGeral + "/projetos/conf/tpTarefa",
+        type: 'POST',
+        data: {id:sid},
+        dataType: 'html',
+      }).done(function(response){
+        window.modal_history.pop();
+        window.modal_width.pop();
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'25%');
+      });
+        }
+      });
+    });
+
+  $(document).on('click', '.create-conf-tipoTarefa', function(event) {
+   event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/conf/ttCreate",
+        type: 'POST',
+        dataType: 'html',
+        data:{id:id},
+      })
+      .done(function(response) {
+        drawModal(response, '30%');
+      });
+ });
+
+     $(document).on('click', '.excluir-conf-tipoTarefa', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/projetos/conf/ttExcluir",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'json',
+      })
+      .done(function(r) {
+       flashMessage(r.status, r.msg);
+       if(r.status == 'success'){
+        var sid = r.id;
+         $.ajax({
+        url: urlbaseGeral + "/projetos/conf/tpTarefa",
+        type: 'POST',
+        data: {id:sid},
+        dataType: 'html',
+      }).done(function(response){
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'30%');
+      });
+    };
+      });
+  });
+
+ $(document).on('click', '.edit-conf-tipoTarefa', function(event) {
+   event.preventDefault();
+   $(this).addClass('hidden');
+   $(this).parent('td').find('.edit-conf-tipoTarefa-form').removeClass('hidden');
+ });
+
+ $(document).on('click', '.hide-conf-edit-tipoTarefa', function(event) {
+    event.preventDefault();
+    $(this).parent('form').parent('td').find('.edit-conf-tipoTarefa').removeClass('hidden');
+    $(this).parent('form').addClass('hidden');
+ });
+
+  $(document).on('submit', '.edit-conf-tipoTarefa-form', function(event) {
+   event.preventDefault();
+   var form = $(this);
+   var values = $(this).serializeAndEncode();
+      $.ajax({
+      url: urlbaseGeral+"/projetos/conf/ttEdit",
+      data: {dados: values},
+      type: 'POST',
+      dataType: 'json',
+    })
+    .done(function(r) {
+      flashMessage(r.status, r.msg);
+      if(r.status == 'success'){
+        var sid = r.id;
+         $.ajax({
+        url: urlbaseGeral + "/projetos/conf/tpTarefa",
+        type: 'POST',
+        data: {id:sid},
+        dataType: 'html',
+      }).done(function(response){
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'30%');
+      });
+    };
+      
+    });
+ });
+
 
  });
 

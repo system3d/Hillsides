@@ -29,4 +29,8 @@ class Status_Tarefa extends Model
 	public function projeto() {
 		return $this->belongsTo('App\Projeto');
 	}
+
+	public function tarefas() {
+		return $this->hasMany('App\Tarefa', 'status_id');
+	}
 }

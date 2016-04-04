@@ -9,7 +9,7 @@ class Tipo_Tarefa_Default extends Model
 {
     protected $table = 'tipos_tarefa_default';
     public $timestamps = true;
-	protected $fillable = ['descricao', 'icone', 'locatario_id'];
+	protected $fillable = ['descricao', 'icone', 'cor', 'locatario_id'];
 
 	protected static function boot()
     {

@@ -60,10 +60,10 @@
                   <i class="fa fa-caret-down"></i>
                 </button>
                 <ul class="dropdown-menu">
-                  <li><a href="#">Estágios do Projeto</a></li>
-                  <li><a href="#">Status do Projeto</a></li>
-                  <li><a href="#">Status das Tarefas</a></li>
-                  <li><a href="#">Tipos de Tarefas</a></li>
+                  <li><a href="#" id="drop-estagio" data-id="{{$projeto->id}}">Estágios do Projeto</a></li>
+                  <li><a href="#" id="drop-st-projeto" data-id="{{$projeto->id}}">Status Disponíveis</a></li>
+                  <li><a href="#" id="drop-st-tarefa" data-id="{{$projeto->id}}">Status das Tarefas</a></li>
+                  <li><a href="#" id="drop-tarefa" data-id="{{$projeto->id}}">Tipos de Tarefas</a></li>
                 </ul>
             </span>
             <button data-dismiss="modal" aria-hidden="true" class="btn btn-google pull-right" data-toggle="tooltip" data-html="true" title='Fechar Janela'><i class="fa fa-times"></i></button>

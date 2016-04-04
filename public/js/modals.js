@@ -143,6 +143,35 @@ function drawModal(data, widtth, no){
 		            "iDisplayLength": 25,
 		        });
              });
+    	}else if(res[2] == 'Stat'){
+    			 $.ajax({
+		        url: urlbaseGeral + "/projetos/conf/stProjeto",
+		        type: 'POST',
+		        data: {id:res[3]},
+		        dataType: 'html',
+		      }).done(function(response){
+		        drawModal(response,'30%');
+		      });
+    	}else if(res[2] == 'StaTar'){
+    			 $.ajax({
+		        url: urlbaseGeral + "/projetos/conf/srTarefa",
+		        type: 'POST',
+		        data: {id:res[3]},
+		        dataType: 'html',
+		      }).done(function(response){
+		        drawModal(response,'30%');
+		      });
+    	}else if(res[2] == 'TiTa'){
+    			 $.ajax({
+		        url: urlbaseGeral + "/projetos/conf/tpTarefa",
+		        type: 'POST',
+		        data: {id:res[3]},
+		        dataType: 'html',
+		      }).done(function(response){
+		        drawModal(response,'30%');
+		      });
+    	}else if(res[2] == 'Est'){
+    		DrawModalEstagio(res[3]);
     	}else{
 	  		$('#modal').modal("hide");
 	  	}
@@ -169,4 +198,37 @@ function startPlugins(){
         showOnFocus: true,
         immediateUpdates: true,
     });
+}
+
+function DrawModalEstagio(id){
+	     $.ajax({
+        url: urlbaseGeral + "/projetos/conf/estagios",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'html',
+      }).done(function(response){
+        drawModal(response,'30%');
+          $("#sorEstagiosBody").sortable({
+        tolerance: 'pointer',
+       placeholder: "placeholderWrapper2",
+        axis: "y",
+         cursor: "move",
+         revert: true,
+        forceHelperSize: true,
+        forcePlaceholderSize: true,
+        helper: 'clone',
+        start: function( event, ui ) {
+          $('.excluir-conf-estag').addClass('hidden');
+        },
+         stop: function( event, ui ) {
+          $('.excluir-conf-estag').removeClass('hidden');
+          var sorted = $( "#sorEstagiosBody" ).sortable( "toArray", { attribute: 'data-id' } );
+          $.ajax({
+         url: urlbaseGeral+"/projetos/conf/setOrder",
+         type: 'POST',
+        data: {sorted:sorted},
+        })
+        },
+    });
+      });
 }

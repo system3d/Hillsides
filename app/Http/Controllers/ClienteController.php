@@ -13,6 +13,10 @@ use App\Historia as historia;
 use App\Disciplina as disciplina;
 use App\Etapa as etapa;
 use App\Models\Access\User\User as user;
+use App\Estagio as estag;
+use App\Status_Projeto as stp;
+use App\Status_tarefa as stt;
+use App\Tipo_Tarefa as ttf;
 
 
 class ClienteController extends Controller
@@ -78,6 +82,37 @@ class ClienteController extends Controller
         $new = disciplina::create($check);
           if(isset($new->id)) return('%success&Disciplina Cadastrada com Sucesso&D&'.$new->projeto_id);
           else return('%error&Erro ao Cadastrar Disciplina');
+      break;
+
+     case 'estagios':
+        unset($check['user_id']);
+        $lastEstag = estag::orderBy('ordem', 'desc')->first();
+        $check['ordem'] = (int) $lastEstag->ordem + 1;
+        $new = estag::create($check);
+          if(isset($new->id)) return('%success&Estágio Cadastrada com Sucesso&Est&'.$new->projeto_id);
+          else return('%error&Erro ao Cadastrar Estágio');
+      break;
+
+      case 'status':
+        $new = stp::create($check);
+          if(isset($new->id)) return('%success&Status Cadastrado com Sucesso&Stat&'.$new->projeto_id);
+          else return('%error&Erro ao Cadastrar Status');
+      break;
+
+      case 'stat_tarefa':
+        unset($check['user_id']);
+        $new = stt::create($check);
+          if(isset($new->id)) return('%success&Status Cadastrado com Sucesso&StaTar&'.$new->projeto_id);
+          else return('%error&Erro ao Cadastrar Status');
+      break;
+
+      case 'tipo_tarefa':
+      unset($check['user_id']);
+      $check['cor']   = '#FFFFFF';
+      $check['icone'] = 'default.png';
+       $new = ttf::create($check);
+          if(isset($new->id)) return('%success&Tipo Cadastrado com Sucesso&TiTa&'.$new->projeto_id);
+          else return('%error&Erro ao Cadastrar Tipo');
       break;
 
       case 'etapas':

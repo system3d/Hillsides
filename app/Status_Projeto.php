@@ -30,4 +30,8 @@ class Status_Projeto extends Model
 		return $this->belongsTo('App\Projeto');
 	}
 
+	public function projetos() {
+		return $this->hasMany('App\Projeto', 'status_id');
+	}
+
 }

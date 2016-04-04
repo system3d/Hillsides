@@ -71,6 +71,8 @@ Route::post('settings/gravarTrp', array('middleware' => 'admin', 'as' => 'settin
 Route::post('settings/deleteTrp', array('middleware' => 'admin', 'as' => 'settings/deleteTrp', 'uses' => 'SettingsController@deleteTrp'));
 Route::post('settings/setIcon', array('middleware' => 'admin', 'as' => 'settings/setIcon', 'uses' => 'SettingsController@setIcon'));
 Route::post('settings/storeIcon', array('middleware' => 'admin', 'as' => 'settings/storeIcon', 'uses' => 'SettingsController@storeIcon'));
+Route::post('settings/setColor', array('middleware' => 'admin', 'as' => 'settings/setColor', 'uses' => 'SettingsController@setColor'));
+Route::post('settings/storeColor', array('middleware' => 'admin', 'as' => 'settings/storeColor', 'uses' => 'SettingsController@storeColor'));
 
 Route::get('projetos', array('middleware' => 'admin', 'as' => 'projetos', 'uses' => 'ProjetosController@index'));
 Route::post('projetos/criar', array('middleware' => 'admin', 'as' => 'projetos/criar', 'uses' => 'ProjetosController@criar'));
@@ -80,6 +82,7 @@ Route::post('projetos/info', array('middleware' => 'admin', 'as' => 'projetos/in
 Route::post('projetos/toggleFavorite', array('middleware' => 'admin', 'as' => 'projetos/toggleFavorite', 'uses' => 'ProjetosController@toggleFavorite'));
 Route::post('projetos/editar', array('middleware' => 'admin', 'as' => 'projetos/editar', 'uses' => 'ProjetosController@editar'));
 Route::post('projetos/update', array('middleware' => 'admin', 'as' => 'projetos/update', 'uses' => 'ProjetosController@update'));
+Route::post('projetos/excluir', array('middleware' => 'admin', 'as' => 'projetos/excluir', 'uses' => 'ProjetosController@excluir'));
 
 Route::post('projetos/equipes', array('middleware' => 'admin', 'as' => 'projetos/equipes', 'uses' => 'ProjetosController@equipes'));
 Route::post('projetos/novaEquipe', array('middleware' => 'admin', 'as' => 'projetos/novaEquipe', 'uses' => 'ProjetosController@novaEquipe'));
@@ -108,3 +111,28 @@ Route::post('projetos/criarEtapas', array('middleware' => 'admin', 'as' => 'proj
 Route::post('projetos/editarEtapas', array('middleware' => 'admin', 'as' => 'projetos/editarEtapas', 'uses' => 'ProjetosController@editarEtapas'));
 Route::post('projetos/updateEtapas', array('middleware' => 'admin', 'as' => 'projetos/updateEtapas', 'uses' => 'ProjetosController@updateEtapas'));
 Route::post('projetos/excluirEtapas', array('middleware' => 'admin', 'as' => 'projetos/excluirEtapas', 'uses' => 'ProjetosController@excluirEtapas'));
+
+Route::post('projetos/conf/estagios', array('middleware' => 'admin', 'as' => 'projetos/conf/estagios', 'uses' => 'SettingsController@proj_estagios'));
+Route::post('projetos/conf/setOrder', array('middleware' => 'admin', 'as' => 'projetos/conf/setOrder', 'uses' => 'SettingsController@proj_setOrder'));
+Route::post('projetos/conf/estagioEdit', array('middleware' => 'admin', 'as' => 'projetos/conf/estagioEdit', 'uses' => 'SettingsController@proj_estagioEdit'));
+Route::post('projetos/conf/estagioNovo', array('middleware' => 'admin', 'as' => 'projetos/conf/estagioNovo', 'uses' => 'SettingsController@proj_estagioNovo'));
+Route::post('projetos/conf/estagioExcluir', array('middleware' => 'admin', 'as' => 'projetos/conf/estagioExcluir', 'uses' => 'SettingsController@proj_estagioExcluir'));
+
+Route::post('projetos/conf/stProjeto', array('middleware' => 'admin', 'as' => 'projetos/conf/stProjeto', 'uses' => 'SettingsController@proj_stProjeto'));
+Route::post('projetos/conf/stEdit', array('middleware' => 'admin', 'as' => 'projetos/conf/stEdit', 'uses' => 'SettingsController@proj_stEdit'));
+Route::post('projetos/conf/stNovo', array('middleware' => 'admin', 'as' => 'projetos/conf/stNovo', 'uses' => 'SettingsController@proj_stNovo'));
+Route::post('projetos/conf/stExcluir', array('middleware' => 'admin', 'as' => 'projetos/conf/stExcluir', 'uses' => 'SettingsController@proj_stExcluir'));
+
+Route::post('projetos/conf/srTarefa', array('middleware' => 'admin', 'as' => 'projetos/conf/srTarefa', 'uses' => 'SettingsController@proj_srTarefa'));
+Route::post('projetos/conf/srEdit', array('middleware' => 'admin', 'as' => 'projetos/conf/srEdit', 'uses' => 'SettingsController@proj_srEdit'));
+Route::post('projetos/conf/srNovo', array('middleware' => 'admin', 'as' => 'projetos/conf/srNovo', 'uses' => 'SettingsController@proj_srNovo'));
+Route::post('projetos/conf/srExcluir', array('middleware' => 'admin', 'as' => 'projetos/conf/srExcluir', 'uses' => 'SettingsController@proj_srExcluir'));
+
+Route::post('projetos/conf/tpTarefa', array('middleware' => 'admin', 'as' => 'projetos/conf/tpTarefa', 'uses' => 'SettingsController@proj_tpTarefa'));
+Route::post('projetos/conf/setColor', array('middleware' => 'admin', 'as' => 'projetos/conf/setColor', 'uses' => 'SettingsController@proj_setColor'));
+Route::post('projetos/conf/storeColor', array('middleware' => 'admin', 'as' => 'projetos/conf/storeColor', 'uses' => 'SettingsController@proj_storeColor'));
+Route::post('projetos/conf/setIcon', array('middleware' => 'admin', 'as' => 'projetos/conf/setIcon', 'uses' => 'SettingsController@proj_setIcon'));
+Route::post('projetos/conf/storeIcon', array('middleware' => 'admin', 'as' => 'projetos/conf/storeIcon', 'uses' => 'SettingsController@proj_storeIcon'));
+Route::post('projetos/conf/ttCreate', array('middleware' => 'admin', 'as' => 'projetos/conf/ttCreate', 'uses' => 'SettingsController@proj_ttCreate'));
+Route::post('projetos/conf/ttExcluir', array('middleware' => 'admin', 'as' => 'projetos/conf/ttExcluir', 'uses' => 'SettingsController@proj_ttExcluir'));
+Route::post('projetos/conf/ttEdit', array('middleware' => 'admin', 'as' => 'projetos/conf/ttEdit', 'uses' => 'SettingsController@proj_ttEdit'));

@@ -56,6 +56,7 @@
     <!-- Bootstrap Select -->
     {!! Html::script('js/bootstrap-select.min.js') !!}
     {!! Html::script('js/i18n/defaults-pt_BR.min.js') !!}
+    {!! Html::script('plugins/colorpicker/bootstrap-colorpicker.min.js') !!}
 
     <!-- AdminLTE -->
     {!! Html::script('js/app.min.js') !!}

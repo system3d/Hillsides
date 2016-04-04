@@ -1,6 +1,6 @@
 $(document).ready(function() {
 
-	$(document).on('click', '#new-est-side', function(event) {
+$(document).on('click', '#new-est-side', function(event) {
 		event.preventDefault();
 		var thisLink = $(this).find('i');
 		// $(this).addClass('fa-spin');
@@ -179,6 +179,34 @@ $(document).ready(function() {
 		  });
 	});
 
+	$(document).on('click', '.fire-bck-change', function(event) {
+		event.preventDefault();
+		var id = $(this).attr('data-id');
+		$.ajax({
+	    url: urlbaseGeral+"/settings/setColor",
+	    type: 'POST',
+	    data:{id:id},
+	    dataType: 'html',
+		  })
+		  .done(function(response) {
+		  	drawModal(response, '25%');
+		  	$('.colorPickBck').colorpicker();
+		  	$('.colorPickBck').colorpicker().on('changeColor.colorpicker', function(event){
+		  	  var color = event.color.toHex();
+			  $('#colorSelected').css('background', color);
+			});
+    
+		  });
+	});
+
+	$(document).on('focus', '.colorPickBck', function(event) {
+		$('#colorSelected').css('border-color', '#3c8dbc');
+	});
+
+	$(document).on('blur', '.colorPickBck', function(event) {
+		$('#colorSelected').css('border-color', '#d2d6de');
+	});
+
 	$("#estagios-sets-wrap").sortable({
         tolerance: 'pointer',
        placeholder: "placeholderWrapper",
@@ -216,5 +244,22 @@ $(document).ready(function() {
     	 	$('#modal').modal("hide");
 	    });
     });
+
+     $(document).on('submit', '#trocar_cor', function(event) {
+     	event.preventDefault();
+     	var values = $(this).serializeAndEncode();
+     	$.ajax({
+	      url: urlbaseGeral+"/settings/storeColor",
+	      data: {dados: values},
+	      type: 'POST',
+	      dataType: 'json',
+	    }).done(function(r){
+	      flashMessage(r.status, r.msg);
+	      $('#modal').modal("hide");
+	      if(r.status == 'success'){
+	      	$('#BTCS'+r.id).css('background', r.cor);
+	      }
+	    })
+     });
 
 });

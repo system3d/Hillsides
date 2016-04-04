@@ -37,7 +37,7 @@ class Projeto extends Model
 	}
 
 	public function status() {
-		return $this->belongsTo('App\Status_Projeto');
+		return $this->belongsTo('App\Status_Projeto', 'status_id');
 	}
 
 	public function statuses() {

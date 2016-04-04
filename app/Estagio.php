@@ -30,4 +30,8 @@ class Estagio extends Model
 		return $this->belongsTo('App\Projeto');
 	}
 
+	public function tarefas() {
+		return $this->hasMany('App\Tarefa');
+	}
+
 }
