@@ -523,6 +523,10 @@ div.dataTables_wrapper div.dataTables_processing {
     cursor: move;
 }
 
+.ui-sortable-helper td{
+    border: none !important;
+}
+
 .ui-sortable-helper
 {
    background:#b8c7ce;  

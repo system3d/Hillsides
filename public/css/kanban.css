@@ -1,0 +1,147 @@
+.red-pin{
+	left: 45px;
+	display: inline-block;
+	width: 8px;
+	height: 8px;
+	background-color: #f33;
+	background-image: -webkit-linear-gradient(top, rgba(100,0,0,0), rgba(255,90,90,1));
+	background-image: -moz-linear-gradient(top, rgba(100,0,0,0), rgba(255,90,90,1));
+	background-image: -ms-linear-gradient(top, rgba(100,0,0,0), rgba(255,90,90,1));
+	background-image: -o-linear-gradient(top, rgba(100,0,0,0), rgba(255,90,90,1));
+	background-image: linear-gradient(to bottom, rgba(100,0,0,0), rgba(255,90,90,1));
+	-webkit-border-radius: 100%;
+	-moz-border-radius: 100%;
+	border-radius: 100%;
+	box-shadow: 0 0 0 1px #c00, inset 0 1px 1px rgba(255,255,255,.6), 0 2px 2px rgba(0,0,0,.4);
+	position: relative;
+}
+
+
+.tarefa{
+	text-align: left !important;
+	margin: 5px;
+	/*margin-left: auto;*/
+	display: inline-block;
+	opacity: 0.8;
+	width: 90px;
+	height: 115px;
+	background: #C70986;
+     -webkit-box-shadow: 0 2px 12px rgba(0,0,0,.5);
+    -moz-box-shadow: 0 2px 12px rgba(0,0,0,.5);
+    box-shadow: 0 2px 3px rgba(0,0,0,.5);
+}
+
+.tarefa:hover{
+	cursor: move;
+}
+
+.tarefa-body{
+	position: relative;
+	width: 90%;
+	margin-left: 5%;
+
+}
+
+.tarefa-body .tarefa-title{
+	font-size:14px;
+	margin-bottom: 3px !important;
+	max-width: 100%;
+	text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
+}
+
+.tarefa-body .tarefa-title:hover{
+	color: #00DEFF;
+	cursor: pointer;
+}
+
+.tarefa-body .tarefa-list{
+	list-style: none;
+	padding-left: 3px;
+	font-size:10px;
+	margin-bottom: 3px;
+}
+
+.tarefa .tarefa-footer{
+	bottom: 0;
+	position: relative;
+}
+
+.tarefa-footer .tarefa-img{
+	width: 22px;
+	height: 22px;
+	margin-top: 3px;
+	display: inline-block;
+}
+
+.tarefa-footer .tarefa-img:hover{
+	cursor: pointer;
+	opacity: 0.7;
+}
+
+.tarefa-img-user{
+	position: relative;
+	margin-left: 7px;
+}
+
+.tarefa-img-tipo{
+	position: relative;
+	margin-right: 7px;
+	float: right;
+}
+
+.box-kanban{
+	margin-bottom: 10px;
+}
+
+.table_kanban{
+
+	table-layout:fixed;
+	border-spacing: 2px;
+    border-collapse: separate;
+    width: 100%;
+}
+
+.table_kanban th{
+	text-align: center;
+	/*border-radius: 5px;*/
+	background: blue;
+	color: #F7F7F7;
+	padding: 3px !important;
+}
+
+#historia-table-header{
+	width: 5%;
+}
+
+.story-button{
+	margin-top: 10px;
+}
+
+.tarefa-group{
+	position: relative;
+	top: 3px;
+	left: 3px;
+}
+
+.table_kanban td {
+	text-align: center;
+	padding: 5px;
+	background-color: white;
+    border: 1px solid #cecece;
+    padding-bottom: 10px;
+    vertical-align: top;
+    height: auto;
+}
+
+.tarefa-wrapper{
+	display:block;
+}
+
+.td-story{
+	 word-wrap: break-word;         /* All browsers since IE 5.5+ */
+    overflow-wrap: break-word;     /* Renamed property in CSS3 draft spec */
+    width: 100%;
+    text-align: center;
+}

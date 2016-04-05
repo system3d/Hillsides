@@ -186,6 +186,7 @@ function drawModal(data, widtth, no){
         $('#modal_loader').addClass('hidden');
 	  });
  	});
+
  });
 
 function startPlugins(){

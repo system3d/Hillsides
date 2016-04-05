@@ -136,3 +136,5 @@ Route::post('projetos/conf/storeIcon', array('middleware' => 'admin', 'as' => 'p
 Route::post('projetos/conf/ttCreate', array('middleware' => 'admin', 'as' => 'projetos/conf/ttCreate', 'uses' => 'SettingsController@proj_ttCreate'));
 Route::post('projetos/conf/ttExcluir', array('middleware' => 'admin', 'as' => 'projetos/conf/ttExcluir', 'uses' => 'SettingsController@proj_ttExcluir'));
 Route::post('projetos/conf/ttEdit', array('middleware' => 'admin', 'as' => 'projetos/conf/ttEdit', 'uses' => 'SettingsController@proj_ttEdit'));
+
+Route::get('kanban/{id}', array('middleware' => 'admin', 'as' => 'kanban/{id}', 'uses' => 'KanbanController@index'));

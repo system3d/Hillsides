@@ -216,7 +216,8 @@ $(document).on('click', '#new-est-side', function(event) {
         forceHelperSize: true,
         forcePlaceholderSize: true,
          stop: function( event, ui ) {
-        	var sorted = $( "#estagios-sets-wrap" ).sortable( "toArray" );
+        	var sorted = $( "#estagios-sets-wrap" ).sortable( "toArray", { attribute: 'data-id' } );
+        	dd(sorted);
         	$.ajax({
 		    url: urlbaseGeral+"/settings/setOrder",
 		     type: 'POST',
