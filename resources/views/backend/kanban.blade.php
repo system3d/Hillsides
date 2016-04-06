@@ -1,5 +1,10 @@
 @extends('frontend.layouts.master')
 
+@section('styles')
+	{{Html::style('css/kanban.css')}}
+	{{Html::style('css/kanban-skins.css')}}
+@endsection
+
 @section('content')
 
 @include('backend.kanban.navigation')

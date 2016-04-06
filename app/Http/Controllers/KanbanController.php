@@ -11,6 +11,9 @@ class KanbanController extends Controller
 {
     public function index($id){
     	$projeto = proj::find($id);
-    	return view('backend.kanban', compact('projeto'));
+    	$estCount = $projeto->estagios->count();
+		$columnWidth = 95 / ($estCount + 2);
+		$columnWidth = $columnWidth.'%';
+    	return view('backend.kanban', compact('projeto', 'columnWidth'));
     }
 }

@@ -95,6 +95,16 @@
 	margin-bottom: 10px;
 }
 
+.box-kanban hr{
+	margin-top:5px;
+	margin-bottom: 10px;
+}
+
+.box-kanban .form-group{
+	margin-right: 5px;
+	margin-bottom: 5px;
+}
+
 .table_kanban{
 
 	table-layout:fixed;
@@ -105,15 +115,32 @@
 
 .table_kanban th{
 	text-align: center;
-	/*border-radius: 5px;*/
-	background: blue;
-	color: #F7F7F7;
+	border-radius: 5px;
 	padding: 3px !important;
 }
 
 #historia-table-header{
 	width: 5%;
 }
+
+th span.hidden{
+	display: inline-block !important;
+	visibility: hidden;
+}
+
+ td.column-collapsed{
+	background-color: #A4A4A4 !important;
+}
+
+.column-hover{
+	float: right;
+	margin-right: 5px;
+}
+
+.column-collapse:hover{
+	cursor: pointer;
+}
+
 
 .story-button{
 	margin-top: 10px;
@@ -128,11 +155,15 @@
 .table_kanban td {
 	text-align: center;
 	padding: 5px;
-	background-color: white;
-    border: 1px solid #cecece;
     padding-bottom: 10px;
     vertical-align: top;
     height: auto;
+}
+
+.table_kanban th{
+	text-overflow: ellipsis;
+   white-space: nowrap;
+   overflow: hidden;
 }
 
 .tarefa-wrapper{
