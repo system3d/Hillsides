@@ -321,6 +321,10 @@
       type: 'POST',
       dataType: 'json',
     }).done(function(r){
+       if(isKanban == true){
+         $('#modal_loader').removeClass('hidden'); 
+         location.reload();
+       }else{
       flashMessage(r.status, r.msg);
         var sid = r.id;
         $.ajax({
@@ -341,6 +345,7 @@
         });
           $('#modal_loader').addClass('hidden');
       });
+    }
     })
   });
 
@@ -354,6 +359,10 @@
         dataType: 'json',
       })
       .done(function(r) {
+        if(isKanban == true){
+         $('#modal_loader').removeClass('hidden'); 
+         location.reload();
+       }else{
        flashMessage(r.status, r.msg);
         var sid = r.id;
         $.ajax({
@@ -372,6 +381,7 @@
         });
           $('#modal_loader').addClass('hidden');
       });
+    }
       });
   });
 
@@ -438,6 +448,7 @@
       })
       .done(function(response) {
         drawModal(response,'30%');
+
       });
   });
 
@@ -452,6 +463,10 @@
       type: 'POST',
       dataType: 'json',
     }).done(function(r){
+       if(isKanban == true){
+         $('#modal_loader').removeClass('hidden'); 
+         location.reload();
+       }else{
       flashMessage(r.status, r.msg);
         $.ajax({
         url: urlbaseGeral+"/projetos/historias",
@@ -471,6 +486,7 @@
         });
           $('#modal_loader').addClass('hidden');
       });
+    }
     })
   });
 
@@ -485,6 +501,10 @@
         dataType: 'json',
       })
       .done(function(r) {
+       if(isKanban == true){
+         $('#modal_loader').removeClass('hidden'); 
+         location.reload();
+       }else{
        flashMessage(r.status, r.msg);
         var sid = r.id;
         $.ajax({
@@ -503,6 +523,7 @@
         });
           $('#modal_loader').addClass('hidden');
       });
+    }
       });
   });
 
@@ -1297,3 +1318,9 @@
 
  });
 
+function kanbanReload(){
+ if(isKanban == true){
+  $('#loader').removeClass('hidden'); 
+  location.reload();
+ }
+}

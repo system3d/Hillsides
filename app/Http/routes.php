@@ -138,3 +138,7 @@ Route::post('projetos/conf/ttExcluir', array('middleware' => 'admin', 'as' => 'p
 Route::post('projetos/conf/ttEdit', array('middleware' => 'admin', 'as' => 'projetos/conf/ttEdit', 'uses' => 'SettingsController@proj_ttEdit'));
 
 Route::get('kanban/{id}', array('middleware' => 'admin', 'as' => 'kanban/{id}', 'uses' => 'KanbanController@index'));
+Route::post('kanban/historia', array('middleware' => 'admin', 'as' => 'kanban/historia', 'uses' => 'KanbanController@historia'));
+Route::post('kanban/criarHistoria', array('middleware' => 'admin', 'as' => 'kanban/criarHistoria', 'uses' => 'KanbanController@criarHistoria'));
+
+Route::post('tarefa/criar', array('middleware' => 'admin', 'as' => 'tarefa/criar', 'uses' => 'TarefasController@criar'));

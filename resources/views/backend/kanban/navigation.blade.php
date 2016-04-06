@@ -10,10 +10,30 @@
 
 
           <div class="form-group">
-            <a href="#" class="btn btn-primary">Projeto</a>
-            <a href="#" class="btn btn-primary">Nova Tarefa</a>
+            <a href="#" class="btn btn-primary" id='loadProjInfoKanban' data-id='{{$projeto->id}}'>
+              <i class="fa fa-folder"></i>&nbsp;&nbsp;Projeto</a>
+             <a href="#" class="btn btn-warning projeto-sprints" id='loadProjSprintKanban' data-id='{{$projeto->id}}'>
+              <i class="fa fa-refresh"></i>&nbsp;&nbsp;Sprints</a>
+            <a href="#" class="btn btn-info" id='hist-proj' data-id='{{$projeto->id}}'>
+              <i class="fa fa-book"></i>&nbsp;&nbsp;Histórias</a>
+            <a href="#" class="btn btn-success" id='novaTarefaKanban' data-id='{{$projeto->id}}'>
+              <i class="fa fa-external-link"></i>&nbsp;&nbsp;Nova Tarefa</a>
           </div>
+
+          <div class="form-group check-group">
+            <label>
+                  <input  type="checkbox" name="backlogToggle" id='backlogToggle' value="1" checked> <span>Backlog</span>
+                </label>
+                &nbsp;&nbsp;
+                <label> <input  type="checkbox" name="arquivToggle" id='arquivToggle' value="1" checked> <span>Arquivadas</span> </label>
+          </div>
+
+          <div class="form-group selectSprints pull-right">
+             <input type="text" placeholder='Pesquisar' class='form-control'>
+          </div>
+
          <hr>
+
           <div class="form-group selectSprints">
           <label for="sprints">Sprints: </label>
            <select id="selectSprints" class="form-control" required="required" name="obra">
@@ -36,7 +56,7 @@
 
            <div class="form-group selectSprints">
           <label for="sprints">Equipes: </label>
-           <select id="selectSprints" class="form-control" required="required" name="obra">
+           <select id="selectEquipe" class="form-control" required="required" name="obra">
             <option value="0">Todas</option>
             @foreach($projeto->equipes as $equipe)
               <option value="{{$equipe->id}}">{{$equipe->descricao}}</option>
@@ -46,7 +66,7 @@
 
            <div class="form-group selectSprints">
           <label for="sprints">Encarregado: </label>
-           <select id="selectSprints" class="form-control" required="required" name="obra">
+           <select id="selectUser" class="form-control" required="required" name="obra">
             <option value="0">Todos</option>
             @foreach($projeto->sprints as $sprint)
               <option value="{{$sprint->id}}">{{$sprint->descricao}}</option>
@@ -56,7 +76,7 @@
 
            <div class="form-group selectSprints">
           <label for="sprints">Disciplinas: </label>
-           <select id="selectSprints" class="form-control" required="required" name="obra">
+           <select id="selectDisc" class="form-control" required="required" name="obra">
             <option value="0">Todas</option>
             @foreach($projeto->disciplinas as $disciplina)
               <option value="{{$disciplina->id}}">{{$disciplina->descricao}}</option>
@@ -66,7 +86,7 @@
 
            <div class="form-group selectSprints">
           <label for="sprints">Etapas: </label>
-           <select id="selectSprints" class="form-control" required="required" name="obra">
+           <select id="selectEtapa" class="form-control" required="required" name="obra">
             <option value="0">Todas</option>
             @foreach($projeto->etapas as $etapa)
               <option value="{{$etapa->id}}">{{$etapa->descricao}}</option>
@@ -74,8 +94,8 @@
            </select>
           </div>
 
-          <div class="form-group selectSprints pull-right">
-          <input type="text" placeholder='Pesquisar' class='form-control'>
+          <div class="form-group">
+            <a href="#" class="btn btn-info" data-toggle="tooltip" data-id='{{$projeto->id}}' title='Carregar Tarefas'><i class="fa fa-refresh"></i>&nbsp;&nbsp;Caregar</a>
           </div>
          
       </form>

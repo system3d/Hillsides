@@ -192,9 +192,9 @@ class CreateSystemTables extends Migration
             $table->increments('id');
             $table->string('descricao', 255)->nullable();
             $table->integer('ordem')->unsigned();
-            $table->integer('projeto_id')->unsigned();
+            $table->integer('projeto_id')->nullable()->unsigned();
             $table->foreign('projeto_id')->references('id')->on('projetos')->onDelete('cascade');
-            $table->integer('locatario_id')->unsigned();
+            $table->integer('locatario_id')->nullable()->unsigned();
             $table->foreign('locatario_id')->references('id')->on('locatarios')->onDelete('cascade');
 
             $table->timestamps();

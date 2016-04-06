@@ -2,6 +2,7 @@
         var urlbaseGeral = {!! json_encode(url('/')) !!};
         var modal_history = [false];
         var modal_width = ['60%'];
+        var isKanban = false;
     </script>
 
     <script type="text/javascript"> var app_env = '{!! env('APP_ENV') !!}' </script>
@@ -19,6 +20,7 @@
     
     <!-- Jquery UI -->
     {!! Html::script('plugins/jQueryUI/jquery-ui.js') !!}
+     {!! Html::script('js/touch-punch.js') !!}
     <!-- Bootstrap 3.3.5 -->
     {!! Html::script('js/bootstrap.min.js') !!}
     {!! Html::script('plugins/parsley.js') !!}

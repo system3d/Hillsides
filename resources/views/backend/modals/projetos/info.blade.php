@@ -45,6 +45,7 @@
       $favT = ($projeto->favorito == 0) ? 'Adicionar a Favoritos' : 'Remover de Favoritos'; ?>
         <div class="form-group">
             <button class="btn {{$fav}} projeto-favorite" data-toggle="tooltip" data-html="true" title='{{$favT}}' data-id="{{$projeto->id}}"><i class="fa fa-star"></i></button>
+            @if($kanban == true)
             <a href='{{url("kanban")."/".$projeto->id}}' type="button" class="btn btn-success" data-toggle="tooltip" data-html="true" title='Kanbam do Projeto'><i class="fa fa-th-large"></i></a>
             <button type="button" class="btn btn-primary info-edit-projeto" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Editar'><i class="fa fa-pencil"></i></button>
             <button class="btn bg-orange projeto-equipes" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Equipes do Projeto'><i class="fa fa-users" ></i></button>
@@ -66,6 +67,7 @@
                   <li><a href="#" id="drop-tarefa" data-id="{{$projeto->id}}">Tipos de Tarefas</a></li>
                 </ul>
             </span>
+            @endif
             <button data-dismiss="modal" aria-hidden="true" class="btn btn-google pull-right" data-toggle="tooltip" data-html="true" title='Fechar Janela'><i class="fa fa-times"></i></button>
             
             <input type="hidden" id="PD{{$projeto->id}}">

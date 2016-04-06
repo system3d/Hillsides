@@ -35,7 +35,13 @@ class ProjetosController extends Controller
 
    public function info(request $request){
       $projeto = proj::find($request['id']);
-      return view('backend.modals.projetos.info', compact('projeto'));
+      $kanban = true;
+      if(isset($request['kanban'])){
+        if($request['kanban'] == 'nao'){
+          $kanban = false;
+        }
+      }
+      return view('backend.modals.projetos.info', compact('projeto', 'kanban'));
    }
 
    public function store(request $request){

@@ -176,3 +176,17 @@ th span.hidden{
     width: 100%;
     text-align: center;
 }
+
+.check-group{
+	margin-bottom: 0 !important;
+	-webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.check-group label:hover{
+	cursor: pointer;
+}

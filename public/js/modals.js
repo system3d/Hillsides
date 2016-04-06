@@ -73,6 +73,10 @@ function drawModal(data, widtth, no){
 	    dataType: 'html',
 	  })
 	  .done(function(rp) {
+  	if(isKanban == true){
+	     $('#modal_loader').removeClass('hidden'); 
+	     location.reload();
+	   }else{
 	    var rex = rp.split('%');
 	  	r =  rex[1];
 	  	var res = r.split("&");
@@ -184,6 +188,7 @@ function drawModal(data, widtth, no){
         	}
         }
         $('#modal_loader').addClass('hidden');
+    	}
 	  });
  	});
 

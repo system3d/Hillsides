@@ -48,7 +48,8 @@ class SettingsController extends Controller
     public function deleteEstagio(request $request){
     	$dados = $request->all();
     	$id = $dados['id'];
-    	$new = esdef::find($id)->delete();
+    	$newO = esdef::find($id);
+      $new = $newO->delete();
     	if($new){
 			$response['status'] = 'success';
 			$response['msg'] = 'Estágio Deletado com Sucesso';
@@ -351,6 +352,7 @@ class SettingsController extends Controller
     }
     $toUp = array('descricao' => $check['descricao']);
     $update = estag::find($check['id']);
+    $old = $update->descricao;
     $updated = $update->update($toUp);
     if($updated){
 		$response['msg'] = 'Estágio Atualizado com Sucesso';

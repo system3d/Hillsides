@@ -1,5 +1,17 @@
 $(document).ready(function() {
 
+   $("#modal").on('hide.bs.modal', function () {
+       modal_history = [false];
+    });
+
+  $('#backlogToggle').iCheck({
+    checkboxClass: 'icheckbox_flat-blue',
+  });
+
+  $('#arquivToggle').iCheck({
+    checkboxClass: 'icheckbox_flat-blue',
+  });
+
   $(document).on('click', '.column-collapse', function(event) {
     event.preventDefault();
     var head = $(this).parent('th');
@@ -77,6 +89,62 @@ $(document).ready(function() {
 	    var ThisId = $(this).attr('data-story');
 		$(this).sortable( "option", "containment", "#H-"+ThisId );
 	});
+
+   /////////
+
+   $(document).on('click', '#loadProjInfoKanban', function(event) {
+     event.preventDefault();
+      $('#loader').removeClass('hidden'); 
+     var id = $(this).attr('data-id');
+         $.ajax({
+            url: urlbaseGeral+"/projetos/info",
+            type: 'POST',
+            dataType: 'html',
+            data:{id:id,kanban:'nao'},
+          })
+          .done(function(response) {
+            drawModal(response, '50%');
+          });
+        $('#loader').addClass('hidden'); 
+   });
+
+   $(document).on('click', '#loadProjHistKanban', function(event) {
+     event.preventDefault();
+     var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/kanban/historia",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'50%');
+      });
+   });
+
+   $(document).on('click', '#novaTarefaKanban', function(event) {
+     event.preventDefault();
+     $('#loader').removeClass('hidden'); 
+     var id = $(this).attr('data-id');
+     var sprint = $('#selectSprints').val();
+     var story = $('#selectStory').val();
+     var user = $('#selectUser').val();
+     var disc = $('#selectDisc').val();
+     var etapa = $('#selectEtapa').val();
+     $.ajax({
+        url: urlbaseGeral+"/tarefa/criar",
+        type: 'POST',
+        dataType: 'html',
+        data:{id:id,sprint:sprint,story:story,user:user,dis:disc,etapa:etapa},
+      })
+      .done(function(response) {
+        drawModal(response, '60%');
+      });
+    $('#loader').addClass('hidden'); 
+   });
+
+
+
 });
 
 function isDark( color ) {

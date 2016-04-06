@@ -16,4 +16,13 @@ class KanbanController extends Controller
 		$columnWidth = $columnWidth.'%';
     	return view('backend.kanban', compact('projeto', 'columnWidth'));
     }
+
+    public function historia(request $request){
+	$id = $request['id'];
+  $obj = proj::find($id);
+  $tipo = 'projeto';
+  $historias = $obj->historias();
+
+    return view('backend.modals.projetos.historias', compact('obj','tipo','historias'));
+    }
 }
