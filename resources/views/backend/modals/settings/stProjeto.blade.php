@@ -16,12 +16,6 @@
 	   			<div class="table-responsive">
 	   			<table class="table table-striped table-bordered dt-responsive nowrap table-hover" cellspacing="0" width="100%" id="modalTable">
 					<tbody>
-						<tr>
-							<td>Ativo</td>
-							<td style="text-align:center">
-								<button class="btn btn-default btn-xs"  data-toggle="tooltip" data-html="true" title='Sistema'><i class="text-muted fa fa-trash"></i></button>
-							</td>
-						</tr>
 						@foreach($projeto->statuses as $status)
 							<tr>
 							<td>

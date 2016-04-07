@@ -84,6 +84,13 @@ class ProjetosController extends Controller
     }
 
     $stp_def = spd::all();
+    $stps1 = array(
+        'descricao'    => 'Ativo',
+        'projeto_id'   => $new->id,
+        'user_id'      => $check['user_id'],
+        'locatario_id' => $check['locatario_id']
+    );
+    $newSTs1 = sp::create($stps1);
     foreach($stp_def as $pd){
     	$stps = array(
     		'descricao'    => $pd->descricao,
@@ -110,7 +117,12 @@ class ProjetosController extends Controller
     }
    	
    	$stf_def = sfd::all();
-
+    $stfs2 = array(
+        'descricao'    => 'Aberta',
+        'projeto_id'   => $new->id,
+        'locatario_id' => $check['locatario_id']
+    );
+     $newSFs2 = sf::create($stfs2);
     foreach($stf_def as $fd){
     	$stfs = array(
     		'descricao'    => $fd->descricao,
@@ -127,7 +139,14 @@ class ProjetosController extends Controller
     }
 
     $str_def = trd::all();
-
+    $stfrs2 = array(
+        'descricao'    => 'Sem Classificação',
+        'icone'        => 'default.png',
+        'cor'          => '#fff',
+        'projeto_id'   => $new->id,
+        'locatario_id' => $check['locatario_id']
+    );
+    $newSFRs2 = tr::create($stfrs2);
     foreach($str_def as $fr){
     	$stfrs = array(
     		'descricao'    => $fr->descricao,
@@ -361,11 +380,13 @@ class ProjetosController extends Controller
     $tipo = $request['tipo'];
     if($tipo == 'sprint'){
       $obj = sprint::find($id);
+      $projeto = $obj->projeto;
     }
     else{
       $obj = proj::find($id);
+      $projeto = $obj;
     }
-    return view('backend.modals.projetos.criar-historia', compact('obj','tipo'));
+    return view('backend.modals.projetos.criar-historia', compact('obj','tipo','projeto'));
   }
 
   public function editarHistoria(request $request){

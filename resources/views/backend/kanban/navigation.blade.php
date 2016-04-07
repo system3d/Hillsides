@@ -6,7 +6,7 @@
     </div>
   </div>
   <div class="box-body">
-      <form accept-charset="UTF-8" class="form-inline" role="form">
+      <form accept-charset="UTF-8" class="form-inline" role="form" id='navForm'>
 
 
           <div class="form-group">
@@ -18,6 +18,7 @@
               <i class="fa fa-book"></i>&nbsp;&nbsp;Histórias</a>
             <a href="#" class="btn btn-success" id='novaTarefaKanban' data-id='{{$projeto->id}}'>
               <i class="fa fa-external-link"></i>&nbsp;&nbsp;Nova Tarefa</a>
+
           </div>
 
           <div class="form-group check-group">
@@ -31,7 +32,7 @@
           <div class="form-group selectSprints pull-right">
              <input type="text" placeholder='Pesquisar' class='form-control'>
           </div>
-
+    
          <hr>
 
           <div class="form-group selectSprints">
@@ -68,8 +69,8 @@
           <label for="sprints">Encarregado: </label>
            <select id="selectUser" class="form-control" required="required" name="obra">
             <option value="0">Todos</option>
-            @foreach($projeto->sprints as $sprint)
-              <option value="{{$sprint->id}}">{{$sprint->descricao}}</option>
+            @foreach($users as $user)
+              <option value="{{$user->id}}">{{$user->name}}</option>
             @endforeach
            </select>
           </div>
@@ -95,7 +96,7 @@
           </div>
 
           <div class="form-group">
-            <a href="#" class="btn btn-info" data-toggle="tooltip" data-id='{{$projeto->id}}' title='Carregar Tarefas'><i class="fa fa-refresh"></i>&nbsp;&nbsp;Caregar</a>
+            <a href="#" class="btn btn-info" data-toggle="tooltip" data-id='{{$projeto->id}}' title='Carregar Tarefas' id='load_tasks'><i class="fa fa-refresh"></i>&nbsp;&nbsp;Caregar</a>
           </div>
          
       </form>

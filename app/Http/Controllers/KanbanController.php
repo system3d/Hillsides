@@ -14,7 +14,19 @@ class KanbanController extends Controller
     	$estCount = $projeto->estagios->count();
 		$columnWidth = 95 / ($estCount + 2);
 		$columnWidth = $columnWidth.'%';
-    	return view('backend.kanban', compact('projeto', 'columnWidth'));
+    $users = array();
+    $usersIn = array();
+    foreach($projeto->equipes as $equipe){
+        foreach($equipe->users as $membro){
+          if(!in_array($membro->id, $usersIn)){
+            $users[] = $membro;
+            $usersIn[] = $membro->id;
+          }
+          
+        }
+      }
+      $users = collect($users);
+    	return view('backend.kanban', compact('projeto', 'columnWidth','users'));
     }
 
     public function historia(request $request){

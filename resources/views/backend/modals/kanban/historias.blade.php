@@ -1,3 +1,4 @@
+@if(isset($projeto->sprints->first()->id))
 <div class="panel panel-success">
    <div class="panel-heading">
    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -43,3 +44,12 @@
 	   </div>
    </div>
 </div>
+@else
+  <div class="alert alert-info">
+   <div class="alert-heading" style='color:white;background:#00c0ef'>
+   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4><i class="icon fa fa-warning"></i> Nenhum Sprint Cadastrada!</h4>
+    <a href="#" class='create-sprint' data-id='{{$projeto->id}}'>Cadastre um Sprint</a> em {{$projeto->descricao}} para criar Histórias.
+  </div>
+</div>
+@endif

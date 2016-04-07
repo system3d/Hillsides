@@ -9,12 +9,6 @@
 	   			<div class="table-responsive">
 	   			<table class="table table-striped table-bordered dt-responsive nowrap table-hover" cellspacing="0" width="100%" id="modalTable">
 					<tbody>
-						<tr>
-							<td>Aberta</td>
-							<td style="text-align:center">
-								<button class="btn btn-default btn-xs"  data-toggle="tooltip" data-html="true" title='Sistema'><i class="text-muted fa fa-trash"></i></button>
-							</td>
-						</tr>
 						@foreach($projeto->status_tarefa as $tarefa)
 							<tr>
 							<td>

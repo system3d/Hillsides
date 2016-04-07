@@ -9,7 +9,7 @@ class Tarefa extends Model
 {
      protected $table = 'tarefas';
     public $timestamps = true;
-	protected $fillable = ['descricao', 'obs', 'peso', 'sprint_id', 'assignee_id', 'tipo_id', 'estagio_id', 'status_id', 'user_id', 'locatario_id'];
+	protected $fillable = ['descricao', 'obs', 'peso', 'sprint_id', 'historia_id', 'assignee_id', 'tipo_id', 'estagio_id', 'status_id', 'projeto_id', 'disciplina_id', 'etapa_id', 'user_id', 'locatario_id'];
 
 	protected static function boot()
     {
@@ -34,6 +34,14 @@ class Tarefa extends Model
 		return $this->belongsTo('App\Historia');
 	}
 
+	public function disciplina() {
+		return $this->belongsTo('App\Disciplina');
+	}
+
+	public function etapa() {
+		return $this->belongsTo('App\Etapa');
+	}
+
 	public function assignee() {
 		return $this->belongsTo('App\Models\Access\User\User');
 	}
@@ -43,7 +51,7 @@ class Tarefa extends Model
 	}
 
 	public function estagio() {
-		return $this->belongsTo('App\Estagio');
+		return $this->belongsTo('App\Estagio', 'estagio_id');
 	}
 
 	public function status() {

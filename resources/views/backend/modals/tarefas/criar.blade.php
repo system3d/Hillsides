@@ -5,7 +5,7 @@
        <h4>Criar Tarefa para {{$projeto->descricao}}</h4>
    </div>
    <div class="panel-body">
-       <form id="tarefa_cadastro" data-parsley-validate="">
+       <form id="tarefa_cadastro" data-parsley-validate="" enctype="multipart/form-data">
        <input type="hidden" name="projeto_id" value="{{$projeto->id}}">
        	<div class="row">
        		<div class="col-md-4">
@@ -39,7 +39,7 @@
                <label for="historia" class="control-label">Estágio:</label>
                  <select class="form-control" style='width:100%' name='estagio_id'>
                   <option value="1">Backlog</option>
-                   @foreach($projeto->estagios as $estg)
+                   @foreach($projeto->estagios->sortBy('ordem') as $estg)
                     <option value="{{$estg->id}}">{{$estg->descricao}}</option>
                    @endforeach
                    <option value="2">Arquivada</option>
@@ -53,6 +53,10 @@
                    @endforeach
                  </select>
             </div> 
+            <div class="form-group">
+               <label for="fullname" class="control-label">Peso:</label>
+               <input type="number" class="form-control" name="peso" style='width:100%'>
+            </div>
           </div>
           <div class="col-md-4">
                <div class="form-group">
@@ -91,28 +95,18 @@
             </div>
           </div>
        	</div> 
-     </form>
-        <hr>
+
         <div class="row">
           <div class="col-md-6">
-              <div class="form-group" style='margin-top: 20px;'>
+              <div class="form-group">
                   <button type="submit" class="btn btn-primary">Gravar</button> 
                   <a href='#'  data-dismiss="modal" aria-hidden="true" class="btn btn-danger">Cancelar</a>
               </div>
           </div>
-          <div class="col-md-6">
-            <div class="form-group">
-               <label for="fullname" class="control-label">Anexo:</label>
-              <form id="tarefa_append">
-               <input type="file" class="form-control" name="file" style='width:100%'>
-               <p class="help-block">Tipos permitidos: JPG, PNG, GIF, TXT, ZIP, DOC, XLS, PPT</p>
-              </form>
-            </div>
-          </div>
-
+            
           </div>
         </div>
-
+    </form>
    </div>
 </div>
 @else

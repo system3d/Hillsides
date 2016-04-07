@@ -9,14 +9,6 @@
 	   			<div class="table-responsive">
 	   			<table class="table table-striped table-bordered dt-responsive nowrap table-hover" cellspacing="0" width="100%" id="modalTable">
 					<tbody>
-						<tr>
-							<td>Sem Classificação</td>
-							<td style="text-align:center">
-								<span class='back-tp-change' style='background:#fff'></span>
-                         		 <img class='img-circle img-p-icon' src="{{ asset('img/icones/default.png') }}">
-								<button class="btn btn-default btn-xs"  data-toggle="tooltip" data-html="true" title='Sistema'><i class="text-muted fa fa-trash"></i></button>
-							</td>
-						</tr>
 						@foreach($projeto->tipos_tarefa as $tipoTarefa)
 							<tr>
 							<td>

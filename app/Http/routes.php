@@ -141,4 +141,8 @@ Route::get('kanban/{id}', array('middleware' => 'admin', 'as' => 'kanban/{id}', 
 Route::post('kanban/historia', array('middleware' => 'admin', 'as' => 'kanban/historia', 'uses' => 'KanbanController@historia'));
 Route::post('kanban/criarHistoria', array('middleware' => 'admin', 'as' => 'kanban/criarHistoria', 'uses' => 'KanbanController@criarHistoria'));
 
+Route::post('tarefa', array('middleware' => 'admin', 'as' => 'tarefa', 'uses' => 'TarefasController@index'));
 Route::post('tarefa/criar', array('middleware' => 'admin', 'as' => 'tarefa/criar', 'uses' => 'TarefasController@criar'));
+Route::post('tarefa/store', array('middleware' => 'admin', 'as' => 'tarefa/store', 'uses' => 'TarefasController@store'));
+Route::post('getTarefas', array('middleware' => 'admin', 'as' => 'getTarefas', 'uses' => 'TarefasController@getTarefas'));
+Route::post('getTarefa', array('middleware' => 'admin', 'as' => 'getTarefa', 'uses' => 'TarefasController@getTarefaSingle'));

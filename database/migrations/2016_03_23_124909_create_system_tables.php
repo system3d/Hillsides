@@ -261,7 +261,7 @@ class CreateSystemTables extends Migration
             $table->foreign('sprint_id')->references('id')->on('sprints')->onDelete('cascade');
             $table->integer('historia_id')->unsigned();
             $table->foreign('historia_id')->references('id')->on('historias')->onDelete('cascade');
-            $table->integer('assignee_id')->unsigned();
+            $table->integer('assignee_id')->unsigned()->nullable();
             $table->foreign('assignee_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('tipo_id')->unsigned();
             $table->foreign('tipo_id')->references('id')->on('tipos_tarefa')->onDelete('cascade');
