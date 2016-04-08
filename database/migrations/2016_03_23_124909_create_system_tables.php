@@ -89,8 +89,6 @@ class CreateSystemTables extends Migration
         Schema::create('status_projeto', function (Blueprint $table) {
             $table->increments('id');
             $table->string('descricao', 255)->nullable();
-            $table->integer('projeto_id')->unsigned();
-            $table->foreign('projeto_id')->references('id')->on('projetos')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('locatario_id')->unsigned();
@@ -117,12 +115,12 @@ class CreateSystemTables extends Migration
             $table->increments('id');
             $table->string('descricao', 255)->nullable();
             $table->mediumText('obs')->nullable();
-            $table->integer('favorito')->default(0)
-            $table->integer('cliente_id')->nullable();
+            $table->integer('favorito')->default(0);
+            $table->integer('cliente_id')->unsigned();
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
-            $table->integer('tipo_id')->nullable();
+            $table->integer('tipo_id')->nullable()->unsigned();
             $table->foreign('tipo_id')->references('id')->on('tipos_projeto')->onDelete('cascade');
-            $table->integer('status_id')->nullable();
+            $table->integer('status_id')->nullable()->unsigned();
             $table->foreign('status_id')->references('id')->on('status_projeto')->onDelete('cascade');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
@@ -130,6 +128,11 @@ class CreateSystemTables extends Migration
             $table->foreign('locatario_id')->references('id')->on('locatarios')->onDelete('cascade');
 
             $table->timestamps();
+        });
+
+        Schema::table('status_projeto', function (Blueprint $table) {
+            $table->integer('projeto_id')->unsigned();
+            $table->foreign('projeto_id')->references('id')->on('projetos')->onDelete('cascade');
         });
 
         Schema::create('sprints', function (Blueprint $table) {
