@@ -84,12 +84,30 @@ $(document).ready(function() {
 
 
 	 $(".sortable-row").sortable({
-	 	connectWith: ".sortable-row",
-	 	cancel: ".NotSortable",
-        tolerance: 'pointer',
-        placeholder: 'dragHelper',
-		revert: true,
-        forceHelperSize: true,
+  	 	connectWith: ".sortable-row",
+  	 	cancel: ".NotSortable",
+      tolerance: 'pointer',
+      placeholder: 'dragHelper',
+      revert: true,
+      forceHelperSize: true,
+      receive: function( event, ui ) {
+        var target = $(event.target);
+        var task = ui.item;
+        var estagio = target.attr('data-estagio');
+        var id = task.attr('data-id');
+        $.ajax({
+            url: urlbaseGeral+"/tarefa/moved",
+            type: 'POST',
+            dataType: 'html',
+            data:{id:id,estagio:estagio},
+          })
+          .done(function(r) {
+            if(r == '405'){
+              flashMessage('warning', 'Você não tem permissão para fazer isto.');
+              $(ui.sender).sortable('cancel');
+            }
+          });
+      },
     });
 
 	 $('.sortable-row').each(function(){
@@ -285,6 +303,8 @@ function singleTask(id){
         });
 }
 
+//get all the projext tasks by requesting them to server, it sends back a json with the task properties, then we format the html and append it to the board with the 
+//functions below(taskHtml/injectTask)
 function getTarefas(){
   $('#kanban_loader').removeClass('hidden');
       
@@ -314,6 +334,7 @@ function getTarefas(){
         });
 }
 
+//receive the json of the task provenient of the getTarefa/getTarefas routes
 function taskHtml(task){
 var response = '<div class="tarefa" data-story="'+task.historia_id+'" style="background-color:'+task.cor+'" data-id="'+task.id+'">';
 response +=     '<span class="red-pin"></span>';
@@ -334,6 +355,9 @@ response +=     '</div>';
 return response;
 }
 
+/**
+/*Receives the html of the task, obtained by the taskHtml function, historia_i and estagio_id of the task
+**/
 function injectTask(task,hist,est){
   $('.sortable-row[data-story="'+hist+'"][data-estagio="'+est+'"]').append(task);
 }
@@ -345,8 +369,53 @@ function setColor(){
   });
 }
 
+
 function setColorSingle(id){
   var tarefa = $('.tarefa[data-id="'+id+'"]');
   var t_color = tarefa.css('background-color');
   $(tarefa).find('.tarefa-body').css('color', isDark(t_color) ? 'white' : 'black');
 }
+
+//function to move tasks, receives just the task 'data-id' and the estagio('data-estagio of the td')
+function moveTask(id,est){
+var task = $('.tarefa[data-id="'+id+'"]');
+var hist = task.attr('data-story');
+//First we copy the arrow to the new table cell and get the offset to the document
+var newo = task.clone().appendTo('.sortable-row[data-story="'+hist+'"][data-estagio="'+est+'"]');
+var newOffset = newo.offset();
+//Get the old position relative to document
+var oldOffset = task.offset();
+//we also clone old to the document for the animation
+var temp = task.clone().appendTo('body');
+//hide new and old and move $temp to position
+//also big z-index, make sure to edit this to something that works with the page
+temp.css('position', 'absolute').css('left', oldOffset.left).css('top', oldOffset.top).css('zIndex', 1000);
+newo.hide();
+task.hide();
+//animate the $temp to the position of the new img
+temp.animate( {'top': newOffset.top, 'left':newOffset.left}, 'slow', function(){
+   //callback function, we remove $old and $temp and show $new
+   newo.show();
+   task.remove();
+   temp.remove();
+});
+}
+
+function reloadKBPage(){
+   var projeto = $('#projeto_id_kanban').val();
+   var sprint = $('#selectSprints').val();
+   var story = $('#selectStory').val();
+   var user = $('#selectUser').val();
+   var disc = $('#selectDisc').val();
+   var etapa = $('#selectEtapa').val();
+   var equipe = $('#selectEquipe').val();
+    $.ajax({
+        url: urlbaseGeral+"/kanban/setHistory",
+        type: 'POST',
+        dataType: 'html',
+        data:{projeto:projeto,sprint:sprint,story:story,user:user,dis:disc,etapa:etapa,equipe:equipe},
+      }).done(function(r) {
+         window.location.href = r;
+      });
+}
+

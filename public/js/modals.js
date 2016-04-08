@@ -29,6 +29,9 @@ function drawModal(data, widtth, no){
 		modal_history.push(data);
 	  	modal_width.push(widtth);
 	}
+	if(modal_history[0] != 0){
+		modal_history.unshift(false);
+	}
 	var wideth =  widtth != undefined ? widtth : '60%';
 	$('#modal-content').parent('.modal-dialog').css('width', wideth);
 	$('#modal-content').html(data);
@@ -73,10 +76,7 @@ function drawModal(data, widtth, no){
 	    dataType: 'html',
 	  })
 	  .done(function(rp) {
-  	if(isKanban == true){
-	     $('#modal_loader').removeClass('hidden'); 
-	     location.reload();
-	   }else{
+	  	shouldReload = true;
 	    var rex = rp.split('%');
 	  	r =  rex[1];
 	  	var res = r.split("&");
@@ -188,9 +188,14 @@ function drawModal(data, widtth, no){
         	}
         }
         $('#modal_loader').addClass('hidden');
-    	}
 	  });
  	});
+
+$('#modal').on('hidden.bs.modal', function(event) {
+	if(isKanban == true && shouldReload == true){
+       reloadKBPage();
+     }
+});
 
  });
 

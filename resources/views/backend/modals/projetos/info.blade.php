@@ -48,12 +48,17 @@
             @if($kanban == true)
             <a href='{{url("kanban")."/".$projeto->id}}' type="button" class="btn btn-success" data-toggle="tooltip" data-html="true" title='Kanbam do Projeto'><i class="fa fa-th-large"></i></a>
             <button type="button" class="btn btn-primary info-edit-projeto" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Editar'><i class="fa fa-pencil"></i></button>
+            @endif
             <button class="btn bg-orange projeto-equipes" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Equipes do Projeto'><i class="fa fa-users" ></i></button>
+            @if($kanban == true)
             <button class="btn btn-info projeto-sprints" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Sprints'><i class="fa fa-refresh" ></i></button>
             <button class="btn bg-maroon projeto-historias" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Historias' id='hist-proj'><i class="fa fa-book"></i></button>
+            @endif
             <button class="btn bg-olive projeto-disciplinas" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Disciplinas'><i class="fa fa-bookmark"></i></i></button>
             <button class="btn btn-github projeto-etapas" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Etapas'><i class="fa fa-map-signs"></i></button>
+            @if($kanban == true)
             <button class="btn btn-danger projeto-delete" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Excluir'><i class="fa fa-trash"></i></button>
+            @endif
             <span class='dropdown'>
                 <button class="btn btn-default projeto-config dropdown-toggle" data-toggle="dropdown">
                   <i class="fa fa-cogs"></i>
@@ -67,7 +72,6 @@
                   <li><a href="#" id="drop-tarefa" data-id="{{$projeto->id}}">Tipos de Tarefas</a></li>
                 </ul>
             </span>
-            @endif
             <button data-dismiss="modal" aria-hidden="true" class="btn btn-google pull-right" data-toggle="tooltip" data-html="true" title='Fechar Janela'><i class="fa fa-times"></i></button>
             
             <input type="hidden" id="PD{{$projeto->id}}">

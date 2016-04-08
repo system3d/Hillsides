@@ -3,6 +3,7 @@
         var modal_history = [false];
         var modal_width = ['60%'];
         var isKanban = false;
+        var shouldReload = false;
     </script>
 
     <script type="text/javascript"> var app_env = '{!! env('APP_ENV') !!}' </script>

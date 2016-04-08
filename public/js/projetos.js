@@ -199,6 +199,7 @@
       data:{id:eid},
     })
     .done(function(response) {
+      shouldReload = true;
       drawModal(response, '50%', true);
     });
       });
@@ -226,6 +227,7 @@
             dataType: 'html',
           })
           .done(function(response) {
+            shouldReload = true;
             drawModal(response, '50%', true);
           });
       });
@@ -321,10 +323,7 @@
       type: 'POST',
       dataType: 'json',
     }).done(function(r){
-       if(isKanban == true){
-         $('#modal_loader').removeClass('hidden'); 
-         location.reload();
-       }else{
+      shouldReload = true;
       flashMessage(r.status, r.msg);
         var sid = r.id;
         $.ajax({
@@ -345,7 +344,6 @@
         });
           $('#modal_loader').addClass('hidden');
       });
-    }
     })
   });
 
@@ -359,10 +357,7 @@
         dataType: 'json',
       })
       .done(function(r) {
-        if(isKanban == true){
-         $('#modal_loader').removeClass('hidden'); 
-         location.reload();
-       }else{
+        shouldReload = true;
        flashMessage(r.status, r.msg);
         var sid = r.id;
         $.ajax({
@@ -381,7 +376,6 @@
         });
           $('#modal_loader').addClass('hidden');
       });
-    }
       });
   });
 
@@ -463,10 +457,7 @@
       type: 'POST',
       dataType: 'json',
     }).done(function(r){
-       if(isKanban == true){
-         $('#modal_loader').removeClass('hidden'); 
-         location.reload();
-       }else{
+       shouldReload = true;
       flashMessage(r.status, r.msg);
         $.ajax({
         url: urlbaseGeral+"/projetos/historias",
@@ -486,7 +477,6 @@
         });
           $('#modal_loader').addClass('hidden');
       });
-    }
     })
   });
 
@@ -501,10 +491,7 @@
         dataType: 'json',
       })
       .done(function(r) {
-       if(isKanban == true){
-         $('#modal_loader').removeClass('hidden'); 
-         location.reload();
-       }else{
+       shouldReload = true;
        flashMessage(r.status, r.msg);
         var sid = r.id;
         $.ajax({
@@ -523,7 +510,6 @@
         });
           $('#modal_loader').addClass('hidden');
       });
-    }
       });
   });
 
@@ -584,6 +570,7 @@
       type: 'POST',
       dataType: 'json',
     }).done(function(r){
+       shouldReload = true;
       flashMessage(r.status, r.msg);
         $.ajax({
         url: urlbaseGeral+"/projetos/disciplinas",
@@ -616,6 +603,7 @@
         dataType: 'json',
       })
       .done(function(r) {
+       shouldReload = true;
        flashMessage(r.status, r.msg);
       $.ajax({
        url: urlbaseGeral+"/projetos/disciplinas",
@@ -695,6 +683,7 @@
       type: 'POST',
       dataType: 'json',
     }).done(function(r){
+      shouldReload = true;
       flashMessage(r.status, r.msg);
         $.ajax({
         url: urlbaseGeral+"/projetos/etapas",
@@ -727,6 +716,7 @@
         dataType: 'json',
       })
       .done(function(r) {
+      shouldReload = true;
        flashMessage(r.status, r.msg);
       $.ajax({
        url: urlbaseGeral+"/projetos/etapas",
@@ -793,6 +783,9 @@
          url: urlbaseGeral+"/projetos/conf/setOrder",
          type: 'POST',
         data: {sorted:sorted},
+          success: function(r){
+            shouldReload = true;
+          },
         })
         },
     });
@@ -818,6 +811,7 @@
     .done(function(r) {
       flashMessage(r.status, r.msg);
       if(r.status == 'success'){
+        shouldReload = true;
         var sid = r.id;
          $.ajax({
         url: urlbaseGeral + "/projetos/conf/estagios",
@@ -847,6 +841,9 @@
          url: urlbaseGeral+"/projetos/conf/setOrder",
          type: 'POST',
         data: {sorted:sorted},
+        success: function(r){
+            shouldReload = true;
+          },
         })
         },
     });
@@ -896,6 +893,7 @@
         data: {id:sid},
         dataType: 'html',
       }).done(function(response){
+        shouldReload = true;
         window.modal_history.pop();
         window.modal_width.pop();
         drawModal(response,'30%');
@@ -918,6 +916,9 @@
          url: urlbaseGeral+"/projetos/conf/setOrder",
          type: 'POST',
         data: {sorted:sorted},
+        success: function(r){
+            shouldReload = true;
+          },
         })
         },
     });
@@ -926,6 +927,9 @@
          url: urlbaseGeral+"/projetos/conf/setOrder",
          type: 'POST',
         data: {sorted:sorted},
+        success: function(r){
+            shouldReload = true;
+          },
         })
       });
     };
@@ -991,6 +995,7 @@
         data: {id:sid},
         dataType: 'html',
       }).done(function(response){
+        shouldReload = true;
         window.modal_history.pop();
         window.modal_width.pop();
         drawModal(response,'30%');
@@ -1019,6 +1024,7 @@
         data: {id:sid},
         dataType: 'html',
       }).done(function(response){
+        shouldReload = true;
         window.modal_history.pop();
         window.modal_width.pop();
         drawModal(response,'30%');
@@ -1088,6 +1094,7 @@
         data: {id:sid},
         dataType: 'html',
       }).done(function(response){
+        shouldReload = true;
         window.modal_history.pop();
         window.modal_width.pop();
         drawModal(response,'30%');
@@ -1116,6 +1123,7 @@
         data: {id:sid},
         dataType: 'html',
       }).done(function(response){
+        shouldReload = true;
         window.modal_history.pop();
         window.modal_width.pop();
         drawModal(response,'30%');
@@ -1179,6 +1187,7 @@
         data: {id:sid},
         dataType: 'html',
       }).done(function(response){
+        shouldReload = true;
         window.modal_history.pop();
         window.modal_width.pop();
         window.modal_history.pop();
@@ -1223,6 +1232,7 @@
         data: {id:sid},
         dataType: 'html',
       }).done(function(response){
+        shouldReload = true;
         window.modal_history.pop();
         window.modal_width.pop();
         window.modal_history.pop();
@@ -1266,6 +1276,7 @@
         data: {id:sid},
         dataType: 'html',
       }).done(function(response){
+        shouldReload = true;
         window.modal_history.pop();
         window.modal_width.pop();
         drawModal(response,'30%');
@@ -1306,6 +1317,7 @@
         data: {id:sid},
         dataType: 'html',
       }).done(function(response){
+        shouldReload = true;
         window.modal_history.pop();
         window.modal_width.pop();
         drawModal(response,'30%');
@@ -1321,6 +1333,6 @@
 function kanbanReload(){
  if(isKanban == true){
   $('#loader').removeClass('hidden'); 
-  location.reload();
+   reloadKBPage();
  }
 }

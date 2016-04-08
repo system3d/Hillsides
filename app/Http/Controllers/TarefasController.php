@@ -134,6 +134,15 @@ class TarefasController extends Controller
         return json_encode($response);
     }
 
+    public function moved(request $request){
+        $dados = $request->all();
+        // return '405';
+        $task = task::find($dados['id']);
+        $toUp = array('estagio_id' => $dados['estagio']);
+        $task->update($toUp);
+        return '200';
+    }
+
     private function getTarefa($id){
         $task = task::find($id);
         $estagioDesc  = ($task->estagio_id == 1) ? 'Backlog' : (($task->estagio_id == 2) ? 'Arquivada' : $task->estagio->descricao);

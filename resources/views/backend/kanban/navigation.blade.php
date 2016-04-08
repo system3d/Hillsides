@@ -40,7 +40,7 @@
            <select id="selectSprints" class="form-control" required="required" name="obra">
             <option value="0">Todos</option>
             @foreach($projeto->sprints as $sprint)
-              <option value="{{$sprint->id}}">{{$sprint->descricao}}</option>
+              <option value="{{$sprint->id}}" <?php if((int) $dados['sprint'] == $sprint->id) echo 'selected'; ?>>{{$sprint->descricao}}</option>
             @endforeach
            </select>
           </div>
@@ -50,7 +50,7 @@
            <select id="selectStory" class="form-control" required="required" name="obra">
             <option value="0">Todas</option>
             @foreach($projeto->historias() as $historia)
-              <option value="{{$historia->id}}">{{$historia->descricao}}</option>
+              <option value="{{$historia->id}}" <?php if((int) $dados['story'] == $historia->id) echo 'selected'; ?>>{{$historia->descricao}}</option>
             @endforeach
            </select>
           </div>
@@ -60,7 +60,7 @@
            <select id="selectEquipe" class="form-control" required="required" name="obra">
             <option value="0">Todas</option>
             @foreach($projeto->equipes as $equipe)
-              <option value="{{$equipe->id}}">{{$equipe->descricao}}</option>
+              <option value="{{$equipe->id}}" <?php if((int) $dados['equipe'] == $equipe->id) echo 'selected'; ?>>{{$equipe->descricao}}</option>
             @endforeach
            </select>
           </div>
@@ -70,7 +70,7 @@
            <select id="selectUser" class="form-control" required="required" name="obra">
             <option value="0">Todos</option>
             @foreach($users as $user)
-              <option value="{{$user->id}}">{{$user->name}}</option>
+              <option value="{{$user->id}}" <?php if((int) $dados['user'] == $user->id) echo 'selected'; ?>>{{$user->name}}</option>
             @endforeach
            </select>
           </div>
@@ -80,7 +80,7 @@
            <select id="selectDisc" class="form-control" required="required" name="obra">
             <option value="0">Todas</option>
             @foreach($projeto->disciplinas as $disciplina)
-              <option value="{{$disciplina->id}}">{{$disciplina->descricao}}</option>
+              <option value="{{$disciplina->id}}" <?php if((int) $dados['dis'] == $disciplina->id) echo 'selected'; ?>>{{$disciplina->descricao}}</option>
             @endforeach
            </select>
           </div>
@@ -90,7 +90,7 @@
            <select id="selectEtapa" class="form-control" required="required" name="obra">
             <option value="0">Todas</option>
             @foreach($projeto->etapas as $etapa)
-              <option value="{{$etapa->id}}">{{$etapa->descricao}}</option>
+              <option value="{{$etapa->id}}" <?php if((int) $dados['etapa'] == $etapa->id) echo 'selected'; ?>>{{$etapa->descricao}}</option>
             @endforeach
            </select>
           </div>

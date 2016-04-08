@@ -6,13 +6,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Projeto as proj;
+use Cache;
 
 class KanbanController extends Controller
 {
     public function index($id){
     	$projeto = proj::find($id);
     	$estCount = $projeto->estagios->count();
-		$columnWidth = 95 / ($estCount + 2);
+		$columnWidth = 92 / ($estCount + 2);
 		$columnWidth = $columnWidth.'%';
     $users = array();
     $usersIn = array();
@@ -26,15 +27,36 @@ class KanbanController extends Controller
         }
       }
       $users = collect($users);
-    	return view('backend.kanban', compact('projeto', 'columnWidth','users'));
+      if (Cache::has('history')) {
+        $dados = Cache::pull('history');
+      }else{
+        $dados = array(
+          "sprint" => "0",
+          "story" => "0",
+          "user" => "0",
+          "dis" => "0",
+          "etapa" => "0",
+          "equipe" => "0"
+        );
+      }
+    	return view('backend.kanban', compact('projeto', 'columnWidth','users', 'dados'));
     }
 
-    public function historia(request $request){
-	$id = $request['id'];
-  $obj = proj::find($id);
-  $tipo = 'projeto';
-  $historias = $obj->historias();
+  public function historia(request $request){
+  	$id = $request['id'];
+    $obj = proj::find($id);
+    $tipo = 'projeto';
+    $historias = $obj->historias();
 
     return view('backend.modals.projetos.historias', compact('obj','tipo','historias'));
-    }
+  }
+
+  public function setHistory(request $request){
+    $dados = $request->all();
+    $projeto = $dados['projeto'];
+    unset($dados['projeto']);
+    Cache::put('history', $dados,5);
+    return route('kanban',[$projeto]);
+  }
+
 }

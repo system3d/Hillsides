@@ -137,12 +137,14 @@ Route::post('projetos/conf/ttCreate', array('middleware' => 'admin', 'as' => 'pr
 Route::post('projetos/conf/ttExcluir', array('middleware' => 'admin', 'as' => 'projetos/conf/ttExcluir', 'uses' => 'SettingsController@proj_ttExcluir'));
 Route::post('projetos/conf/ttEdit', array('middleware' => 'admin', 'as' => 'projetos/conf/ttEdit', 'uses' => 'SettingsController@proj_ttEdit'));
 
-Route::get('kanban/{id}', array('middleware' => 'admin', 'as' => 'kanban/{id}', 'uses' => 'KanbanController@index'));
+Route::get('kanban/{id}', array('middleware' => 'admin', 'as' => 'kanban', 'uses' => 'KanbanController@index'));
 Route::post('kanban/historia', array('middleware' => 'admin', 'as' => 'kanban/historia', 'uses' => 'KanbanController@historia'));
 Route::post('kanban/criarHistoria', array('middleware' => 'admin', 'as' => 'kanban/criarHistoria', 'uses' => 'KanbanController@criarHistoria'));
+Route::post('kanban/setHistory', array('middleware' => 'admin', 'as' => 'kanban/setHistory', 'uses' => 'KanbanController@setHistory'));
 
 Route::post('tarefa', array('middleware' => 'admin', 'as' => 'tarefa', 'uses' => 'TarefasController@index'));
 Route::post('tarefa/criar', array('middleware' => 'admin', 'as' => 'tarefa/criar', 'uses' => 'TarefasController@criar'));
 Route::post('tarefa/store', array('middleware' => 'admin', 'as' => 'tarefa/store', 'uses' => 'TarefasController@store'));
 Route::post('getTarefas', array('middleware' => 'admin', 'as' => 'getTarefas', 'uses' => 'TarefasController@getTarefas'));
 Route::post('getTarefa', array('middleware' => 'admin', 'as' => 'getTarefa', 'uses' => 'TarefasController@getTarefaSingle'));
+Route::post('tarefa/moved', array('middleware' => 'admin', 'as' => 'tarefa/moved', 'uses' => 'TarefasController@moved'));
