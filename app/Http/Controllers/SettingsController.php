@@ -24,7 +24,7 @@ class SettingsController extends Controller
     	$data = array(
     		'descricao'    => $value,
     		'locatario_id' => access()->user()->locatario_id,
-    		'ordem'        => ($last->ordem + 1)
+    		'ordem'        => !empty($last->ordem) ? ($last->ordem + 1) : 1
 		);
 		$check = esdef::where('descricao', $value)->first();
 		if(!empty($check->id)){
