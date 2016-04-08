@@ -321,9 +321,10 @@ function getTarefas(){
           dataType: 'json',
           data:{projeto:projeto,sprint:sprint,story:story,user:user,dis:disc,etapa:etapa,equipe:equipe},
         }).done(function(r) {
+          $('.tarefa').remove();
           if(r.count > 0){
             var tasks = r.tasks;
-            $('.tarefa').remove();
+            
             for(var k in tasks) {
                 var th = taskHtml(tasks[k]);
                 injectTask(th,tasks[k].historia_id,tasks[k].estagio_id);
@@ -339,11 +340,9 @@ function taskHtml(task){
 var response = '<div class="tarefa" data-story="'+task.historia_id+'" style="background-color:'+task.cor+'" data-id="'+task.id+'">';
 response +=     '<span class="red-pin"></span>';
 response +=       '<div class="tarefa-body">';
-response +=         '<p class="tarefa-title tarefa-info" data-id="'+task.id+'"><span data-toggle="tooltip" data-html="true" title="'+task.tarefa+'">'+task.tarefa+'</span></p>';
+response +=         '<p class="tarefa-title tarefa-info" data-id="'+task.id+'" data-toggle="tooltip" data-html="true" title="'+task.tarefa+'"><span>'+task.tarefa+'</span></p>';
 response +=           '<ul class="tarefa-list">';
 response +=             '<li>'+task.status+'</li>';
-response +=             '<li>'+task.disciplina+'</li>';
-response +=             '<li>'+task.etapa+'</li>';
 response +=           '</ul>';
 response +=         '</div>';
 response +=        '<div class="tarefa-footer">';

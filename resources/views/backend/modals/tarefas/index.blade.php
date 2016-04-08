@@ -56,7 +56,7 @@
 	    @endif
         @if(!empty($tarefa->etapa_id))
 		     <div class="form-group">
-               <label class="control-label">Cidade:</label>
+               <label class="control-label">Etapa:</label>
                  <p class="form-static">{{$tarefa->etapa->descricao}}</p>
            </div>
         @endif

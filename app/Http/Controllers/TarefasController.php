@@ -39,9 +39,9 @@ class TarefasController extends Controller
 
     public function store(request $request){
         $dados = $request->all();
-        $checkName = task::where('descricao',$dados['descricao'])->where('projeto_id',$dados['projeto_id'])->first();
+        $checkName = task::where('descricao',$dados['descricao'])->where('historia_id',$dados['historia_id'])->first();
         if(isset($checkName->id)){
-            $response['msg'] = 'Esta Tarefa já existe neste projeto.';
+            $response['msg'] = 'Esta Tarefa já existe nesta história.';
             $response['status'] = 'error';
             return $response;
         }
@@ -115,7 +115,7 @@ class TarefasController extends Controller
            $tarefas->whereIn('assignee_id', $members);
         }
 
-       $tasks =  $tarefas->get();
+       $tasks =  $tarefas->orderBy('created_at')->get();
        $response=array();
        $taskes = array();
        if($tasks->count() > 0){

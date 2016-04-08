@@ -26,7 +26,7 @@
 	<div class="form-group">
             <button type="button" class="btn btn-primary info-edit-equipe" id="EDI{{$equipe->id}}">Editar</button>
             <button class="btn btn-danger equipe-delete" id="DEI{{$equipe->id}}">Excluir</button>
-            <a href='#' id='voltar_modal' class="btn btn-warning">Cancelar</a>
+            <a href='#'data-dismiss="modal" aria-hidden="true" class="btn btn-warning">Voltar</a>
             <input type="hidden" id="EX{{$equipe->id}}">
         </div>
 	</div>

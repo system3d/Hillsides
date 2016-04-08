@@ -43,16 +43,18 @@
 }
 
 .tarefa-body .tarefa-title{
-	font-size:14px;
+	font-size:12px;
 	margin-bottom: 3px !important;
+	height: 48px;
 	max-width: 100%;
+	max-height: 
 	text-overflow: ellipsis;
-   white-space: nowrap;
-   overflow: hidden;
+  word-wrap: break-word;
+  overflow: hidden;
 }
 
 .tarefa-body .tarefa-title:hover{
-	color: #00DEFF;
+	text-decoration: underline;
 	cursor: pointer;
 }
 
