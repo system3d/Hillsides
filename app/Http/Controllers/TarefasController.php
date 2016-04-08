@@ -143,6 +143,64 @@ class TarefasController extends Controller
         return '200';
     }
 
+    public function editar(request $request){
+         $id = $request['id'];
+        $tarefa = task::find($id);
+        $projeto = $tarefa->projeto;
+        $users = array();
+        $usersIn = array();
+        foreach($projeto->equipes as $equipe){
+            foreach($equipe->users as $membro){
+                if(!in_array($membro->id, $usersIn)){
+                    $users[] = $membro;
+                    $usersIn[] = $membro->id;
+                }
+                
+            }
+        }
+        $users = collect($users);
+        return view('backend.modals.tarefas.editar', compact('tarefa','projeto','users'));
+    }
+
+    public function update(request $request){
+         $Alldados = $request->all();
+        $dadosBefore = urldecode($Alldados['dados']);
+        $dados = explode('&', $dadosBefore);
+        foreach($dados as $dado){
+            $check2 = explode('=',$dado);
+            if($check2[1] != ''){
+              $check[$check2[0]] = $check2[1];
+            }
+        } 
+        $id = $check['id'];
+        unset($check['id']);
+        $task = task::find($id);
+
+        $new = $task->update($check);
+        if(!isset($new)){
+          $response['msg'] = 'Erro ao Atualizar Tarefa';
+          $response['status'] = 'error';
+        }else{
+          $response['msg'] = 'Tarefa Atualizada com Sucesso';
+          $response['status'] = 'success';
+          $response['id'] = $id;
+          $response['task'] = $this->getTarefa($id);
+        }
+        
+         return $response;
+    }
+
+    public function excluir(request $request){
+    $id = $request['id'];
+    $new = task::find($id);
+    $idgo = $new->id;
+    $new->delete();
+    $response['msg'] = 'Tarefa Excluida com Sucesso';
+    $response['status'] = 'success';
+    $response['id'] = $idgo;
+    return $response;
+  }
+
     private function getTarefa($id){
         $task = task::find($id);
         $estagioDesc  = ($task->estagio_id == 1) ? 'Backlog' : (($task->estagio_id == 2) ? 'Arquivada' : $task->estagio->descricao);

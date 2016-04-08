@@ -42,6 +42,10 @@ class Tarefa extends Model
 		return $this->belongsTo('App\Etapa');
 	}
 
+	public function projeto() {
+		return $this->belongsTo('App\Projeto');
+	}
+
 	public function assignee() {
 		return $this->belongsTo('App\Models\Access\User\User');
 	}

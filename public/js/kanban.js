@@ -252,6 +252,99 @@ $(document).ready(function() {
         });
    });
 
+    $(document).on('click', '.edit-tarefa', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+    $.ajax({
+            url: urlbaseGeral+"/tarefa/editar",
+            type: 'POST',
+            dataType: 'html',
+            data:{id:id},
+          })
+          .done(function(response) {
+            drawModal(response, '60%');
+          });
+  });
+
+    $(document).on('submit', '#tarefa_update', function(event) {
+    event.preventDefault();
+    $('#modal_loader').removeClass('hidden');
+    var values = $(this).serializeAndEncode();
+    
+    $.ajax({
+      url: urlbaseGeral+"/tarefa/update",
+      data: {dados: values},
+      type: 'POST',
+      dataType: 'json',
+    }).done(function(r){
+
+      flashMessage(r.status, r.msg);
+
+      if(r.status == 'success'){
+        var sid = r.id;
+        $('.tarefa[data-id="'+sid+'"]').remove();
+        var th = taskHtml(r.task);
+        injectTask(th,r.task.historia_id,r.task.estagio_id);
+        setColorSingle(sid);
+        $.ajax({
+        url: urlbaseGeral+"/tarefa",
+        type: 'POST',
+        data: {id:sid},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        window.modal_history.pop();
+        window.modal_width.pop();
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'50%');
+        
+      });
+    }
+    $('#modal_loader').addClass('hidden');
+    })
+  });
+
+$(document).on('click', '.tarefa-delete', function(event) {
+  event.preventDefault();
+    var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/tarefa/excluir",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'json',
+      }).done(function(r){
+       flashMessage(r.status, r.msg);
+        if(r.status == 'success'){
+          $('.tarefa[data-id="'+r.id+'"]').remove();
+        }
+        $('#modal').modal("hide");
+     });
+});
+
+
+////////////////////
+
+
+  $(document).on('change', '#selectStory', function(event) {
+    var hist = $(this).val();
+    if(hist == 0){
+      $('.kanban-trow').removeClass('hidden');
+    }else{
+      $('.kanban-trow').addClass('hidden');
+      $('.kanban-trow[data-story="'+hist+'"]').removeClass('hidden');
+    }
+  });
+
+  $(document).on('change', '#selectSprints', function(event) {
+    var sprint = $(this).val();
+    if(sprint == 0){
+      $('.kanban-trow').removeClass('hidden');
+    }else{
+      $('.kanban-trow').addClass('hidden');
+      $('.kanban-trow[data-sprint="'+sprint+'"]').removeClass('hidden');
+    }
+  });
 
 
 });

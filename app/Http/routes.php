@@ -148,3 +148,6 @@ Route::post('tarefa/store', array('middleware' => 'admin', 'as' => 'tarefa/store
 Route::post('getTarefas', array('middleware' => 'admin', 'as' => 'getTarefas', 'uses' => 'TarefasController@getTarefas'));
 Route::post('getTarefa', array('middleware' => 'admin', 'as' => 'getTarefa', 'uses' => 'TarefasController@getTarefaSingle'));
 Route::post('tarefa/moved', array('middleware' => 'admin', 'as' => 'tarefa/moved', 'uses' => 'TarefasController@moved'));
+Route::post('tarefa/editar', array('middleware' => 'admin', 'as' => 'tarefa/editar', 'uses' => 'TarefasController@editar'));
+Route::post('tarefa/update', array('middleware' => 'admin', 'as' => 'tarefa/update', 'uses' => 'TarefasController@update'));
+Route::post('tarefa/excluir', array('middleware' => 'admin', 'as' => 'tarefa/excluir', 'uses' => 'TarefasController@excluir'));
