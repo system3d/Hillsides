@@ -158,6 +158,7 @@ class SettingsController extends Controller
 			$response['msg'] = 'Tipo Adicionado com Sucesso';
 			$response['id']  = $new->id;
 			$response['desc'] = $new->descricao;
+      $response['cor'] = $new->cor;
 		}else{
 			$response['msg'] = 'Erro ao Adicionar STipotatus';
 			$response['status'] = 'error';

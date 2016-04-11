@@ -1,5 +1,5 @@
 .red-pin{
-	left: 45px;
+	left: 41.1px;
 	display: inline-block;
 	width: 8px;
 	height: 8px;
@@ -200,4 +200,21 @@ th span.hidden{
     right: -10px;
     font-size: 10px;
     font-weight: 400;
+}
+
+.widget-user{
+	margin: 0 !important;
+	width: 100% !important;
+}
+.widget-user-header{
+	border-radius: 0 !important;
+}
+
+.no-padding{
+	padding: 0 !important;
+}
+
+.panel-criar-tarefa .nav-tabs-custom{
+	border-bottom: 0 !important;
+	margin-bottom: 0 !important;
 }

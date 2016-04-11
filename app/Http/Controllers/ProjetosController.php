@@ -106,8 +106,12 @@ class ProjetosController extends Controller
 		$response['status'] = 'error';
 		return $response;
     }
-    $statusOld = spd::find($status);
-    $statusNewQ = sp::where('descricao', $statusOld->descricao)->where('projeto_id',$new->id)->first();
+    if($status == '0'){
+      $statusNewQ = sp::where('descricao', 'Ativo')->where('projeto_id',$new->id)->first();
+    }else{
+      $statusOld = spd::find($status);
+      $statusNewQ = sp::where('descricao', $statusOld->descricao)->where('projeto_id',$new->id)->first();
+    }
     $statusNew = array('status_id' => $statusNewQ->id);
     $newU = $new->update($statusNew);
     if(!$newU){

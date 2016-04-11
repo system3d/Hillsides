@@ -139,7 +139,7 @@ $(document).on('click', '#new-est-side', function(event) {
 	    	flashMessage(r.status, r.msg);
 		    if(r.status == 'success'){
 		    	$('#novo-trp-set').val('');
-		    	$('#trp-sets-wrap').append('<p data-id="'+r.id+'">'+r.desc+'<span class="pull-right"><a href="#" data-id="'+r.id+'" data-toggle="tooltip" data-html="true" title="Trocar Icone" class="icon-t-change" style="margin-right:4px"><img class="img-circle img-icon" src="'+urlbaseGeral+'/img/icones/default.png" id="t-icon-'+r.id+'"></a><a href="#" data-toggle="tooltip" data-html="true" title="Deletar" class="delete-trp text-red"><i class="fa fa-trash"></i></a></span></p>');
+		    	$('#trp-sets-wrap').append('<p data-id="'+r.id+'">'+r.desc+'<span class="pull-right"><a href="#" data-id='+r.id+' data-toggle="tooltip" data-html="true" title="Cor de Fundo" class="fire-bck-change"><span id="BTCS'+r.id+'" class="back-t-change" style="background:'+r.cor+'"></span></a> <a href="#" data-id="'+r.id+'" data-toggle="tooltip" data-html="true" title="Trocar Icone" class="icon-t-change" style="margin-right:4px"><img class="img-circle img-icon" src="'+urlbaseGeral+'/img/icones/default.png" id="t-icon-'+r.id+'"></a><a href="#" data-toggle="tooltip" data-html="true" title="Deletar" class="delete-trp text-red"><i class="fa fa-trash"></i></a></span></p>');
 		    }
 		  	thisLink.toggleClass('fa-spinner fa-check').removeClass('fa-spin');
 		    });

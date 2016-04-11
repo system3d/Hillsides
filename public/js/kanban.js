@@ -174,7 +174,7 @@ $(document).ready(function() {
 
     $(document).on('submit', '#tarefa_cadastro', function(event) {
       event.preventDefault();
-
+      var nova = 0;
        var formData = new FormData($(this)[0]);
        $.ajax({
            type:'POST',
@@ -187,20 +187,15 @@ $(document).ready(function() {
         }).done(function(r) {
         flashMessage(r.status, r.msg);
         if(r.status == 'success'){
-           $.ajax({
-          url: urlbaseGeral+"/tarefa",
-          type: 'POST',
-          dataType: 'html',
-          data:{id:r.id},
-        })
-        .done(function(response) {
-          drawModal(response, '40%');
-           $('#kanban_loader').addClass('hidden');
-        });
          singleTask(r.id);
-
+         $('html,body').animate({ 
+            scrollTop: $('#H-'+r.story).offset().top
+        }, 500);
+        startGoTop();
+         $('#modal').modal('hide');
         }
       });
+  
     });
 
    //////////////////////
@@ -323,6 +318,7 @@ $(document).on('click', '.tarefa-delete', function(event) {
 });
 
 
+
 ////////////////////
 
 
@@ -370,8 +366,64 @@ $(document).on('click', '.tarefa-delete', function(event) {
     event.stopPropagation();
   });
 
+  /////////////
+
+  $(document).on('click', '.tarefa-img-user', function(event) {
+    event.preventDefault();
+    var id = $(this).attr('data-id');
+    var task = $(this).attr('data-tarefa');
+    if(id == 0){
+      return false;
+    }else{
+      $.ajax({
+        url: urlbaseGeral+"/tarefa/user",
+        type: 'POST',
+        data: {id:id,task:task},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'50%');
+      });
+    }
+  });
+
+  $("#go-to-top").click(function(e) {
+    e.preventDefault();
+  $("html, body").animate({ scrollTop: 0 }, "slow");
+  $(this).addClass('hidden');
+  return false;
+});
+
+  $(document).on('change', 'input[type="file"]', function(event) {
+    $(this).next().removeClass('hidden');
+  });
+
+   $(document).on('click', '.tarefa-anexos', function(event) {
+    event.preventDefault();
+     var id = $(this).attr('data-id');
+      $.ajax({
+        url: urlbaseGeral+"/tarefa/anexos",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'50%');
+         $('#modalTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+      });
+  });
 
 });
+
+function startGoTop(){
+   $('#go-to-top').removeClass('hidden');
+   setTimeout(function(){
+      $('#go-to-top').addClass("hidden");
+    }, 5000);
+}
 
 function isDark( color ) {
     var match = /rgb\((\d+).*?(\d+).*?(\d+)\)/.exec(color);
@@ -454,7 +506,7 @@ function getTarefas(){
 
 //receive the json of the task provenient of the getTarefa/getTarefas routes
 function taskHtml(task){
-var str  = task.historia+task.sprint+task.tarefa+task.status+task.estagio+task.tipo+task.peso+task.obs;
+var str  = task.historia+'%'+task.sprint+'%'+task.tarefa+'%'+task.status+'%'+task.estagio+'%'+task.tipo+'%'+task.peso+'%'+task.obs;
 var search = str.toString();
 search = search.replace(/ /g,'%%').toLowerCase();
 var response = '<div class="tarefa" data-story="'+task.historia_id+'" style="background-color:'+task.cor+'" data-id="'+task.id+'" data-search="'+search+'">';
@@ -466,7 +518,7 @@ response +=             '<li>'+task.status+'</li>';
 response +=           '</ul>';
 response +=         '</div>';
 response +=        '<div class="tarefa-footer">';
-response +=          '<img class="img-circle tarefa-img tarefa-img-user" src="'+task.user_icone+'"  data-toggle="tooltip" data-html="true" title="'+task.assignee+'">';
+response +=          '<img class="img-circle tarefa-img tarefa-img-user" data-tarefa="'+task.id+'" src="'+task.user_icone+'" data-id="'+task.assignee_id+'" data-toggle="tooltip" data-html="true" title="'+task.assignee+'">';
 response +=          '<img class="img-circle tarefa-img tarefa-img-tipo tarefa-info" data-id="'+task.id+'" src="'+task.tipo_icone+'"  data-toggle="tooltip" data-html="true" title="'+task.tipo+'">';
 response +=       '</div>';
 response +=     '</div>';

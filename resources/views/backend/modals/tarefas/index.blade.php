@@ -66,8 +66,8 @@
          <div class="form-group">
           <button type="button" class="btn btn-primary edit-tarefa" data-id='{{$tarefa->id}}'>Editar</button> 
           <button class="btn btn-danger tarefa-delete" data-id='{{$tarefa->id}}'>Excluir</button> 
-          <a href='#' class="btn btn-github" style='position:relative;'>
-            <span class="badge bg-aqua">12</span>
+          <a href='#' class="btn btn-github tarefa-anexos" data-id="{{$tarefa->id}}" style='position:relative;'>
+            <span class="badge bg-aqua">{{$tarefa->anexos->count()}}</span>
             Anexos</a>
             <button data-dismiss="modal" aria-hidden="true" class="btn btn-warning pull-right">Sair</button>
       </div>

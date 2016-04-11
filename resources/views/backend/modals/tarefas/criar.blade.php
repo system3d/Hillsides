@@ -1,15 +1,25 @@
 @if(isset($projeto->historias()->first()->id))
-<div class="panel panel-info">
+<div class="panel panel-info panel-criar-tarefa">
    <div class="panel-heading">
    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
        <h4>Criar Tarefa para {{$projeto->descricao}}</h4>
    </div>
    <div class="panel-body">
-       <form id="tarefa_cadastro" data-parsley-validate="" enctype="multipart/form-data">
+    <div class="nav-tabs-custom">
+     <ul class="nav nav-tabs">
+      <li class="active"><a href="#dados" data-toggle="tab">Dados</a></li>
+      <li><a href="#anexos" data-toggle="tab">Anexos</a></li>
+      <li><a href="#custo_crono" data-toggle="tab">Custo/Cronograma</a></li>
+    </ul>
+    <br>
+    <form id="tarefa_cadastro" data-parsley-validate="" enctype="multipart/form-data">
+    <div class="tab-content">
+        <div class="tab-pane active" id='dados'>
+     
        <input type="hidden" name="projeto_id" value="{{$projeto->id}}">
-       	<div class="row">
-       		<div class="col-md-4">
-       			<div class="form-group">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
                <label for="fullname" class="control-label">Título <i class="text-red">*</i> :</label>
                <input type="text" class="form-control" required="" data-parsley-trigger="change" name="descricao" style='width:100%'>
             </div>
@@ -25,7 +35,7 @@
                    <label for="fullname" class="control-label">Descrição <i class="text-red">*</i> :</label>
                       <textarea id="message" rows="3" class="form-control" required='' data-parsley-trigger="keyup" name="obs" style='width:100%'></textarea>
                 </div>
-       		</div>
+          </div>
           <div class="col-md-4">
              <div class="form-group">
                <label for="historia" class="control-label">Categoria:</label>
@@ -94,9 +104,28 @@
               </i>
             </div>
           </div>
-       	</div> 
+        </div> 
 
-        <div class="row">
+     
+        </div>
+
+       <div class="tab-pane" id='anexos' style='margin-bottom: 15px;'>
+
+            <div class="row">
+              <div class="col-md-10">
+                <input type="file" class='form-control' name='anexo[]' style='margin-bottom: 5px;'>
+                <input type="file" class='form-control hidden' name='anexo[]' style='margin-bottom: 5px;'>
+                <input type="file" class='form-control hidden' name='anexo[]' style='margin-bottom: 5px;'>
+                <input type="file" class='form-control hidden' name='anexo[]' style='margin-bottom: 5px;'>
+                <input type="file" class='form-control hidden' name='anexo[]' style='margin-bottom: 5px;'>
+              </div>
+            </div>
+
+       </div>
+       <div class="tab-pane" id='custo_crono'></div>
+
+
+         <div class="row">
           <div class="col-md-6">
               <div class="form-group">
                   <button type="submit" class="btn btn-primary">Gravar</button> 
@@ -105,8 +134,11 @@
           </div>
             
           </div>
-        </div>
+
     </form>
+
+    </div>
+    </div>
    </div>
 </div>
 @else

@@ -655,3 +655,10 @@ textarea {
 .back-tp-change:hover{
     cursor: pointer;
 }
+
+#go-to-top{
+    opacity: 0.8;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+}

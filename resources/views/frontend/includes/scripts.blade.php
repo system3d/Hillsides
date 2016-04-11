@@ -18,7 +18,6 @@
     {!! Html::script('plugins/toasts/src/jquery.toast.js') !!}
     <!-- Messages -->
     {!! Html::script('js/messages.js') !!}
-    
     <!-- Jquery UI -->
     {!! Html::script('plugins/jQueryUI/jquery-ui.js') !!}
      {!! Html::script('js/touch-punch.js') !!}

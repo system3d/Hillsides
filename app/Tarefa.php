@@ -69,4 +69,8 @@ class Tarefa extends Model
 	public function custo() {
 		return $this->hasOne('App\Custo');
 	}
+
+	public function anexos() {
+		return $this->hasMany('App\Anexo');
+	}
 }

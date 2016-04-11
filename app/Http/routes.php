@@ -151,3 +151,5 @@ Route::post('tarefa/moved', array('middleware' => 'admin', 'as' => 'tarefa/moved
 Route::post('tarefa/editar', array('middleware' => 'admin', 'as' => 'tarefa/editar', 'uses' => 'TarefasController@editar'));
 Route::post('tarefa/update', array('middleware' => 'admin', 'as' => 'tarefa/update', 'uses' => 'TarefasController@update'));
 Route::post('tarefa/excluir', array('middleware' => 'admin', 'as' => 'tarefa/excluir', 'uses' => 'TarefasController@excluir'));
+Route::post('tarefa/user', array('middleware' => 'admin', 'as' => 'tarefa/user', 'uses' => 'TarefasController@user'));
+Route::post('tarefa/anexos', array('middleware' => 'admin', 'as' => 'tarefa/anexos', 'uses' => 'TarefasController@anexos'));

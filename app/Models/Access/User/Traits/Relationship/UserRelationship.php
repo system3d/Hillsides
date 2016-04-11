@@ -68,6 +68,10 @@ trait UserRelationship
         return $this->hasMany('App\Tarefa');
     }
 
+    public function tarefasAssigned() {
+        return $this->hasMany('App\Tarefa','assignee_id');
+    }
+
     public function historias() {
         return $this->hasMany('App\Historia');
     }

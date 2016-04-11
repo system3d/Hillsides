@@ -4,6 +4,7 @@
        <h4>Novo Projeto</h4>
    </div>
    <div class="panel-body">
+        
        <form id="projeto_cadastro" data-parsley-validate="">
 
        	<div class="row">
@@ -30,6 +31,7 @@
                 <div class="form-group">
                    <label for="fullname" class="control-label">Status:</label>
                      <select class="form-control" required="" style='width:100%' name='status_id'>
+                        <option value="0">Ativo</option>
                        @foreach(access()->user()->locatario->status_projeto_default as $spd)
                         <option value="{{$spd->id}}">{{$spd->descricao}}</option>
                        @endforeach

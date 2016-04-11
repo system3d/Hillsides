@@ -9,6 +9,10 @@ use App\Projeto as proj;
 use App\tarefa as task;
 use App\Historia as hist;
 use App\Equipe as equipe;
+use App\Anexo as anexo;
+use App\Models\Access\User\User as user;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\File;
 
 class TarefasController extends Controller
 {
@@ -72,9 +76,47 @@ class TarefasController extends Controller
             $response['msg'] = 'Erro ao Gravar Tarefa';
             $response['status'] = 'error';
         }else{
-             $response['msg'] = 'Tarefa Criada com Sucesso.';
+          $imgError = array();
+          if(!empty($dados['anexo'][0])){
+            $files = $dados['anexo'];
+            $anexo = 1;
+            
+            foreach($files as $file){
+              if(isset($file)){
+                  $exts = array('jpg', 'jpeg', 'png', 'gif', 'jpe', 'jif', 'jfif', 'jfi','pdf','txt','zip','doc','rar','xls','ppt');
+                  $extension = $file->getClientOriginalExtension();
+                  $fileSize = $file->getSize();
+                    if(!in_array($extension, $exts)){
+                       $imgError[] = 'Extensão Invalida - '.$extension;
+                    }else{
+                      $finalName = $file->getClientOriginalName();
+                      $checkAnexo = anexo::where('tarefa_id',$new->locatario_id)->where('descricao',$finalName)->first();
+                      if(isset($checkAnexo->id)){
+                        $anexo++;
+                        $path = 'anexos/'.$data['locatario_id'].'/'.$data['projeto_id'].'/'.$new->id.'/';
+                        $checking = Storage::put( $path.$finalName, File::get($file));
+                         if(isset($checking)){
+                          $nameFinal = $path.$finalName;
+                          $appended = array('path' => $nameFinal, 'descricao' => $finalName, 'tarefa_id' => $new->id, 'locatario_id' => $new->locatario_id, 'tamanho' => $fileSize);
+                          $anexoD = anexo::create($appended);
+                         }
+                       }else{
+                         $imgError[] = 'Arquivo Repetido - '.$finalName;
+                       }
+                    }
+                  }
+                }
+          }
+
+            $response['msg'] = 'Tarefa Criada com Sucesso.';
+            if(count($imgError) > 0){
+              foreach($imgError as $imerr){
+                $response['msg'] .= ' - '.$imerr;
+              }
+            }
             $response['status'] = 'success';
             $response['id'] = $new->id;
+            $response['story'] = $new->historia_id;
         }
         return $response;
     }
@@ -201,6 +243,19 @@ class TarefasController extends Controller
     return $response;
   }
 
+  public function user(request $request){
+     $id = $request['id'];
+     $task = $request['task'];
+     $user = user::find($id);
+     $tarefa = task::find($task);
+     return view('backend.modals.tarefas.user', compact('user','tarefa'));
+  }
+
+  public function anexos(request $request){
+    $tarefa = task::find($request['id']);
+    return view('backend.modals.tarefas.anexos', compact('tarefa'));
+  }
+
     private function getTarefa($id){
         $task = task::find($id);
         $estagioDesc  = ($task->estagio_id == 1) ? 'Backlog' : (($task->estagio_id == 2) ? 'Arquivada' : $task->estagio->descricao);
@@ -226,4 +281,5 @@ class TarefasController extends Controller
         );
        return $response;
     }
+
 }

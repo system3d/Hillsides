@@ -52,6 +52,8 @@
              <i class="fa loading"></i>
         </div>
 
+        <div id="go-to-top" class='btn btn-primary hidden'><i class="fa fa-chevron-up"></i></div>
+
         @include('includes.partials.modal')
 
       </section><!-- /.content -->
