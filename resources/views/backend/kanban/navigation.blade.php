@@ -30,7 +30,7 @@
           </div>
 
           <div class="form-group selectSprints pull-right">
-             <input type="text" placeholder='Pesquisar' class='form-control'>
+             <input type="text" id='kanban-search' placeholder='Pesquisar' class='form-control'>
           </div>
     
          <hr>

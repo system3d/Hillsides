@@ -7,6 +7,7 @@
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)/$ /$1 [L,R=301]
 
+Options -Indexes
 RewriteCond %{REQUEST_URI} !(\.([a-zA-Z0-9]{2,})|robots\.txt)$ [NC]
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
@@ -16,6 +17,8 @@ RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_URI} !^/public/
 RewriteRule ^(css|js|img|plugins|modules|fonts)/(.*)$ public/$1/$2 [L,NC]
+
+RewriteCond %{REQUEST_URI} !^/public
 
 
 </IfModule>

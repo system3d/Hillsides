@@ -55,7 +55,7 @@
 
 .tarefa-body .tarefa-title:hover{
 	text-decoration: underline;
-	cursor: pointer;
+	cursor: move;
 }
 
 .tarefa-body .tarefa-list{

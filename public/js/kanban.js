@@ -346,6 +346,30 @@ $(document).on('click', '.tarefa-delete', function(event) {
     }
   });
 
+  //////////////////
+
+
+  $(document).on('keyup', '#kanban-search', function(event) {
+    event.preventDefault();
+    var search = $(this).val();
+    search = search.replace(/ /g,'%%').toLowerCase();
+    if(search != ''){
+      $('.tarefa').each(function(index, el) {
+        var attrs = $(el).attr('data-search');
+         if (attrs.includes(search)){
+          $(el).removeClass('hidden');
+         }else{
+          $(el).addClass('hidden');
+         }
+      });
+    }else{
+      $('.tarefa').each(function(index, el) {
+        $(el).removeClass('hidden');
+      });
+    }
+    event.stopPropagation();
+  });
+
 
 });
 
@@ -430,7 +454,10 @@ function getTarefas(){
 
 //receive the json of the task provenient of the getTarefa/getTarefas routes
 function taskHtml(task){
-var response = '<div class="tarefa" data-story="'+task.historia_id+'" style="background-color:'+task.cor+'" data-id="'+task.id+'">';
+var str  = task.historia+task.sprint+task.tarefa+task.status+task.estagio+task.tipo+task.peso+task.obs;
+var search = str.toString();
+search = search.replace(/ /g,'%%').toLowerCase();
+var response = '<div class="tarefa" data-story="'+task.historia_id+'" style="background-color:'+task.cor+'" data-id="'+task.id+'" data-search="'+search+'">';
 response +=     '<span class="red-pin"></span>';
 response +=       '<div class="tarefa-body">';
 response +=         '<p class="tarefa-title tarefa-info" data-id="'+task.id+'" data-toggle="tooltip" data-html="true" title="'+task.tarefa+'"><span>'+task.tarefa+'</span></p>';
