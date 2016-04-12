@@ -13,6 +13,7 @@ use App\Anexo as anexo;
 use App\Models\Access\User\User as user;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
+use App\Cronograma as crono;
 
 class TarefasController extends Controller
 {
@@ -76,6 +77,19 @@ class TarefasController extends Controller
             $response['msg'] = 'Erro ao Gravar Tarefa';
             $response['status'] = 'error';
         }else{
+
+          if(!empty($dados['crono_prev']) || !empty($dados['crono_real'])){
+            $prev = !empty($dados['crono_prev']) ?  date_format(date_create_from_format('d/m/Y', $dados['crono_prev']), 'Y-m-d') : '';
+            $real = !empty($dados['crono_real']) ?  date_format(date_create_from_format('d/m/Y', $dados['crono_real']), 'Y-m-d') : '';
+            $cronoToSave = array('previsto' => $prev, 'realizado' => $real, 'tarefa_id' => $new->id, 'user_id' => $new->user_id, 'locatario_id' => $new->locatario_id);
+            $crono = crono::create($cronoToSave);
+          }
+
+          if(!empty($dados['custo'])){
+            $custo = $dados['custo'];
+
+          }
+
           $imgError = array();
           if(!empty($dados['anexo'][0])){
             $files = $dados['anexo'];
@@ -83,7 +97,7 @@ class TarefasController extends Controller
             
             foreach($files as $file){
               if(isset($file)){
-                  $exts = array('jpg', 'jpeg', 'png', 'gif', 'jpe', 'jif', 'jfif', 'jfi','pdf','txt','zip','doc','rar','xls','ppt');
+                  $exts = array('jpg', 'jpeg', 'png', 'gif', 'jpe', 'jif', 'jfif', 'jfi','pdf','txt','zip','doc','rar','xls','ppt','xlsx','pptx');
                   $extension = $file->getClientOriginalExtension();
                   $fileSize = $file->getSize();
                     if(!in_array($extension, $exts)){
@@ -91,7 +105,7 @@ class TarefasController extends Controller
                     }else{
                       $finalName = $file->getClientOriginalName();
                       $checkAnexo = anexo::where('tarefa_id',$new->locatario_id)->where('descricao',$finalName)->first();
-                      if(isset($checkAnexo->id)){
+                      if(!isset($checkAnexo->id)){
                         $anexo++;
                         $path = 'anexos/'.$data['locatario_id'].'/'.$data['projeto_id'].'/'.$new->id.'/';
                         $checking = Storage::put( $path.$finalName, File::get($file));
@@ -216,6 +230,12 @@ class TarefasController extends Controller
         } 
         $id = $check['id'];
         unset($check['id']);
+        if($check['assignee_id'] == 0)
+          unset($check['assignee_id']);
+        if($check['disciplina_id'] == 0)
+          unset($check['disciplina_id']);
+        if($check['etapa_id'] == 0)
+          unset($check['etapa_id']);
         $task = task::find($id);
 
         $new = $task->update($check);
@@ -235,6 +255,10 @@ class TarefasController extends Controller
     public function excluir(request $request){
     $id = $request['id'];
     $new = task::find($id);
+    if($new->anexos->count() > 0){
+        $path = storage_path().'/app/anexos/'.$new->locatario_id.'/'.$new->projeto_id.'/'.$new->id;
+        $Ruin = File::deleteDirectory($path);
+    }
     $idgo = $new->id;
     $new->delete();
     $response['msg'] = 'Tarefa Excluida com Sucesso';
@@ -254,6 +278,65 @@ class TarefasController extends Controller
   public function anexos(request $request){
     $tarefa = task::find($request['id']);
     return view('backend.modals.tarefas.anexos', compact('tarefa'));
+  }
+
+  public function download($id){
+    $file = anexo::find($id);
+    return response()->download(storage_path().'/app/'.$file->path);
+  }
+
+   public function excluirAnexo(request $request){
+    $id = $request['id'];
+    $new = anexo::find($id);
+    File::delete(storage_path().'/app/'.$new->path);
+    $idgo = $new->tarefa_id;
+    $new->delete();
+    $response['msg'] = 'Anexo Excluido com Sucesso';
+    $response['status'] = 'success';
+    $response['task'] = $this->getTarefa($idgo);
+    $response['id'] = $idgo;
+    return $response;
+  }
+
+  public function anexoUpload(request $request){
+     $id = $request['id'];
+     $tarefa = task::find($id);
+     return view('backend.modals.tarefas.anexos_upload', compact('tarefa'));
+  }
+
+  public function storeAnexo(request $request){
+    $file = $request['anexo'];
+    $new = task::find($request['tarefa']);
+    $idgo = $new->id;
+    $exts = array('jpg', 'jpeg', 'png', 'gif', 'jpe', 'jif', 'jfif', 'jfi','pdf','txt','zip','doc','rar','xls','ppt','xlsx','pptx');
+    $extension = $file->getClientOriginalExtension();
+    $fileSize = $file->getSize();
+      if(!in_array($extension, $exts)){
+          $response['status'] = 'error';
+          $response['msg'] = 'Extensão Invalida';
+          return $response;
+      }else{
+        $finalName = $file->getClientOriginalName();
+        $checkAnexo = anexo::where('tarefa_id',$new->locatario_id)->where('descricao',$finalName)->first();
+        if(!isset($checkAnexo->id)){
+          $path = 'anexos/'.$new->locatario_id.'/'.$new->projeto_id.'/'.$new->id.'/';
+          $checking = Storage::put( $path.$finalName, File::get($file));
+           if(isset($checking)){
+            $nameFinal = $path.$finalName;
+            $appended = array('path' => $nameFinal, 'descricao' => $finalName, 'tarefa_id' => $new->id, 'locatario_id' => $new->locatario_id, 'tamanho' => $fileSize);
+            $anexoD = anexo::create($appended);
+            $response['msg'] = 'Anexo Salvo com Sucesso';
+            $response['status'] = 'success';
+            $response['task'] = $this->getTarefa($idgo);
+            $response['id'] = $idgo;
+            return $response;
+           }
+         }else{
+           $response['status'] = 'error';
+          $response['msg'] = 'Arquivo Repetido';
+          return $response;
+         }
+      }
   }
 
     private function getTarefa($id){
@@ -277,7 +360,8 @@ class TarefasController extends Controller
             'obs'         => $task->obs,
             'peso'        => $task->peso,
             'tipo_icone'  => asset('img/icones/'.$task->tipo->icone),
-            'user_icone'  => !empty($task->assignee_id) ? asset('img/avatar/'.$task->assignee->avatar) : asset('img/avatar/default.png')
+            'user_icone'  => !empty($task->assignee_id) ? asset('img/avatar/'.$task->assignee->avatar) : asset('img/avatar/default.png'),
+            'anexos'      => $task->anexos->count() > 0 ? '<span class="badge bg-aqua pull-right" data-toggle="tooltip" data-html="true" title="Esta Tarefa Possui Anexos">'.$task->anexos->count().'</span>' : ''
         );
        return $response;
     }

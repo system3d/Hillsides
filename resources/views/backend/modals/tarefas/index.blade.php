@@ -5,7 +5,7 @@
    </div>
    <div class="panel-body">
    <div class="row">
-   		<div class="col-md-4">
+   		<div class="col-md-6">
            <div class="form-group">
                <label class="control-label">Nome:</label>
                  <p class="form-static">{{$tarefa->descricao}}</p>
@@ -20,7 +20,7 @@
            </div>
              <br/><br/>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-3">
          <div class="form-group">
              <label class="control-label">Categoria :</label>
              <p class="form-static">{{$tarefa->tipo->descricao}}</p>
@@ -40,7 +40,7 @@
          </div>
         @endif
       </div>
-      <div class="col-md-4"></div>
+      <div class="col-md-3"></div>
 
        	@if(!empty($tarefa->assignee_id))
 		     <div class="form-group">

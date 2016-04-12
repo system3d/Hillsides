@@ -18,10 +18,11 @@
 					@if(isset($tarefa->anexos->first()->id))
 						@foreach($tarefa->anexos as $anexo)
 							<tr>
-							<td>{{$anexo->descricao}}</td>
+							<td>&nbsp;&nbsp;&nbsp;<a href="{{url('tarefa/download/'.$anexo->id)}}" target="_blank" data-toggle="tooltip" title='Download'>{{$anexo->descricao}}</a></td>
 							<td>{{formatBytes($anexo->tamanho)}}</td>
 							<td style="text-align:center">
-								<a href="#" class="btn btn-danger btn-xs" data-id='{{$anexo->id}}' data-toggle="tooltip" data-html="true" id='excluir-anexo' title='Excluir'><i class="fa fa-trash"></i></a>
+								<a href="#" class="btn btn-danger btn-xs excluir-anexo" data-id='{{$anexo->id}}' data-toggle="tooltip" data-html="true" title='Excluir'>
+									<i class="fa fa-trash"></i></a>
 							</td>
 							</tr>
 						@endforeach
@@ -29,7 +30,9 @@
 				</table>
 				</div>
 				@if($tarefa->anexos->count() < 5)
-				<a href="#" style='margin:15px' data-id='{{$tarefa->id}}' class="btn btn-primary create-sprint">Upload</a>
+				<a href="#" style='margin:15px' data-id='{{$tarefa->id}}' class="btn btn-primary anexo-upload">Upload</a>
+				@else
+				<button style='margin:15px' class="btn btn-primary" data-toggle="tooltip" data-html="true" title='Maximo 5 Anexos por Tarefa'>Upload</button>
 				@endif
 				<a href='#' id='voltar_modal' class="btn btn-warning pull-right" style='margin:15px'>Voltar</a>
 	   		</div>

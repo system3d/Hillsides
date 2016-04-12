@@ -153,3 +153,7 @@ Route::post('tarefa/update', array('middleware' => 'admin', 'as' => 'tarefa/upda
 Route::post('tarefa/excluir', array('middleware' => 'admin', 'as' => 'tarefa/excluir', 'uses' => 'TarefasController@excluir'));
 Route::post('tarefa/user', array('middleware' => 'admin', 'as' => 'tarefa/user', 'uses' => 'TarefasController@user'));
 Route::post('tarefa/anexos', array('middleware' => 'admin', 'as' => 'tarefa/anexos', 'uses' => 'TarefasController@anexos'));
+Route::post('tarefa/excluirAnexo', array('middleware' => 'admin', 'as' => 'tarefa/excluirAnexo', 'uses' => 'TarefasController@excluirAnexo'));
+Route::get('tarefa/download/{id}', array('middleware' => 'admin', 'as' => 'tarefa/download', 'uses' => 'TarefasController@download'));
+Route::post('tarefa/upload', array('middleware' => 'admin', 'as' => 'tarefa/upload', 'uses' => 'TarefasController@anexoUpload'));
+Route::post('tarefa/storeAnexo', array('middleware' => 'admin', 'as' => 'tarefa/storeAnexo', 'uses' => 'TarefasController@storeAnexo'));

@@ -122,7 +122,34 @@
             </div>
 
        </div>
-       <div class="tab-pane" id='custo_crono'></div>
+       <div class="tab-pane" id='custo_crono'>
+         <div class="row">
+           <div class="col-md-6">
+              <div class="form-group">
+                 <label for="fullname" class="control-label">Data Prevista para Início:</label>
+                 <input type="text" class="form-control datePicker" name="crono_prev" style='width:100%'>
+              </div>
+              <div class="form-group">
+                 <label for="fullname" class="control-label">Data Prevista para Término:</label>
+                 <input type="text" class="form-control datePicker" name="crono_real" style='width:100%'>
+              </div>
+           </div>
+           <div class="col-md-6">
+              <div class="form-group">
+                 <label for="fullname" class="control-label">Custo:</label>
+                 <input type="number" class="form-control" name="custo" style='width:100%'>
+              </div>
+              <div class="form-group">
+                 <label for="fullname" class="control-label">Tipo de Custo:</label>
+                 <select class="form-control" required="" style='width:100%' name='tipo_custo'>
+                   @foreach(access()->user()->locatario->tipos_custo as $tpc)
+                    <option value="{{$tpc->id}}">{{$tpc->descricao}}</option>
+                   @endforeach
+                 </select>
+              </div>
+           </div>
+         </div>
+       </div>
 
 
          <div class="row">

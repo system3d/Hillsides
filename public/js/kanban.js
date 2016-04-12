@@ -244,6 +244,9 @@ $(document).ready(function() {
         })
         .done(function(response) {
           drawModal(response, '40%');
+          $(".form-static").linkify({
+              target: "_blank"
+          });
         });
    });
 
@@ -416,6 +419,90 @@ $(document).on('click', '.tarefa-delete', function(event) {
       });
   });
 
+   $(document).on('click', '.excluir-anexo', function(event) {
+     event.preventDefault();
+     var id = $(this).attr('data-id');
+     $.ajax({
+        url: urlbaseGeral+"/tarefa/excluirAnexo",
+        type: 'POST',
+        data: {id:id},
+        dataType: 'json',
+      }).done(function(r){
+       flashMessage(r.status, r.msg);
+        if(r.status == 'success'){
+        $('.tarefa[data-id="'+r.id+'"]').remove();
+        var th = taskHtml(r.task);
+        injectTask(th,r.task.historia_id,r.task.estagio_id);
+        setColorSingle(r.id);
+        $.ajax({
+        url: urlbaseGeral+"/tarefa/anexos",
+        type: 'POST',
+        data: {id:r.id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        drawModal(response,'50%');
+         $('#modalTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+      });
+    }
+     });
+   });
+
+   $(document).on('click', '.anexo-upload', function(event) {
+     event.preventDefault();
+     var id = $(this).attr('data-id');
+      $.ajax({
+          url: urlbaseGeral+"/tarefa/upload",
+          type: 'POST',
+          dataType: 'html',
+          data:{id:id},
+        })
+        .done(function(response) {
+          drawModal(response, '40%');
+        });
+   });
+
+   $(document).on('submit', '#upload_anexo', function(event) {
+      event.preventDefault();
+      var formData = new FormData(this);
+       $.ajax({
+            type:'POST',
+            url: urlbaseGeral+"/tarefa/storeAnexo",
+            data:formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+        }).done(function(r) {
+        flashMessage(r.status, r.msg);
+        if(r.status == 'success'){
+          $('.tarefa[data-id="'+r.id+'"]').remove();
+        var th = taskHtml(r.task);
+        injectTask(th,r.task.historia_id,r.task.estagio_id);
+        setColorSingle(r.id);
+        $.ajax({
+        url: urlbaseGeral+"/tarefa/anexos",
+        type: 'POST',
+        data: {id:r.id},
+        dataType: 'html',
+      })
+      .done(function(response) {
+        window.modal_history.pop();
+        window.modal_width.pop();
+         window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'50%');
+         $('#modalTable').DataTable({
+            responsive: true,
+            "iDisplayLength": 25,
+        });
+      });
+        }
+      });
+    });
+
 });
 
 function startGoTop(){
@@ -511,6 +598,7 @@ var search = str.toString();
 search = search.replace(/ /g,'%%').toLowerCase();
 var response = '<div class="tarefa" data-story="'+task.historia_id+'" style="background-color:'+task.cor+'" data-id="'+task.id+'" data-search="'+search+'">';
 response +=     '<span class="red-pin"></span>';
+response +=      task.anexos;
 response +=       '<div class="tarefa-body">';
 response +=         '<p class="tarefa-title tarefa-info" data-id="'+task.id+'" data-toggle="tooltip" data-html="true" title="'+task.tarefa+'"><span>'+task.tarefa+'</span></p>';
 response +=           '<ul class="tarefa-list">';
@@ -539,7 +627,6 @@ function setColor(){
     $(el).find('.tarefa-body').css('color', isDark(t_color) ? 'white' : 'black');
   });
 }
-
 
 function setColorSingle(id){
   var tarefa = $('.tarefa[data-id="'+id+'"]');

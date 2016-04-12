@@ -5,7 +5,6 @@ $(document).ready(function() {
     $('#modal').modal("hide");
     $('#modal_loader').addClass('hidden');
   });
-  
 
   $('#fa-estagios-sidebar').click(function(event) {
     $('#set-est-side').toggleClass('hidden');

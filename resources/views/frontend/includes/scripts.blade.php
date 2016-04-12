@@ -16,6 +16,8 @@
     {!! Html::script('plugins/jQuery/jQuery-2.1.4.min.js') !!}
     {{-- Toaster(Notificações) --}}
     {!! Html::script('plugins/toasts/src/jquery.toast.js') !!}
+
+    {!! Html::script('plugins/linkify/jquery-linkify.min.js') !!}
     <!-- Messages -->
     {!! Html::script('js/messages.js') !!}
     <!-- Jquery UI -->

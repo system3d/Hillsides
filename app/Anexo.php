@@ -9,7 +9,7 @@ class Anexo extends Model
 {
     protected $table = 'anexos';
     public $timestamps = false;
-	protected $fillable = ['descricao', 'tamanho', 'tarefa_id', 'locatario_id'];
+	protected $fillable = ['descricao', 'tamanho', 'path', 'tarefa_id', 'locatario_id'];
 
 	protected static function boot()
     {

@@ -16,7 +16,6 @@
 	position: relative;
 }
 
-
 .tarefa{
 	background: linear-gradient(to bottom, rgba(255,255,255, 0.05), rgba(255,255,255, 0.25));
 	text-align: left !important;
@@ -33,6 +32,11 @@
 
 .tarefa:hover{
 	cursor: move;
+}
+
+.tarefa .badge{
+	margin-top: 2px;
+	margin-right: 2px;
 }
 
 .tarefa-body{
