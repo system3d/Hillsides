@@ -9,7 +9,7 @@ class Custo extends Model
 {
     protected $table = 'custos';
     public $timestamps = true;
-	protected $fillable = ['valor', 'obs', 'tipo_id', 'user_id', 'locatario_id'];
+	protected $fillable = ['valor', 'obs', 'tipo_id', 'user_id', 'tarefa_id' ,'locatario_id'];
 
 	protected static function boot()
     {

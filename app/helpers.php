@@ -148,3 +148,15 @@ if (! function_exists('formatBytes')) {
     return round($bytes, $precision) . ' ' . $units[$pow]; 
 } 
 }
+
+if (!function_exists('diffForHumans')) {
+    /**
+     * Access (lol) the Access:: facade as a simple function
+     */
+    function diffForHumans($data, $format = null) {
+        if($format == null)
+            return date('d/m/Y',strtotime($data));
+        else
+            return date($format,strtotime($data));
+    }
+}

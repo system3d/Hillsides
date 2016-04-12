@@ -87,6 +87,7 @@ $(document).ready(function() {
   	 	connectWith: ".sortable-row",
   	 	cancel: ".NotSortable",
       tolerance: 'pointer',
+      containment: "tbody",
       placeholder: 'dragHelper',
       revert: true,
       forceHelperSize: true,
@@ -502,6 +503,15 @@ $(document).on('click', '.tarefa-delete', function(event) {
         }
       });
     });
+
+ var thHeight = $("#kanbanBody th:first").height();
+  $(".resizableColumn").resizable({
+      minWidth: 150,
+      maxWidth: 550,
+      maxHeight: 23,
+      minHeight: 23,
+      handles: "e"
+  });
 
 });
 

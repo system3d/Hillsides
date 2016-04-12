@@ -5,6 +5,7 @@
 {{Html::style('css/kanban.css')}}
 {{Html::style('css/kanban-skins.css')}}
 {{Html::style('plugins/iCheck/all.css')}}
+{{Html::style('plugins/jQueryUI/jquery-ui.min.css')}}
 
 @endsection
 

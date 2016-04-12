@@ -14,6 +14,7 @@ use App\Models\Access\User\User as user;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\Cronograma as crono;
+use App\Custo as custo;
 
 class TarefasController extends Controller
 {
@@ -87,7 +88,9 @@ class TarefasController extends Controller
 
           if(!empty($dados['custo'])){
             $custo = $dados['custo'];
-
+            $tipo_custo = $dados['tipo_custo'];
+            $custoToSave = array('valor' => $custo, 'tipo_id' => $tipo_custo, 'tarefa_id' => $new->id, 'user_id' => $new->user_id, 'locatario_id' => $new->locatario_id);
+            $custoSaved = custo::create($custoToSave);
           }
 
           $imgError = array();
@@ -236,7 +239,23 @@ class TarefasController extends Controller
           unset($check['disciplina_id']);
         if($check['etapa_id'] == 0)
           unset($check['etapa_id']);
+
+        $crono_prev = $check['crono_prev'];
+        $crono_real = $check['crono_real'];
+        $custo = $check['custo'];
+        $tipo_custo = $check['tipo_custo'];
+        unset($check['crono_prev']);
+        unset($check['crono_real']);
+        unset($check['custo']);
+        unset($check['tipo_custo']);
+
         $task = task::find($id);
+
+        $cronoUpdate = array('previsto' => date_format(date_create_from_format('d/m/Y', $crono_prev), 'Y-m-d'), 'realizado' => date_format(date_create_from_format('d/m/Y', $crono_real), 'Y-m-d'));
+        $cronoUp = crono::find($task->cronograma->id)->update($cronoUpdate);
+
+        $custoUpdate = array('valor' => $custo, 'tipo_id' => $tipo_custo);
+        $custoUp = custo::find($task->custo->id)->update($custoUpdate);
 
         $new = $task->update($check);
         if(!isset($new)){
@@ -361,7 +380,7 @@ class TarefasController extends Controller
             'peso'        => $task->peso,
             'tipo_icone'  => asset('img/icones/'.$task->tipo->icone),
             'user_icone'  => !empty($task->assignee_id) ? asset('img/avatar/'.$task->assignee->avatar) : asset('img/avatar/default.png'),
-            'anexos'      => $task->anexos->count() > 0 ? '<span class="badge bg-aqua pull-right" data-toggle="tooltip" data-html="true" title="Esta Tarefa Possui Anexos">'.$task->anexos->count().'</span>' : ''
+            'anexos'      => $task->anexos->count() > 0 ? '<span class="label bg-aqua pull-right" data-toggle="tooltip" data-html="true" title="Esta Tarefa Possui Anexos">'.$task->anexos->count().'</span>' : ''
         );
        return $response;
     }

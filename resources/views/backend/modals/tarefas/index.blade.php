@@ -39,8 +39,14 @@
              <p class="form-static">{{$tarefa->peso}}</p>
          </div>
         @endif
+         @if(!empty($tarefa->custo->id))
+         <div class="form-group">
+               <label class="control-label">Custo:</label>
+                 <p class="form-static">{{$tarefa->custo->valor}} R$ - {{$tarefa->custo->tipo->descricao}}</p>
+           </div>
+        @endif
       </div>
-      <div class="col-md-3"></div>
+      <div class="col-md-3">
 
        	@if(!empty($tarefa->assignee_id))
 		     <div class="form-group">
@@ -60,6 +66,21 @@
                  <p class="form-static">{{$tarefa->etapa->descricao}}</p>
            </div>
         @endif
+        @if(!empty($tarefa->cronograma->previsto))
+         <div class="form-group">
+               <label class="control-label">Data Prevista para Início:</label>
+                 <p class="form-static">{{diffForHumans($tarefa->cronograma->previsto)}}</p>
+           </div>
+        @endif
+        @if(!empty($tarefa->cronograma->realizado))
+         <div class="form-group">
+               <label class="control-label">Data Prevista para Término:</label>
+                 <p class="form-static">{{diffForHumans($tarefa->cronograma->realizado)}}</p>
+           </div>
+        @endif
+       
+
+    </div>
 		</div>
     <div class="row">
       <div class="col-md-12">
