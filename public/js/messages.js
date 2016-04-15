@@ -18,6 +18,10 @@ function flashDefault(text, title, transition, close, hide, stack, position, ali
 	flashMessage('none', text, title, transition, close, hide, stack, position, align, loader);
 }
 
+function flashNotify(style, text, title, transition, close, hide, stack, position, align, loader){
+	flashMessage(style, text, title, transition, close, false, stack, 'bottom-right', align, loader);
+}
+
 function flashMessage(style, text, title, transition, close, hide, stack, position, align, loader){
 	if(style == 'danger') style == 'error';
 	var defaults = text+"&"+title+"&"+transition+"&"+close+"&"+hide+"&"+stack+"&"+position+"&"+align+"&"+loader;

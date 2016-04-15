@@ -60,13 +60,13 @@
                <div class="row">
                 <div class="col-md-4">
                   <label for="fullname" class="control-label">Custo:</label>
-                   <input type="number" class="form-control" name="custo" style='width:100%' value='{{$tarefa->custo->valor}}'>
+                   <input type="number" class="form-control" name="custo" style='width:100%' value=' <?php if(isset($tarefa->custo->valor)) echo $tarefa->custo->valor; ?> '>
                 </div>
                 <div class="col-md-8">
                   <label for="fullname" class="control-label">Tipo de Custo:</label>
                   <select class="form-control" required="" style='width:100%' name='tipo_custo'>
                    @foreach(access()->user()->locatario->tipos_custo as $tpc)
-                    <option value="{{$tpc->id}}" <?php if($tarefa->custo->tipo_id == $tpc->id) echo 'selected'; ?>>{{$tpc->descricao}}</option>
+                    <option value="{{$tpc->id}}" <?php if(isset($tarefa->custo->tipo_id)){ if($tarefa->custo->tipo_id == $tpc->id) echo 'selected'; }?>>{{$tpc->descricao}}</option>
                    @endforeach
                  </select>
                 </div>
@@ -76,11 +76,11 @@
           <div class="col-md-4">
             <div class="form-group">
                  <label for="fullname" class="control-label">Data Prevista para Início:</label>
-                 <input type="text" class="form-control datePicker" name="crono_prev" style='width:100%' value="{{date('d/m/Y',strtotime($tarefa->cronograma->previsto))}}">
+                 <input type="text" class="form-control datePicker" name="crono_prev" style='width:100%' value=" <?php if(isset($tarefa->cronograma->previsto)) date('d/m/Y',strtotime($tarefa->cronograma->previsto)) ?>">
               </div>
               <div class="form-group">
                  <label for="fullname" class="control-label">Data Prevista para Término:</label>
-                 <input type="text" class="form-control datePicker" name="crono_real" style='width:100%' value="{{date('d/m/Y',strtotime($tarefa->cronograma->realizado))}}">
+                 <input type="text" class="form-control datePicker" name="crono_real" style='width:100%' value="<?php if(isset($tarefa->cronograma->previsto)) date('d/m/Y',strtotime($tarefa->cronograma->realizado)) ?>">
               </div>
                <div class="form-group">
                <label for="historia" class="control-label">Atribuída A:</label>

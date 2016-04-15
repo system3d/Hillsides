@@ -251,11 +251,28 @@ class TarefasController extends Controller
 
         $task = task::find($id);
 
-        $cronoUpdate = array('previsto' => date_format(date_create_from_format('d/m/Y', $crono_prev), 'Y-m-d'), 'realizado' => date_format(date_create_from_format('d/m/Y', $crono_real), 'Y-m-d'));
-        $cronoUp = crono::find($task->cronograma->id)->update($cronoUpdate);
+        
+        
+        if(isset($task->cronograma)){
+          $cronoUp = crono::find($task->cronograma->id);
+          $cronoUpdate = array('previsto' => date_format(date_create_from_format('d/m/Y', $crono_prev), 'Y-m-d'), 'realizado' => date_format(date_create_from_format('d/m/Y', $crono_real), 'Y-m-d'));
+          $cronoUp->update($cronoUpdate);
+        }else{
+          $cronoToSave = array('previsto' => date_format(date_create_from_format('d/m/Y', $crono_prev), 'Y-m-d'), 'realizado' => date_format(date_create_from_format('d/m/Y', $crono_real), 'Y-m-d'),
+           'tarefa_id' => $task->id, 'user_id' => $task->user_id, 'locatario_id' => $task->locatario_id);
+          $cronoNew = crono::create($cronoToSave);
+        }
 
-        $custoUpdate = array('valor' => $custo, 'tipo_id' => $tipo_custo);
-        $custoUp = custo::find($task->custo->id)->update($custoUpdate);
+        
+        
+        if(isset($task->custo)){
+          $custoUp = custo::find($task->custo->id);
+          $custoUpdate = array('valor' => $custo, 'tipo_id' => $tipo_custo);
+          $custoUp->update($custoUpdate);
+        }else{
+           $custoToSave = array('valor' => $custo, 'tipo_id' => $tipo_custo, 'tarefa_id' => $task->id, 'user_id' => $task->user_id, 'locatario_id' => $task->locatario_id);
+           $custoSaved = custo::create($custoToSave);
+        }
 
         $new = $task->update($check);
         if(!isset($new)){
