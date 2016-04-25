@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use App\Cronograma as crono;
 use App\Custo as custo;
+use Kanban;
 
 class TarefasController extends Controller
 {
@@ -197,8 +198,10 @@ class TarefasController extends Controller
         $dados = $request->all();
         // return '405';
         $task = task::find($dados['id']);
+        $origem = $task->estagio_id;
         $toUp = array('estagio_id' => $dados['estagio']);
         $task->update($toUp);
+        kanban::taskUpdate($task->id,$origem,$dados['estagio'],access()->user()->id);
         return '200';
     }
 
@@ -397,7 +400,7 @@ class TarefasController extends Controller
             'peso'        => $task->peso,
             'tipo_icone'  => asset('img/icones/'.$task->tipo->icone),
             'user_icone'  => !empty($task->assignee_id) ? asset('img/avatar/'.$task->assignee->avatar) : asset('img/avatar/default.png'),
-            'anexos'      => $task->anexos->count() > 0 ? '<span class="label bg-aqua pull-right" data-toggle="tooltip" data-html="true" title="Esta Tarefa Possui Anexos">'.$task->anexos->count().'</span>' : ''
+            'anexos'      => $task->anexos->count() > 0 ? '<span class="label pull-right" data-toggle="tooltip" data-html="true" title="Esta Tarefa Possui Anexos"><i class="fa fa-paperclip fa-flip-horizontal hasAnexo" aria-hidden="true"></i></span>' : ''
         );
        return $response;
     }

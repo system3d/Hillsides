@@ -22,6 +22,10 @@ function flashNotify(style, text, title, transition, close, hide, stack, positio
 	flashMessage(style, text, title, transition, close, false, stack, 'bottom-right', align, loader);
 }
 
+function flashInfoCenter(text, title, transition, close, hide, stack, position, align, loader){
+	flashMessage('info', text, '', transition, close, false, stack, 'top-center', align, loader);
+}
+
 function flashMessage(style, text, title, transition, close, hide, stack, position, align, loader){
 	if(style == 'danger') style == 'error';
 	var defaults = text+"&"+title+"&"+transition+"&"+close+"&"+hide+"&"+stack+"&"+position+"&"+align+"&"+loader;

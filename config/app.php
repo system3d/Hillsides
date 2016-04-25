@@ -180,6 +180,7 @@ return [
         App\Providers\AuthServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+        App\Providers\KanbanServiceProvider::class,
 
         /*
          * Third Party Providers
@@ -254,6 +255,7 @@ return [
         'Gravatar'    => Creativeorange\Gravatar\Facades\Gravatar::class,
         'Html'        => Collective\Html\HtmlFacade::class,
         'Socialite'   => Laravel\Socialite\Facades\Socialite::class,
+        'Kanban'      => App\Providers\KanbanServiceProvider::class,
     ],
 
 ];

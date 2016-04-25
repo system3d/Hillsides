@@ -36,6 +36,7 @@ $(document).ready(function() {
         $(this).find('.text-vertical').remove();
         thisWidth = $(this).attr('data-width');
         $(this).removeClass('NotSortable');
+        $(this).removeClass('collapsed-thing');
         $(this).addClass('sortable-row');
         $(this).css('width', thisWidth);
         $(this).find('.tarefa').removeClass('hidden');
@@ -61,6 +62,7 @@ $(document).ready(function() {
           did++;
         }
         $(this).addClass('NotSortable');
+        $(this).addClass('collapsed-thing');
         $(this).removeClass('sortable-row');
         $(this).css('width', '19px');
         $(this).find('.tarefa').addClass('hidden');
@@ -635,6 +637,7 @@ function setColor(){
   $('.tarefa').each(function(index, el) {
     var t_color = $(el).css('background-color');
     $(el).find('.tarefa-body').css('color', isDark(t_color) ? 'white' : 'black');
+    $(el).find('.hasAnexo').css('color', isDark(t_color) ? '#EFEFEF' : 'black');
   });
 }
 
@@ -642,6 +645,7 @@ function setColorSingle(id){
   var tarefa = $('.tarefa[data-id="'+id+'"]');
   var t_color = tarefa.css('background-color');
   $(tarefa).find('.tarefa-body').css('color', isDark(t_color) ? 'white' : 'black');
+  $(tarefa).find('.hasAnexo').css('color', isDark(t_color) ? '#EFEFEF' : 'black');
 }
 
 //function to move tasks, receives just the task 'data-id' and the estagio('data-estagio of the td')
@@ -649,7 +653,10 @@ function moveTask(id,est){
 var task = $('.tarefa[data-id="'+id+'"]');
 var hist = task.attr('data-story');
 //First we copy the arrow to the new table cell and get the offset to the document
-var newo = task.clone().appendTo('.sortable-row[data-story="'+hist+'"][data-estagio="'+est+'"]');
+var column = $('td[data-story="'+hist+'"][data-estagio="'+est+'"]').hasClass('collapsed-thing');
+
+if(!column){
+  var newo = task.clone().appendTo('.sortable-row[data-story="'+hist+'"][data-estagio="'+est+'"]');
 var newOffset = newo.offset();
 //Get the old position relative to document
 var oldOffset = task.offset();
@@ -667,6 +674,11 @@ temp.animate( {'top': newOffset.top, 'left':newOffset.left}, 'slow', function(){
    task.remove();
    temp.remove();
 });
+}else{
+  var newT = task.addClass('hidden').appendTo('id[data-story="'+hist+'"][data-estagio="'+est+'"]');
+  dd($(newT));
+  // task.remove();
+}
 }
 
 function reloadKBPage(){

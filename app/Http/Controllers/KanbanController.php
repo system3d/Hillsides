@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Projeto as proj;
 use Cache;
+use Kanban;
+use JavaScript;
 
 class KanbanController extends Controller
 {
@@ -39,6 +41,7 @@ class KanbanController extends Controller
           "equipe" => "0"
         );
       }
+      JavaScript::put(['thisProjetoId'=>$projeto->id]);
     	return view('backend.kanban', compact('projeto', 'columnWidth','users', 'dados'));
     }
 
@@ -57,6 +60,10 @@ class KanbanController extends Controller
     unset($dados['projeto']);
     Cache::put('history', $dados,5);
     return route('kanban',[$projeto]);
+  }
+
+  public function teste(){
+    kanban::taskUpdate(4,79,80,2);
   }
 
 }

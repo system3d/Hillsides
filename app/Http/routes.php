@@ -157,3 +157,5 @@ Route::post('tarefa/excluirAnexo', array('middleware' => 'admin', 'as' => 'taref
 Route::get('tarefa/download/{id}', array('middleware' => 'admin', 'as' => 'tarefa/download', 'uses' => 'TarefasController@download'));
 Route::post('tarefa/upload', array('middleware' => 'admin', 'as' => 'tarefa/upload', 'uses' => 'TarefasController@anexoUpload'));
 Route::post('tarefa/storeAnexo', array('middleware' => 'admin', 'as' => 'tarefa/storeAnexo', 'uses' => 'TarefasController@storeAnexo'));
+
+Route::get('teste', array('middleware' => 'admin', 'as' => 'teste', 'uses' => 'KanbanController@teste'));

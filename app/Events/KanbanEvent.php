@@ -6,7 +6,7 @@ use App\Events\Event;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class KanbanEvent extends Event
+class KanbanEvent extends Event implements ShouldBroadcast
 {
   use SerializesModels;
 
@@ -14,13 +14,12 @@ class KanbanEvent extends Event
     public $id;
 
 
-   public function __construct($content, $style , $title,  $id)
+   public function __construct($task, $est , $notify, $user, $id)
     {
-      $message = array('title'=>$title, 'message'=>$content,'type'=>$style);
-      $this->id = $id;
+      $message = array('task'=>$task, 'est'=>$est, 'notify' => $notify, 'user'=>$user);
       $this->data = array(
             'message'=>$message,
-            'channel'=>'kanban-'.$this->id
+            'channel'=>'kanban-'.$id
         );
     }
 
