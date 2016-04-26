@@ -78,3 +78,4 @@
      {!! Html::script('js/settings.js') !!}
     {!! Html::script('js/script.js') !!}
     {!! Html::script('js/modals.js') !!}
+    {!! Html::script('js/chat.js') !!}

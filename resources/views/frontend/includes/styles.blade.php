@@ -32,6 +32,7 @@
 
 	<!-- Main Styles -->
 	{{Html::style('css/style.css')}}
+	{{Html::style('css/chat.css')}}
 
 
 

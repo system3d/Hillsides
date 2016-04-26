@@ -15,6 +15,7 @@ use App\Tipo_Tarefa as ttf;
 use App\Status_Projeto_Default as spd;
 use App\Status_Tarefa_Default as sfd;
 use App\Tipo_Tarefa_Default as trd;
+use Kanban;
 
 class SettingsController extends Controller
 {
@@ -333,10 +334,14 @@ class SettingsController extends Controller
    	$req = $request->all();
    	$dados = $request['sorted'];
 	$ordem = 1;
+  $proj = false;
 	foreach($dados as $dado){
 		$id = $dado;
 		$data = array('ordem' => $ordem);
-		$new = estag::find($id)->update($data);
+		$new = estag::find($id);
+    if(!$proj)
+      $proj = $new->projeto_id;
+    $new->update($data);
 		$ordem++;
 	}
    }
@@ -359,6 +364,7 @@ class SettingsController extends Controller
 		$response['msg'] = 'Estágio Atualizado com Sucesso';
     	$response['status'] = 'success';
     	$response['id'] = $update->projeto_id;
+       Kanban::configUpdate('Estágios', access()->user()->id, $update->projeto_id);
  	}else{
  	    $response['msg'] = 'Erro ao Atualizar Estágio';
 	    $response['status'] = 'error';
@@ -385,6 +391,7 @@ class SettingsController extends Controller
     $response['msg'] = 'Estágio Excluido com Sucesso';
     $response['status'] = 'success';
     $response['id'] = $idgo;
+    Kanban::configUpdate('Estágios', access()->user()->id, $idgo);
     return $response;
    }
 

@@ -23,66 +23,66 @@ $(document).ready(function() {
     checkboxClass: 'icheckbox_flat-blue',
   });
 
-  $(document).on('click', '.column-collapse', function(event) {
-    event.preventDefault();
-    var head = $(this).parent('th');
-    var phase = head.attr('data-phase');
+  // $(document).on('click', '.column-collapse', function(event) {
+  //   event.preventDefault();
+  //   var head = $(this).parent('th');
+  //   var phase = head.attr('data-phase');
 
-    if(head.hasClass('column-collapsed')){
-      var thisWidth = 'auto';
-     $("td[data-phase]").each(function(){
-        var thisPhase = $(this).attr('data-phase');
-       if(thisPhase == phase){
-        $(this).find('.text-vertical').remove();
-        thisWidth = $(this).attr('data-width');
-        $(this).removeClass('NotSortable');
-        $(this).removeClass('collapsed-thing');
-        $(this).addClass('sortable-row');
-        $(this).css('width', thisWidth);
-        $(this).find('.tarefa').removeClass('hidden');
-       }
-    });
-     head.css('width', thisWidth);
-      head.removeClass('column-collapsed');
-      head.html(phase+'<span class="column-collapse column-hover hidden"><i class="fa fa-minus"></i></span>');
-    }else{
-      var did = 0;
-     $("td[data-phase]").each(function(){
+  //   if(head.hasClass('column-collapsed')){
+  //     var thisWidth = 'auto';
+  //    $("td[data-phase]").each(function(){
+  //       var thisPhase = $(this).attr('data-phase');
+  //      if(thisPhase == phase){
+  //       $(this).find('.text-vertical').remove();
+  //       thisWidth = $(this).attr('data-width');
+  //       $(this).removeClass('NotSortable');
+  //       $(this).removeClass('collapsed-thing');
+  //       $(this).addClass('sortable-row');
+  //       $(this).css('width', thisWidth);
+  //       $(this).find('.tarefa').removeClass('hidden');
+  //      }
+  //   });
+  //    head.css('width', thisWidth);
+  //     head.removeClass('column-collapsed');
+  //     head.html(phase+'<span class="column-collapse column-hover hidden"><i class="fa fa-minus"></i></span>');
+  //   }else{
+  //     var did = 0;
+  //    $("td[data-phase]").each(function(){
       
-       var thisPhase = $(this).attr('data-phase');
-       if(thisPhase == phase){
-        if(did === 0){
-          var bodyHeight = $('#kanbanBody').height();
-          if(bodyHeight < 145)
-            phasePrint = phase.toUpperCase().substring(0,7);
-          else
-            phasePrint = phase.toUpperCase().substring(0,18);
-          $(this).append('<strong class="text-vertical">'+phasePrint+'</strong>');
-          verticalTextAlign();
-          did++;
-        }
-        $(this).addClass('NotSortable');
-        $(this).addClass('collapsed-thing');
-        $(this).removeClass('sortable-row');
-        $(this).css('width', '19px');
-        $(this).find('.tarefa').addClass('hidden');
-       }
-    });
-      head.addClass('column-collapsed');
-      head.css('width', '19px');
-      head.html('<span class="column-collapse"><i class="fa fa-plus"></i></span>');
-    }
-  });
+  //      var thisPhase = $(this).attr('data-phase');
+  //      if(thisPhase == phase){
+  //       if(did === 0){
+  //         var bodyHeight = $('#kanbanBody').height();
+  //         if(bodyHeight < 145)
+  //           phasePrint = phase.toUpperCase().substring(0,7);
+  //         else
+  //           phasePrint = phase.toUpperCase().substring(0,18);
+  //         $(this).append('<strong class="text-vertical">'+phasePrint+'</strong>');
+  //         verticalTextAlign();
+  //         did++;
+  //       }
+  //       $(this).addClass('NotSortable');
+  //       $(this).addClass('collapsed-thing');
+  //       $(this).removeClass('sortable-row');
+  //       $(this).css('width', '19px');
+  //       $(this).find('.tarefa').addClass('hidden');
+  //      }
+  //   });
+  //     head.addClass('column-collapsed');
+  //     head.css('width', '19px');
+  //     head.html('<span class="column-collapse"><i class="fa fa-plus"></i></span>');
+  //   }
+  // });
 
-  $(document).on('mouseenter', 'th', function(event) {
-    $(this).find('.column-hover').removeClass('hidden');
-  });
+  // $(document).on('mouseenter', 'th', function(event) {
+  //   $(this).find('.column-hover').removeClass('hidden');
+  // });
 
-  $(document).on('mouseleave', 'th', function(event) {
-    $(this).find('.column-hover').addClass('hidden');
-  });
+  // $(document).on('mouseleave', 'th', function(event) {
+  //   $(this).find('.column-hover').addClass('hidden');
+  // });
 
-  verticalTextAlign();
+  // verticalTextAlign();
 
 
 	 $(".sortable-row").sortable({
@@ -515,6 +515,10 @@ $(document).on('click', '.tarefa-delete', function(event) {
       handles: "e"
   });
 
+  $('#RefreshPage').click(function(event) {
+    reloadKBPageActual();
+  });
+
 });
 
 function startGoTop(){
@@ -675,9 +679,8 @@ temp.animate( {'top': newOffset.top, 'left':newOffset.left}, 'slow', function(){
    temp.remove();
 });
 }else{
-  var newT = task.addClass('hidden').appendTo('id[data-story="'+hist+'"][data-estagio="'+est+'"]');
-  dd($(newT));
-  // task.remove();
+  task.remove();
+  singleTaskHidden(id);
 }
 }
 
@@ -699,3 +702,55 @@ function reloadKBPage(){
       });
 }
 
+function reloadKBPageActual(){
+   var projeto = $('#projeto_id_kanban').val();
+   var sprint = $('#actualSprint').val();
+   var story = $('#actualStory').val();
+   var user = $('#actualUser').val();
+   var disc = $('#actualDisc').val();
+   var etapa = $('#actualEtapa').val();
+   var equipe = $('#actualEquipe').val();
+    $.ajax({
+        url: urlbaseGeral+"/kanban/setHistory",
+        type: 'POST',
+        dataType: 'html',
+        data:{projeto:projeto,sprint:sprint,story:story,user:user,dis:disc,etapa:etapa,equipe:equipe},
+      }).done(function(r) {
+         window.location.href = r;
+      });
+}
+
+function taskHtmlHidden(task){
+var str  = task.historia+'%'+task.sprint+'%'+task.tarefa+'%'+task.status+'%'+task.estagio+'%'+task.tipo+'%'+task.peso+'%'+task.obs;
+var search = str.toString();
+search = search.replace(/ /g,'%%').toLowerCase();
+var response = '<div class="tarefa hidden" data-story="'+task.historia_id+'" style="background-color:'+task.cor+'" data-id="'+task.id+'" data-search="'+search+'">';
+response +=     '<span class="red-pin"></span>';
+response +=      task.anexos;
+response +=       '<div class="tarefa-body">';
+response +=         '<p class="tarefa-title tarefa-info" data-id="'+task.id+'" data-toggle="tooltip" data-html="true" title="'+task.tarefa+'"><span>'+task.tarefa+'</span></p>';
+response +=           '<ul class="tarefa-list">';
+response +=             '<li>'+task.status+'</li>';
+response +=           '</ul>';
+response +=         '</div>';
+response +=        '<div class="tarefa-footer">';
+response +=          '<img class="img-circle tarefa-img tarefa-img-user" data-tarefa="'+task.id+'" src="'+task.user_icone+'" data-id="'+task.assignee_id+'" data-toggle="tooltip" data-html="true" title="'+task.assignee+'">';
+response +=          '<img class="img-circle tarefa-img tarefa-img-tipo tarefa-info" data-id="'+task.id+'" src="'+task.tipo_icone+'"  data-toggle="tooltip" data-html="true" title="'+task.tipo+'">';
+response +=       '</div>';
+response +=     '</div>';
+
+return response;
+}
+
+function singleTaskHidden(id){
+       $.ajax({
+          url: urlbaseGeral+"/getTarefa",
+          type: 'POST',
+          dataType: 'json',
+          data:{id:id},
+        }).done(function(r) {
+          var th = taskHtmlHidden(r);
+          injectTask(th,r.historia_id,r.estagio_id);
+          setColorSingle(r.id);
+        });
+}

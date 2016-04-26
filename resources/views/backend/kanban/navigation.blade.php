@@ -102,3 +102,10 @@
       </form>
   </div><!-- /.box-body -->
 </div>
+
+<input type="hidden" id='actualSprint' value=' {{$dados["sprint"]}}'>
+<input type="hidden" id='actualStory' value='  {{$dados["story"]}}'>
+<input type="hidden" id='actualEquipe' value=' {{$dados["equipe"]}}'>
+<input type="hidden" id='actualUser' value='   {{$dados["user"]}}'>
+<input type="hidden" id='actualDisc' value='   {{$dados["dis"]}}'>
+<input type="hidden" id='actualEtapa' value='{{$dados["etapa"]}}'>

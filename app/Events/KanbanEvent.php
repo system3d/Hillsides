@@ -14,9 +14,9 @@ class KanbanEvent extends Event implements ShouldBroadcast
     public $id;
 
 
-   public function __construct($task, $est , $notify, $user, $id)
+   public function __construct($action,$task, $est , $notify, $user, $id)
     {
-      $message = array('task'=>$task, 'est'=>$est, 'notify' => $notify, 'user'=>$user);
+      $message = array('task'=>$task, 'est'=>$est, 'notify' => $notify, 'user'=>$user,'action'=>$action);
       $this->data = array(
             'message'=>$message,
             'channel'=>'kanban-'.$id

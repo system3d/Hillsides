@@ -1,0 +1,61 @@
+#chat_users_list{
+	position: fixed;
+	right: 0;
+	bottom: 0 !important;
+	margin: 2px !important;
+	width: 275px;
+}
+
+#chat_search_field{
+	width: 245px !important;
+}
+
+.chat_list_img{
+	width: 35px;
+	height: 35px;
+}
+
+#chat_is_toggle{
+	font-size: 14px;
+}
+
+.chat-item{
+	padding: 5px;
+	border: 1px solid #DBDBDB;
+	background: #F6FEFF;
+}
+
+.chat_menu{
+	padding: 0 !important;
+}
+
+.chat_menu h4{
+	margin-left: 45px !important;
+	margin-top: 0 !important;
+	margin-bottom: 0 !important;
+	font-size:15px ;
+}
+
+.chat_menu li{
+	background: #222d32;
+	color: #b8c7ce;
+	padding:10px 15px !important;
+}
+
+.chat_menu small{
+	margin-left: 10px !important;
+}
+
+.box-footer-primary{
+	border-top: none;
+	background: #3c8dbc;
+}
+
+.chat_menu li:hover{
+	background: #181f23;
+	cursor: pointer !important;
+}
+
+.bg-dark-blue{
+	background: #222d32;
+}

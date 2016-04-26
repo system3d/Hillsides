@@ -3,14 +3,14 @@
 	<thead>
 		<tr>
 		<th id='historia-table-header' data-column='1'>História</th>
-		<th width='{{$columnWidth}}' data-phase='Backlog' data-column='2' class='backlog resizableColumn'>Backlog <span class="column-hover column-collapse hidden"><i class="fa fa-minus"></i></span></th>
+		<th width='{{$columnWidth}}' data-phase='Backlog' data-column='2' class='backlog resizableColumn'>Backlog {{-- <span class="column-hover column-collapse hidden"><i class="fa fa-minus"></i></span> --}}</th>
 		<?php $data_column = 3; ?>
 		@foreach($projeto->estagios->sortBy('ordem') as $estagio)
 			<th width='{{$columnWidth}}' data-column='{{$data_column}}' data-phase='{{$estagio->descricao}}' data-estagio='{{$estagio->id}}' class='resizableColumn'>{{$estagio->descricao}} 
-			<span class="column-hover column-collapse hidden"><i class="fa fa-minus"></i></span></th>
+			{{-- <span class="column-hover column-collapse hidden"><i class="fa fa-minus"></i></span> --}}</th>
 			<?php $data_column++; ?>
 		@endforeach
-		<th width='{{$columnWidth}}' data-column='{{$data_column}}' class='arquivo resizableColumn' data-phase='Arquivadas'>Arquivadas <span class="column-hover column-collapse hidden"><i class="fa fa-minus"></i></span></th>
+		<th width='{{$columnWidth}}' data-column='{{$data_column}}' class='arquivo resizableColumn' data-phase='Arquivadas'>Arquivadas {{-- <span class="column-hover column-collapse hidden"><i class="fa fa-minus"></i></span> --}}</th>
 		</tr>
 	</thead>
 	<tbody id='kanbanBody'>

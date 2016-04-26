@@ -3,6 +3,7 @@
 namespace App\Models\Access\User\Traits\Relationship;
 
 use App\Models\Access\User\SocialLogin;
+use Cache;
 
 /**
  * Class UserRelationship
@@ -74,6 +75,11 @@ trait UserRelationship
 
     public function historias() {
         return $this->hasMany('App\Historia');
+    }
+
+    public function isOnline()
+    {
+        return Cache::has('user-is-online-' . $this->id);
     }
 
     /**

@@ -17,6 +17,7 @@ use App\Estagio as estag;
 use App\Status_Projeto as stp;
 use App\Status_tarefa as stt;
 use App\Tipo_Tarefa as ttf;
+use Kanban;
 
 
 class ClienteController extends Controller
@@ -89,7 +90,10 @@ class ClienteController extends Controller
         $lastEstag = estag::orderBy('ordem', 'desc')->first();
         $check['ordem'] = (int) $lastEstag->ordem + 1;
         $new = estag::create($check);
-          if(isset($new->id)) return('%success&Estágio Cadastrada com Sucesso&Est&'.$new->projeto_id);
+          if(isset($new->id)){
+            Kanban::configUpdate('Estágios', access()->user()->id, $new->projeto_id);
+            return('%success&Estágio Cadastrada com Sucesso&Est&'.$new->projeto_id);
+          } 
           else return('%error&Erro ao Cadastrar Estágio');
       break;
 

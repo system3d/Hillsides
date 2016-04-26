@@ -14,6 +14,8 @@
 @include('backend.kanban.navigation')
 
 @include('backend.kanban.table')
+
+@include('backend.kanban.modals')
 	
 @endsection
 
