@@ -77,6 +77,10 @@ trait UserRelationship
         return $this->hasMany('App\Historia');
     }
 
+     public function lastActivity() {
+        return $this->hasOne('App\Online');
+    }
+
     public function isOnline()
     {
         return Cache::has('user-is-online-' . $this->id);

@@ -158,4 +158,7 @@ Route::get('tarefa/download/{id}', array('middleware' => 'admin', 'as' => 'taref
 Route::post('tarefa/upload', array('middleware' => 'admin', 'as' => 'tarefa/upload', 'uses' => 'TarefasController@anexoUpload'));
 Route::post('tarefa/storeAnexo', array('middleware' => 'admin', 'as' => 'tarefa/storeAnexo', 'uses' => 'TarefasController@storeAnexo'));
 
+Route::post('chat/updateStatus', array('middleware' => 'admin', 'as' => 'chat/updateStatus', 'uses' => 'ChatController@updateStatus'));
+Route::post('chat/window', array('middleware' => 'admin', 'as' => 'chat/window', 'uses' => 'ChatController@window'));
+
 Route::get('teste', array('middleware' => 'admin', 'as' => 'teste', 'uses' => 'KanbanController@teste'));

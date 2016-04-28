@@ -1,9 +1,8 @@
+@if(access()->user()->locatario->users->count() > 1)
 <div class="box box-primary direct-chat box-solid collapsed-box" id='chat_users_list'>
-  <div class="box-header hoverPointer" id='toggleChatList'>
-    <h3 class="box-title"><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Contatos</h3>
-    <div class="box-tools pull-right">
-      <i class="fa fa-plus" id='chat_is_toggle' aria-hidden="true"></i>
-    </div>
+  <div class="box-header hoverPointer" id='toggleChatList' data-widget="collapse">
+    <i class="fa fa-plus" aria-hidden="true" style='float:right;font-size:12px'></i>
+    <h3 class="box-title"><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Contatos </h3>
   </div><!-- /.box-header -->
   <div class="box-body no-padding bg-dark-blue" style="position: relative;overflow-y:auto; width: auto; height: 300px;">
       <ul class="chat_menu" id='chat_menu_list' style="width: 100%; height: 300px;">
@@ -16,12 +15,8 @@
           <h4>
             {{str_limit($chat_user->name,25,'...')}}
           </h4>
-          <small>
-            @if($chat_user->isOnline())
+          <small class='chat_user_status'>
             <i class="fa fa-circle text-success"></i> Online
-            @else
-            <i class="fa fa-circle text-danger"></i> Offline
-            @endif
           </small>
       </li><!-- end message -->
       @endif
@@ -35,9 +30,23 @@
           <h4>
             {{str_limit($chat_user->name,25,'...')}}
           </h4>
-          <small>
-            @if($chat_user->isOnline())
-            <i class="fa fa-circle text-success"></i> Online
+          <small class='chat_user_status'>
+            @if(isset($chat_user->lastActivity->data))
+            <?php $lastActivityObj =  timeDiff($chat_user->lastActivity->data);?>
+              @if($lastActivityObj['t'] < 86000)
+                Visto(a) por último à 
+                @if($lastActivityObj['h'] > 0)
+                  @if($lastActivityObj['h'] == 1)
+                    {{$lastActivityObj['h']}} hora
+                  @else
+                    {{$lastActivityObj['h']}} horas
+                  @endif
+                @else
+                {{$lastActivityObj['m']}} minutos
+                @endif
+              @else
+              <i class="fa fa-circle text-danger"></i> Offline
+              @endif
             @else
             <i class="fa fa-circle text-danger"></i> Offline
             @endif
@@ -54,4 +63,9 @@
       </div>
     </form>
   </div><!-- /.box-footer-->
+</div>
+@endif
+
+<div id="chat_windows_container">
+  
 </div>

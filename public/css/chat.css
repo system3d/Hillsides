@@ -4,6 +4,22 @@
 	bottom: 0 !important;
 	margin: 2px !important;
 	width: 275px;
+
+}
+
+#chat_windows_container{
+	position: fixed;
+	right: 280px;
+	bottom: 0 !important;
+	margin: 2px !important;
+	width: 850px;
+}
+
+.chat-window{
+	margin-left: 5px;
+	float: right;
+	width: 275px;
+	margin-bottom: 0 !important;
 }
 
 #chat_search_field{

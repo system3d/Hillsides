@@ -27,6 +27,7 @@ class CreateChatTables extends Migration
 
         Schema::create('online', function (Blueprint $table) {
             $table->increments('id');
+            $table->datetime('data');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('locatario_id')->unsigned();
