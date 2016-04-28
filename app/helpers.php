@@ -210,3 +210,19 @@ function secondsToTime($inputSeconds) {
     return $obj;
 }
 }
+
+if (! function_exists('datePtFormat')) {
+    /**
+     * Get the fallback locale
+     *
+     * @return \Illuminate\Foundation\Application|mixed
+     */
+    function datePtFormat($time)
+    {
+        $resp = date('j M, H:i',strtotime($time));
+        $nmeng = array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+        $nmpt = array('Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez');
+        $r = str_ireplace($nmeng, $nmpt, $resp);
+        return $r;
+    }
+}

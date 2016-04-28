@@ -15,9 +15,16 @@
 	width: 850px;
 }
 
+.direct-chat-text{
+	margin-left: 3px !important;
+	margin-right: 3px !important;
+}
+
 .chat-window{
 	margin-left: 5px;
-	float: right;
+	position: fixed;
+	bottom: 2px;
+	display: inline-block;
 	width: 275px;
 	margin-bottom: 0 !important;
 }
@@ -31,10 +38,6 @@
 	height: 35px;
 }
 
-#chat_is_toggle{
-	font-size: 14px;
-}
-
 .chat-item{
 	padding: 5px;
 	border: 1px solid #DBDBDB;
@@ -42,6 +45,8 @@
 }
 
 .chat_menu{
+	width: 100%;
+	margin-bottom: 0;
 	padding: 0 !important;
 }
 
@@ -74,4 +79,43 @@
 
 .bg-dark-blue{
 	background: #222d32;
+}
+
+.status-chat{
+	font-size: 10px;
+	color: #AEAEAE;
+	position: absolute;
+	bottom: 5px;
+	right: 4px;
+}
+.direct-chat-text{
+	padding-right: 16px;
+}
+.status-chat1{
+	color: #4DC631;
+}
+.status-chatR{
+	display: none;
+}
+.status-chat3{
+	color: #CD0000;
+}
+.chat-text-area{
+	font-size: 12px;
+	max-height: 54px;
+	min-height: 54px;
+	resize:none;
+}
+.btn-rounded{
+	height: 54px;
+}
+.send-chat-message .help-block{
+	margin-bottom: 7px;
+	margin-top: 3px;
+}
+.chat-window .box-footer{
+	padding-top: 0 !important;
+}
+.visNone{
+	visibility: hidden;
 }

@@ -4,8 +4,8 @@
     <i class="fa fa-plus" aria-hidden="true" style='float:right;font-size:12px'></i>
     <h3 class="box-title"><i class="fa fa-comments" aria-hidden="true"></i>&nbsp;&nbsp;&nbsp;Contatos </h3>
   </div><!-- /.box-header -->
-  <div class="box-body no-padding bg-dark-blue" style="position: relative;overflow-y:auto; width: auto; height: 300px;">
-      <ul class="chat_menu" id='chat_menu_list' style="width: 100%; height: 300px;">
+  <div class="box-body no-padding bg-dark-blue" style="position: relative;overflow-y:auto; width: auto; height: 288px;">
+      <ul class="chat_menu" id='chat_menu_list'>
       @foreach(access()->user()->locatario->users->sortBy('name') as $chat_user)
       @if($chat_user->isOnline() && $chat_user->id != access()->user()->id)
       <li class='chat_user' data-id="{{$chat_user->id}}" data-name='{{$chat_user->name}}'><!-- start message -->

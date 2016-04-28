@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Access\User\User as user;
+use App\Mensagem as msg;
 
 use App\Http\Requests;
 
@@ -53,9 +54,41 @@ class ChatController extends Controller
     	$dados = $request->all();
     	$sender = user::find($dados['sender']);
     	$receiver = user::find($dados['receiver']);
+    	$sid = $sender->id;
+    	$riv = $receiver->id;
+    	$messages = msg::where(function ($query) use($sid,$riv){
+	    $query->where('sender_id', $sid)
+	        ->where('receiver_id', $riv);
+	})->orWhere(function($query) use($sid,$riv){
+	    $query->where('receiver_id', $sid)
+	        ->where('sender_id', $riv);
+	    })->orderBy('created_at')->get();
     	if(isset($sender) && isset($receiver))
-    		return view('backend.includes.partials.message', compact('sender', 'receiver'));
+    		return view('backend.includes.partials.message', compact('sender', 'receiver','messages'));
     	else
     		return false;
     }
+
+   public function send(request $request){
+   	 $dados = $request->all();
+   	 if(!empty($dados['msg']) && !empty($dados['receiver'])){
+   	 	$new = msg::create(['message' => $dados['msg'], 'sender_id' => access()->user()->id, 'receiver_id' => $dados['receiver'], 'status' => 0, 'locatario_id' => access()->user()->locatario_id]);
+   	 }
+   	 if(isset($new->id)){
+   	 	$response['status'] = $new->status;
+   	 	$response['msg'] = $new->message;
+   	 	$response['id'] = $new->id;
+   	 	$response['name'] = $new->sender->name;
+   	 	$response['receiver'] = $new->receiver_id;
+   	 	$response['sender'] = $new->sender_id;
+   	 	$response['time'] = datePtFormat($new->created_at);
+   	 }else{
+   	 	$response['status'] = 3;
+   	 	$response['msg'] = $dados['msg'];
+   	 	$response['receiver'] = $dados['receiver'];
+   	 	$response['sender'] = access()->user()->id;
+   	 	$response['time'] = datePtFormat(date('Y-m-d H:i:s'));
+   	 }
+   	return $response;
+   }
 }
