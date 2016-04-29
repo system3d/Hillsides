@@ -74,7 +74,8 @@ class ChatController extends Controller
    public function send(request $request){
    	 $dados = $request->all();
    	 if(!empty($dados['msg']) && !empty($dados['receiver'])){
-   	 	$new = msg::create(['message' => $dados['msg'], 'sender_id' => access()->user()->id, 'receiver_id' => $dados['receiver'], 'status' => 0, 'locatario_id' => access()->user()->locatario_id]);
+   	 	$msg = htmlentities($dados['msg']);
+   	 	$new = msg::create(['message' => $msg, 'sender_id' => access()->user()->id, 'receiver_id' => $dados['receiver'], 'status' => 0, 'locatario_id' => access()->user()->locatario_id]);
    	 }
    	 if(isset($new->id)){
    	 	$response['status'] = $new->status;
@@ -86,7 +87,7 @@ class ChatController extends Controller
    	 	$response['time'] = datePtFormat($new->created_at);
    	 	$header['name'] = $new->sender->name;
    	 	$header['date'] = datePtFormat($new->created_at);
-   	 	$header['status'] = $new->status;
+   	 	$header['status'] = 'R';
    	 	$header['id'] = $new->id;
    	 	Event::fire(new MessageSend($new->message,$new->sender_id,$new->receiver_id,$header));
    	 }else{

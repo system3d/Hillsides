@@ -34,6 +34,20 @@
                     </ul>
 
                 </li>
+                 <li class="dropdown messages-menu">
+                    <!-- Menu toggle button -->
+                    <a href="" class="dropdown-toggle" data-toggle="dropdown">
+                        <i style='font-size:15px' class="fa fa-comments"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <!-- Inner Menu: contains the notifications -->
+                            <ul class="menu message-header-menu">
+                            </ul>
+                        </li>
+                    </ul>
+
+                </li>
               <!-- User Account: style can be found in dropdown.less -->
               <li>
                 <a href="#" data-toggle="control-sidebar" id='controlSidebarIcon'><i style='font-size:15px' class="fa fa-gears"></i></a>

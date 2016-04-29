@@ -126,3 +126,7 @@
 .right .direct-chat-text{
 	float: right;
 }
+
+h3.chat-title{
+	font-size:14px !important;
+}

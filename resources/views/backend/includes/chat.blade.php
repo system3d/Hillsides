@@ -8,14 +8,15 @@
       <ul class="chat_menu" id='chat_menu_list'>
       @foreach(access()->user()->locatario->users->sortBy('name') as $chat_user)
       @if($chat_user->isOnline() && $chat_user->id != access()->user()->id)
-      <li class='chat_user' data-id="{{$chat_user->id}}" data-name='{{$chat_user->name}}'><!-- start message -->
+      <li class='chat_user' data-id="{{$chat_user->id}}" data-name='{{$chat_user->name}}'  data-off='false'><!-- start message -->
           <div class="pull-left">
             <img src="{{ asset('img/avatar/'.$chat_user->avatar) }}" class="img-circle chat_list_img" alt="User Image">
           </div>
           <h4>
             {{str_limit($chat_user->name,25,'...')}}
           </h4>
-          <small class='chat_user_status'>
+            <?php $lastActivityObj =  timeDiff($chat_user->lastActivity->data);?>
+          <small class='chat_user_status' data-time='{{$lastActivityObj["t"]}}'>
             <i class="fa fa-circle text-success"></i> Online
           </small>
       </li><!-- end message -->
@@ -23,31 +24,39 @@
       @endforeach
       @foreach(access()->user()->locatario->users->sortBy('name') as $chat_user)
       @if(!$chat_user->isOnline() && $chat_user->id != access()->user()->id)
-      <li class='chat_user' data-id="{{$chat_user->id}}" data-name='{{$chat_user->name}}'><!-- start message -->
+      <li class='chat_user' data-id="{{$chat_user->id}}" data-name='{{strtolower($chat_user->name)}}' data-off='true'><!-- start message -->
           <div class="pull-left">
             <img src="{{ asset('img/avatar/'.$chat_user->avatar) }}" class="img-circle chat_list_img" alt="User Image">
           </div>
           <h4>
             {{str_limit($chat_user->name,25,'...')}}
           </h4>
-          <small class='chat_user_status'>
             @if(isset($chat_user->lastActivity->data))
             <?php $lastActivityObj =  timeDiff($chat_user->lastActivity->data);?>
               @if($lastActivityObj['t'] < 86000)
+              <small class='chat_user_status' data-time='{{$lastActivityObj["t"]}}'>
                 Visto(a) por último à 
                 @if($lastActivityObj['h'] > 0)
-                  @if($lastActivityObj['h'] == 1)
-                    {{$lastActivityObj['h']}} hora
+                    @if($lastActivityObj['h'] == 1)
+                      {{$lastActivityObj['h']}} hora
+                    @else
+                      {{$lastActivityObj['h']}} horas
+                    @endif
+                @elseif($lastActivityObj['m'] > 0)
+                  @if($lastActivityObj['m'] == 1)
+                    {{$lastActivityObj['m']}} minuto
                   @else
-                    {{$lastActivityObj['h']}} horas
+                    {{$lastActivityObj['m']}} minutos
                   @endif
                 @else
-                {{$lastActivityObj['m']}} minutos
+                  1 minuto
                 @endif
               @else
+              <small class='chat_user_status' data-time='0'>
               <i class="fa fa-circle text-danger"></i> Offline
               @endif
             @else
+            <small class='chat_user_status' data-time='0'>
             <i class="fa fa-circle text-danger"></i> Offline
             @endif
           </small>

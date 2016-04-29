@@ -1,7 +1,8 @@
 <div class="box box-success direct-chat box-solid chat-window" data-id='{{$receiver->id}}'>
   <div class="box-header hoverPointer" data-widget="collapse">
-    <i class="fa fa-minus chat_is_toggle" aria-hidden="true" style='float:right;margin-right: 25px;font-size:12px;margin-top: 4px;'></i>
-    <h3 class="box-title" data-toggle='tooltip' title='{{$receiver->name}}'>{{str_limit($receiver->name,25,'...')}}</h3>
+    <i class="fa fa-minus chat_is_toggle" aria-hidden="true" style='display:none'></i>
+    <h3 class="box-title chat-title" data-toggle='tooltip' title='{{$receiver->name}}'>
+        {{str_limit($receiver->name,25,'...')}}</h3>
     <div class="box-tools pull-right">
       <button class="btn btn-box-tool remove-window-chat"><i class="fa fa-times"></i></button>
     </div>

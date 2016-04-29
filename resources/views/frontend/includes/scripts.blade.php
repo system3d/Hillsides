@@ -9,7 +9,10 @@
     <script type="text/javascript"> var app_env = '{!! env('APP_ENV') !!}' </script>
 
     @if(isset(access()->user()->id))
-    <script type="text/javascript"> var thisUserId = {!! json_encode(access()->user()->id) !!} </script>
+        <script type="text/javascript">
+             var thisUserId = {!! json_encode(access()->user()->id) !!};
+             var thisLocatarioId = {!! json_encode(access()->user()->locatario_id) !!};
+        </script>
     @endif
 
     <!-- jQuery 2.1.4 -->

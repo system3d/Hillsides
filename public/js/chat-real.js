@@ -1,5 +1,7 @@
 $(document).ready(function() {
 	 var canal = 'message-'+thisUserId;
+   var canalStatus = 'chat-misc-status-'+thisLocatarioId;
+   var canalStatusOffline = 'chat-misc-status-offline-'+thisLocatarioId;
    var canalTyp = 'typing-'+thisUserId;
   if(app_env == 'local')
     var socket = io(':3000');
@@ -16,6 +18,18 @@ $(document).ready(function() {
        setTyping(rec);
     });
 
+    socket.on(canalStatus, function(data) { 
+        var id = data.data.data.message.params;
+        changeToOnline(id);
+        $('.chat_user[data-id="'+id+'"]').find('.chat_user_status').attr('data-time', 1);
+        $('.chat_user[data-id="'+id+'"]').attr('data-off', 'false');
+    });
+
+    socket.on(canalStatusOffline, function(data) {
+       var id = data.data.data.message.params;
+       $('.chat_user[data-id="'+id+'"]').attr('data-off', 'true');
+       changeToTime(id);
+    });
 
 
      $(document).on('keydown', '.chat-text-area', function(event) {
@@ -46,6 +60,12 @@ $(document).ready(function() {
 
 });
 
+
+setInterval(function(){ 
+  autoUpdateStatus();
+}, 60000);
+
+
 function appendRealMessage(dados){
   if(!$('.chat-window[data-id="'+dados.sender+'"]').length){
     createChatWindow(dados.receiver,dados.sender);
@@ -62,6 +82,7 @@ function appendRealMessage(dados){
   
 }
 
+var typing = false; 
 function setTyping(rec){
   if($('.chat-window[data-id="'+rec+'"]').length){
     if(!typing){
@@ -81,6 +102,79 @@ function setTyping(rec){
  }
 }
 
-var typing = false;  
-var timeout = undefined;
+function changeToOnline(id){
+  var statusHtml = $('.chat_user[data-id="'+id+'"]').find('.chat_user_status').html('<i class="fa fa-circle text-success"></i> Online');
+  var thisUser = $('.chat_user[data-id="'+id+'"]');
+  var userHTML = thisUser.html();
+  thisUser.remove();
+  $('#chat_menu_list').prepend(thisUser);
+}
 
+function changeToOffline(id){
+  var statusHtml = $('.chat_user[data-id="'+id+'"]').find('.chat_user_status').html('<i class="fa fa-circle text-danger"></i> Offline');
+  var thisUser = $('.chat_user[data-id="'+id+'"]');
+  var userHTML = thisUser.html();
+  thisUser.remove();
+  $('#chat_menu_list').append(thisUser);
+}
+
+function changeToTime(id){
+  var st_time = $('.chat_user[data-id="'+id+'"]').find('.chat_user_status').attr('data-time');
+  var timeHtml = getTimeHtml(st_time);
+  $('.chat_user[data-id="'+id+'"]').find('.chat_user_status').html(timeHtml);
+  var thisUser = $('.chat_user[data-id="'+id+'"]');
+  var userHTML = thisUser.html();
+  thisUser.remove();
+  $('#chat_menu_list').append(thisUser);
+}
+
+function changeToFive(id){
+  var statusHtml = $('.chat_user[data-id="'+id+'"]').find('.chat_user_status').html('Visto(a) por último à 5 minutos');
+   var thisUser = $('.chat_user[data-id="'+id+'"]');
+  var userHTML = thisUser.html();
+  thisUser.remove();
+  $('#chat_menu_list').append(thisUser);
+}
+
+function autoUpdateStatus(){
+  var users = $('#chat_menu_list').find('.chat_user');
+  users.each(function(index, el) {
+    var statusTag = $(el).find('.chat_user_status');
+    var id = $(el).attr('data-id');
+    var isOff = $(el).attr('data-off');
+    var st_time = statusTag.attr('data-time');
+    if(st_time > 0){
+       var new_time = parseInt(st_time) + 60;
+    statusTag.attr('data-time', new_time);
+    if(new_time > 86400 && st_time < 86400){
+      changeToOffline(id);
+    }
+    if(new_time > 300 && new_time < 86400  || isOff == 'true'){
+       var timeHtml = getTimeHtml(new_time);
+       statusTag.html(timeHtml);
+    }
+   
+    }
+  });
+}
+
+function getTimeHtml(s){
+  var obj = secondsToTime(s);
+  var response = s;
+  if(obj.h > 0){
+    if(obj.h == 1)
+      response = 'Visto(a) por último à 1 hora';
+    else
+      response = 'Visto(a) por último à '+obj.h+' horas';
+  }else if(obj.m > 0){
+    if(obj.m == 1)
+      response = 'Visto(a) por último à 1 minuto';
+    else
+      response = 'Visto(a) por último à '+obj.m+' minutos';
+  }else if(obj.s > 0){
+      response = 'Visto(a) por último à 1 minuto';
+  }else{
+    response = '<i class="fa fa-circle text-danger"></i> Offline';
+  }
+  return response;
+}

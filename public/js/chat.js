@@ -1,11 +1,12 @@
 $(document).ready(function($) {
-	$('#toggleChatList').click(function(event) {
-		if($(this).parent('#chat_users_list').hasClass('collapsed-box'))
-			updateChatStatus();
-	});
+	// $('#toggleChatList').click(function(event) {
+	// 	if($(this).parent('#chat_users_list').hasClass('collapsed-box'))
+	// 		updateChatStatus();
+	// });
 
-	$('#chat_search_field').keyup(function(event) {
+	$(document).on('keyup', '#chat_search_field', function(event) {
 		var search = $(this).val();
+		search = search.toLowerCase();
 		var users = $('#chat_menu_list').find('.chat_user');
 		if(search != ''){
 			users.each(function(index, el){
@@ -179,4 +180,3 @@ function insertMsg(id,msg,name,time,status,rec,which){
     var thisWindow = $('.chat-window[data-id="'+rec+'"]').find('.direct-chat-messages');
 	thisWindow.scrollTop(thisWindow.prop('scrollHeight'));
 }
-

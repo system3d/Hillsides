@@ -8,7 +8,9 @@ use App\Events\Frontend\Auth\UserLoggedIn;
 use App\Events\Frontend\Auth\UserLoggedOut;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use App\Http\Requests\Frontend\Auth\LoginRequest;
-
+use Event;
+use App\Events\ChatMiscEvent;
+use Cache;
 /**
  * Class AuthenticatesUsers
  * @package App\Services\Access\Traits
@@ -72,7 +74,8 @@ trait AuthenticatesUsers
         if (app('session')->has(config('access.socialite_session_name'))) {
             app('session')->forget(config('access.socialite_session_name'));
         }
-
+        Event::fire(new ChatMiscEvent('status-offline',access()->user()->id, access()->user()->locatario_id));
+        Cache::forget('user-is-online-' . access()->user()->id);
         event(new UserLoggedOut(access()->user()));
         auth()->logout();
         return redirect(property_exists($this, 'redirectAfterLogout') ? $this->redirectAfterLogout : '/');
