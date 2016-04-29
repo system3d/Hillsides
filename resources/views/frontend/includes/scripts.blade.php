@@ -54,6 +54,8 @@
     <!-- Masks -->
     {!! Html::script('plugins/jquery.mask.min.js') !!}
 
+    {!! Html::script('plugins/socket.io.js') !!}
+
      {!! Html::script('js/datatables_plugin.js') !!}
 
 
@@ -79,3 +81,6 @@
     {!! Html::script('js/script.js') !!}
     {!! Html::script('js/modals.js') !!}
     {!! Html::script('js/chat.js') !!}
+    @if(env('REAL_TIME'))
+     {!! Html::script('js/chat-real.js') !!}
+    @endif

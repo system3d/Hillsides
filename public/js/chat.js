@@ -66,6 +66,8 @@ $(document).ready(function($) {
 		}
 	});
 
+
+
 });
 
 function updateChatStatus(){
@@ -129,6 +131,8 @@ function chatWindowCreator(r,receiver){
 		$('#chat_windows_container').append(r);
 		var calcSizes = true;
 	}
+		var thisWindow = $('.chat-window[data-id="'+receiver+'"]').find('.direct-chat-messages');
+		thisWindow.scrollTop(thisWindow.prop('scrollHeight'));
 	if(calcSizes){
 		organizeWindows();
 	}
@@ -160,15 +164,19 @@ function capWindows(){
 
 function insertMsg(id,msg,name,time,status,rec,which){
 	var side = (which == 0) ? ' right' : '';
+	var sideName = (which == 0) ? 'right' : 'left';
+	var sideTime = (which == 0) ? 'left' : 'right';
 	var message = ' <div class="direct-chat-msg'+side+'" data-id="'+id+'">';
     message +='   <div class="direct-chat-info clearfix">';
-    message +='      <span class="direct-chat-name pull-right">'+name+'</span>';
-    message +='      <span class="direct-chat-timestamp pull-left">'+time+'</span>';
+    message +='      <span class="direct-chat-name pull-'+sideName+'">'+name+'</span>';
+    message +='      <span class="direct-chat-timestamp pull-'+sideTime+'">'+time+'</span>';
     message +='    </div><!-- /.direct-chat-info -->';
     message +='    <div class="direct-chat-text receiver-txt">';
     message +='      <i class="fa fa-check status-chat status-chat'+status+'" aria-hidden="true"></i>';
     message +='      '+msg+'<br>';
     message +='    </div><!-- /.direct-chat-text -->';
     $('.chat-window[data-id="'+rec+'"]').find('.direct-chat-messages').append(message);
+    var thisWindow = $('.chat-window[data-id="'+rec+'"]').find('.direct-chat-messages');
+	thisWindow.scrollTop(thisWindow.prop('scrollHeight'));
 }
 

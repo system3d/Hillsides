@@ -119,3 +119,10 @@
 .visNone{
 	visibility: hidden;
 }
+.direct-chat-text{
+	width: 85%;
+    word-break: break-all;
+}
+.right .direct-chat-text{
+	float: right;
+}

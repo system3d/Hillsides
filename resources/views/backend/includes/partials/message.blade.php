@@ -43,7 +43,7 @@
   </div><!-- /.box-body -->
   <div class="box-footer">
     <form class='send-chat-message' data-id='{{$receiver->id}}' method="post">
-      <p class='help-block isTiping-block visNone' data-id='{{$receiver->id}}'>{{str_limit($receiver->name,25,'')}} está digitando ...</p>
+      <p class='help-block istiping-block visNone' data-id='{{$receiver->id}}'>{{str_limit($receiver->name,25,'')}} está digitando ...</p>
       <div class="input-group"> 
         <textarea class="form-control chat-text-area" placeholder='Digite Aqui ...' data-id='{{$receiver->id}}' ></textarea>
         <input type="hidden" name="receiver" class='receiver_id_input' value='{{$receiver->id}}'>

@@ -23,7 +23,6 @@
  <script type="text/javascript"> var isKanban = true; </script>
 {!! Html::script('plugins/iCheck/icheck.min.js') !!}
 {!! Html::script('plugins/jquery-cookie-master/jquery.cookie.js') !!}
-{!! Html::script('plugins/socket.io.js') !!}
 {!! Html::script('js/equipes.js') !!}
 {!! Html::script('js/clientes.js') !!}
 {!! Html::script('js/projetos.js') !!}

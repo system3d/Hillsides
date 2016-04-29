@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Access\User\User as user;
 use App\Mensagem as msg;
+use Event;
+use App\Events\MessageSend;
 
 use App\Http\Requests;
 
@@ -82,6 +84,11 @@ class ChatController extends Controller
    	 	$response['receiver'] = $new->receiver_id;
    	 	$response['sender'] = $new->sender_id;
    	 	$response['time'] = datePtFormat($new->created_at);
+   	 	$header['name'] = $new->sender->name;
+   	 	$header['date'] = datePtFormat($new->created_at);
+   	 	$header['status'] = $new->status;
+   	 	$header['id'] = $new->id;
+   	 	Event::fire(new MessageSend($new->message,$new->sender_id,$new->receiver_id,$header));
    	 }else{
    	 	$response['status'] = 3;
    	 	$response['msg'] = $dados['msg'];
