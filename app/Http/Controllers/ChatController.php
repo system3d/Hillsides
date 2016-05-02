@@ -7,6 +7,7 @@ use App\Models\Access\User\User as user;
 use App\Mensagem as msg;
 use Event;
 use App\Events\MessageSend;
+use App\Events\ChatMiscEvent;
 
 use App\Http\Requests;
 
@@ -85,9 +86,10 @@ class ChatController extends Controller
    	 	$response['receiver'] = $new->receiver_id;
    	 	$response['sender'] = $new->sender_id;
    	 	$response['time'] = datePtFormat($new->created_at);
-   	 	$header['name'] = $new->sender->name;
+   	 	$header['name'] = str_limit($new->sender->name,25);
    	 	$header['date'] = datePtFormat($new->created_at);
    	 	$header['status'] = 'R';
+      $header['avatar'] = $new->sender->avatar;
    	 	$header['id'] = $new->id;
    	 	Event::fire(new MessageSend($new->message,$new->sender_id,$new->receiver_id,$header));
    	 }else{
@@ -99,4 +101,16 @@ class ChatController extends Controller
    	 }
    	return $response;
    }
+
+   public function read(request $request){
+    $id = $request->all()['id'];
+    $update = msg::where('sender_id',$id)->where('receiver_id',access()->user()->id)->where('status',0)->update(['status'=>1]);
+    if($update > 0){
+      $response = ['do' => 1];
+      Event::fire(new ChatMiscEvent('read',access()->user()->id, $id));
+    }else{
+     $response = ['do' => 0];
+    }
+     return $response;
+  }
 }

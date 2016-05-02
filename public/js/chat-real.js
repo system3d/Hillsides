@@ -3,6 +3,7 @@ $(document).ready(function() {
    var canalStatus = 'chat-misc-status-'+thisLocatarioId;
    var canalStatusOffline = 'chat-misc-status-offline-'+thisLocatarioId;
    var canalTyp = 'typing-'+thisUserId;
+   var canalRec = 'chat-misc-read-'+thisUserId;
   if(app_env == 'local')
     var socket = io(':3000');
   else
@@ -16,6 +17,11 @@ $(document).ready(function() {
       socket.on(canalTyp, function(data) {
        var rec = data.receiver;
        setTyping(rec);
+    });
+
+     socket.on(canalRec, function(data) {
+       var rec = data.data.data.message.params;
+       setRead(rec);
     });
 
     socket.on(canalStatus, function(data) { 
@@ -58,6 +64,11 @@ $(document).ready(function() {
         }
     });
 
+   $(document).on('click', '.chat-user-header', function(event) {
+    event.preventDefault();
+    createChatWindow(thisUserId,$(this).attr('data-id'));
+  });
+
 });
 
 
@@ -68,8 +79,21 @@ setInterval(function(){
 
 function appendRealMessage(dados){
   if(!$('.chat-window[data-id="'+dados.sender+'"]').length){
-    createChatWindow(dados.receiver,dados.sender);
+     if($('.chat-user-header[data-id="'+dados.sender+'"]').length){
+        var $element =  $('.chat-user-header[data-id="'+dados.sender+'"]');
+        var count = parseInt($element.find('.count-unread').html());
+        count = !isNaN(count) ? (count + 1) : 1;
+        $element.remove();
+     }else{
+      var count = 1;
+     }
+     addMessageHeader(dados,count);
+     var total = parseInt($('#msgsTotalHeader').html());
+      total = total + 1;
+      $('#msgsTotalHeader').html(total);
+      $('#msgsTotalHeader').removeClass('hidden');
   }else{
+    markAsRead(dados.sender);
     var header = dados.header;
     insertMsg(header.id,dados.message,header.name,header.date,header.status,dados.sender,1);
        $('.chat-window[data-id="'+dados.sender+'"]').removeClass('collapsed-box');
@@ -177,4 +201,60 @@ function getTimeHtml(s){
     response = '<i class="fa fa-circle text-danger"></i> Offline';
   }
   return response;
+}
+
+
+function markAsRead(id){
+  var id = id;
+  $.ajax({
+    url: urlbaseGeral + '/chat/read',
+    type: 'POST',
+    dataType: 'json',
+    data: {id: id},
+  })
+  .done(function( r ) {
+    if(r.do == 1){
+      var $element =  $('.chat-user-header[data-id="'+id+'"]');
+      $element.removeClass('chat-msg-header-0').addClass('chat-msg-header-1');
+      var count = parseInt($element.find('.count-unread').html());
+      var total = parseInt($('#msgsTotalHeader').html());
+      count = !isNaN(count) ? count : 0;
+      total = total - count;
+      $('#msgsTotalHeader').html(total);
+      if(total > 0)
+        $('#msgsTotalHeader').removeClass('hidden');
+      else
+        $('#msgsTotalHeader').addClass('hidden');
+      $element.find('.count-unread').remove();
+      if(!$element.find('p').find('.fa-check').length)
+        $element.find('p').append('<i class="fa fa-check text-success pull-right"></i>');
+    }
+  });
+  
+}
+
+function setRead(id){
+  var chatWindow = $('.chat-window[data-id="'+id+'"]');
+  var msgs = chatWindow.find('.right');
+  msgs.each(function(index, el) {
+    $(el).find('.status-chat').removeClass('status-chat0').addClass('status-chat1');
+  });
+}
+
+function addMessageHeader(dados,count){
+  var liHtml = '<li>';
+  liHtml +=    '  <a href="#" class="chat-user-header chat-msg-header-0" data-id="'+dados.sender+'">';
+  liHtml +=    '    <div class="pull-left">';
+  liHtml +=    '         <img src="'+urlbaseGeral+'/img/avatar/'+dados.header.avatar+'" class="img-circle" alt="User Image">';
+  liHtml +=    '    </div>';
+  liHtml +=    '    <h4>';
+  liHtml +=            dados.header.name.substring(0,20);
+  liHtml +=    '      <small><i class="fa fa-clock-o"></i> '+dados.header.date+'</small>';
+  liHtml +=    '   </h4>';
+  liHtml +=    '   <p>'+dados.message.substring(0,30);
+  liHtml +=    '      <span class="label label-info count-unread" data-id="'+dados.sender+'">'+count+'</small>';
+  liHtml +=    '   </p>';
+  liHtml +=    '  </a>';
+  liHtml +=    '</li>';
+  $('#ulHeaderMenuChat').prepend(liHtml);
 }

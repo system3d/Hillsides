@@ -161,5 +161,6 @@ Route::post('tarefa/storeAnexo', array('middleware' => 'admin', 'as' => 'tarefa/
 Route::post('chat/updateStatus', array('middleware' => 'admin', 'as' => 'chat/updateStatus', 'uses' => 'ChatController@updateStatus'));
 Route::post('chat/window', array('middleware' => 'admin', 'as' => 'chat/window', 'uses' => 'ChatController@window'));
 Route::post('chat/send', array('middleware' => 'admin', 'as' => 'chat/send', 'uses' => 'ChatController@send'));
+Route::post('chat/read', array('middleware' => 'admin', 'as' => 'chat/read', 'uses' => 'ChatController@read'));
 
 Route::get('teste', array('middleware' => 'admin', 'as' => 'teste', 'uses' => 'KanbanController@teste'));

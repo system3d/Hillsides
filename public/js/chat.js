@@ -67,6 +67,7 @@ $(document).ready(function($) {
 		}
 	});
 
+	
 
 
 });
@@ -111,6 +112,7 @@ function createChatWindow(sender,receiver){
          data: {sender: sender, receiver:receiver},
         }).done(function(response, receiver) {
 		  	chatWindowCreator(response,rec);
+		  	markAsRead(rec);
 	 	});
 }
 

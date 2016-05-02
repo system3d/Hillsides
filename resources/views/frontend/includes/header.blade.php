@@ -34,15 +34,40 @@
                     </ul>
 
                 </li>
+                <?php $lastMessages = getLastMessages(); ?>
                  <li class="dropdown messages-menu">
                     <!-- Menu toggle button -->
                     <a href="" class="dropdown-toggle" data-toggle="dropdown">
                         <i style='font-size:15px' class="fa fa-comments"></i>
+                        @if($lastMessages['total'] > 0)
+                        <span class="label bg-maroon" id='msgsTotalHeader'>{{$lastMessages['total']}}</span>
+                        @else
+                        <span class="label bg-maroon hidden" id='msgsTotalHeader'>{{$lastMessages['total']}}</span>
+                        @endif
                     </a>
                     <ul class="dropdown-menu">
                         <li>
-                            <!-- Inner Menu: contains the notifications -->
-                            <ul class="menu message-header-menu">
+                            <ul class="menu message-header-menu" id='ulHeaderMenuChat'>
+                              @foreach($lastMessages['msgs'] as $msg)
+                                <li><!-- start message -->
+                                <a href="#" class='chat-user-header chat-msg-header-{{$msg->status}}' data-id='{{$msg->sender_id}}'>
+                                  <div class="pull-left">
+                                    <img src="{{ asset('img/avatar/'.$msg->sender->avatar) }}" class="img-circle" alt="User Image">
+                                  </div>
+                                  <h4>
+                                    {{str_limit($msg->sender->name,20)}}
+                                    <small><i class="fa fa-clock-o"></i> {{datePtFormat($msg->created_at)}}</small>
+                                  </h4>
+                                  <p>{{str_limit($msg->message,30)}}
+                                    @if(isset($lastMessages['num'][$msg->sender_id]))
+                                      <span class="label label-info count-unread" data-id='{{$msg->sender_id}}'>{{$lastMessages['num'][$msg->sender_id]}}</small>
+                                    @else
+                                      <i class="fa fa-check text-success pull-right"></i>
+                                    @endif
+                                 </p>
+                                </a>
+                              </li>
+                              @endforeach
                             </ul>
                         </li>
                     </ul>

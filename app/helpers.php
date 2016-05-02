@@ -226,3 +226,40 @@ if (! function_exists('datePtFormat')) {
         return $r;
     }
 }
+
+if (! function_exists('getLastMessages')) {
+
+    function getLastMessages()
+    {
+        $userModel = new App\Models\Access\User\User;
+        $msgModel = new App\Mensagem;
+        $user = access()->user();
+        $senders = $msgModel->select('sender_id')->where('receiver_id',$user->id)->groupBy('sender_id')->get();
+        $lastMessages = array();
+        foreach($senders as $sender){
+            $lastMessages[] = $msgModel->where('sender_id',$sender->sender_id)->where('receiver_id',$user->id)->orderBy('status')->orderBy('created_at','desc')->first();
+        }
+        $response = array();
+        $unreadN = array();
+        $unread = 0;
+        $total = $msgModel->where('receiver_id',$user->id)->where('status',0)->count();
+        foreach($lastMessages as $lst){
+            if($lst->status == 0){
+                $response[] = $lst;
+                $unread++;
+                $unreadN[$lst->sender_id] = $msgModel->select('id')->where('sender_id',$lst->sender_id)->where('receiver_id',$user->id)->where('status',0)->count();
+            }
+        }
+        foreach($lastMessages as $lst){
+            if($lst->status == 1){
+                $response[] = $lst;
+            }
+        }
+        $response['msgs']   = collect($response);
+        $response['unread'] = $unread;
+        $response['num'] = $unreadN;
+        $response['total'] = $total;
+        return $response;
+
+    }
+}

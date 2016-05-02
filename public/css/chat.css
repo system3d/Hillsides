@@ -130,3 +130,26 @@
 h3.chat-title{
 	font-size:14px !important;
 }
+
+.messages-menu .slimScrollDiv, .messages-menu .message-header-menu{
+	height: auto !important;
+	max-height: 300px;
+}
+
+.chat-user-header img{
+	width: 35px !important;
+	height: 35px !important;
+}
+
+.chat-msg-header-0{
+	background: #FFF3F3;
+}
+
+.chat-user-header:hover{
+	background: #FFD9D9 !important;
+}
+
+.count-unread{
+	position: absolute;
+	right: 7.5px;
+}
