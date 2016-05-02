@@ -15,7 +15,8 @@
 	</thead>
 	<tbody id='kanbanBody'>
 		@foreach($projeto->historias() as $historia)
-			<tr id='H-{{$historia->id}}' class='kanban-trow' data-story='{{$historia->id}}' data-sprint='{{$historia->sprint_id}}'>
+			<tr id='H-{{$historia->id}}' class='kanban-trow 
+				<?php if($dados['story'] != 0 && $dados['story'] != $historia->id) echo 'hidden'; ?>' data-story='{{$historia->id}}' data-sprint='{{$historia->sprint_id}}' >
 				<td class='td-story' data-column='1'><span style='padding-top: 3px;'>História:</span><br>{{$historia->descricao}} <br> <br> Sprint: <br> {{$historia->sprint->descricao}} <br> </td>
 				<td class='sortable-row backlog' data-column='2' data-story='{{$historia->id}}' data-estagio='1' data-phase='Backlog' data-width='{{$columnWidth}}'>
 

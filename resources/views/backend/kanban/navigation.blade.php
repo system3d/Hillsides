@@ -50,7 +50,7 @@
            <select id="selectStory" class="form-control" required="required" name="obra">
             <option value="0">Todas</option>
             @foreach($projeto->historias() as $historia)
-              <option value="{{$historia->id}}" <?php if((int) $dados['story'] == $historia->id) echo 'selected'; ?>>{{$historia->descricao}}</option>
+              <option data-sprint='{{$historia->sprint_id}}' value="{{$historia->id}}" class='storyOption' <?php if((int) $dados['story'] == $historia->id) echo 'selected'; ?>>{{$historia->descricao}}</option>
             @endforeach
            </select>
           </div>

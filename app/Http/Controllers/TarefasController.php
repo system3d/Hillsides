@@ -60,7 +60,7 @@ class TarefasController extends Controller
         }
         $data = array(
            'descricao'      => $dados['descricao'],
-           'obs'            => $dados['obs'],
+           'obs'            => htmlentities($dados['obs']),
            'sprint_id'      => $historia->sprint_id,
            'historia_id'    => $dados['historia_id'],
            'tipo_id'        => $dados['tipo_id'],
@@ -243,14 +243,19 @@ class TarefasController extends Controller
         if($check['etapa_id'] == 0)
           unset($check['etapa_id']);
 
+        if(isset($check['crono_prev']))
         $crono_prev = $check['crono_prev'];
+        if(isset($check['crono_real']))
         $crono_real = $check['crono_real'];
+        if(isset($check['custo']))
         $custo = $check['custo'];
+        if(isset($check['tipo_custo']))
         $tipo_custo = $check['tipo_custo'];
         unset($check['crono_prev']);
         unset($check['crono_real']);
         unset($check['custo']);
         unset($check['tipo_custo']);
+        $check['obs'] = htmlentities($check['obs']);
 
         $task = task::find($id);
 
@@ -260,7 +265,7 @@ class TarefasController extends Controller
           $cronoUp = crono::find($task->cronograma->id);
           $cronoUpdate = array('previsto' => date_format(date_create_from_format('d/m/Y', $crono_prev), 'Y-m-d'), 'realizado' => date_format(date_create_from_format('d/m/Y', $crono_real), 'Y-m-d'));
           $cronoUp->update($cronoUpdate);
-        }else{
+        }elseif(isset($crono_prev) && isset($crono_real)){
           $cronoToSave = array('previsto' => date_format(date_create_from_format('d/m/Y', $crono_prev), 'Y-m-d'), 'realizado' => date_format(date_create_from_format('d/m/Y', $crono_real), 'Y-m-d'),
            'tarefa_id' => $task->id, 'user_id' => $task->user_id, 'locatario_id' => $task->locatario_id);
           $cronoNew = crono::create($cronoToSave);
@@ -272,7 +277,7 @@ class TarefasController extends Controller
           $custoUp = custo::find($task->custo->id);
           $custoUpdate = array('valor' => $custo, 'tipo_id' => $tipo_custo);
           $custoUp->update($custoUpdate);
-        }else{
+        }elseif(isset($tipo_custo) && isset($custo)){
            $custoToSave = array('valor' => $custo, 'tipo_id' => $tipo_custo, 'tarefa_id' => $task->id, 'user_id' => $task->user_id, 'locatario_id' => $task->locatario_id);
            $custoSaved = custo::create($custoToSave);
         }

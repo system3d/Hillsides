@@ -29,8 +29,8 @@ class KanbanController extends Controller
         }
       }
       $users = collect($users);
-      if (Cache::has('history')) {
-        $dados = Cache::pull('history');
+      if (Cache::has('history-'.access()->user()->id)) {
+        $dados = Cache::pull('history-'.access()->user()->id);
       }else{
         $dados = array(
           "sprint" => "0",
@@ -58,7 +58,7 @@ class KanbanController extends Controller
     $dados = $request->all();
     $projeto = $dados['projeto'];
     unset($dados['projeto']);
-    Cache::put('history', $dados,5);
+    Cache::put('history-'.access()->user()->id, $dados,5);
     return route('kanban',[$projeto]);
   }
 

@@ -331,8 +331,16 @@ $(document).on('click', '.tarefa-delete', function(event) {
   $(document).on('change', '#selectStory', function(event) {
     var hist = $(this).val();
     if(hist == 0){
-      $('.kanban-trow').removeClass('hidden');
+      var sprint = $('#selectSprints').val();
+      getTarefas();
+      $('#selectSprints').prop('disabled', false);
+      if(sprint == 0){
+        $('.kanban-trow').removeClass('hidden');
+      }else{
+        $('.kanban-trow[data-sprint="'+sprint+'"]').removeClass('hidden');
+      }
     }else{
+      $('#selectSprints').prop('disabled', 'disabled');
       $('.kanban-trow').addClass('hidden');
       $('.kanban-trow[data-story="'+hist+'"]').removeClass('hidden');
     }
@@ -342,8 +350,11 @@ $(document).on('click', '.tarefa-delete', function(event) {
     var sprint = $(this).val();
     if(sprint == 0){
       $('.kanban-trow').removeClass('hidden');
+      $('.storyOption').removeClass('hidden');
     }else{
       $('.kanban-trow').addClass('hidden');
+      $('.storyOption[data-sprint!="'+sprint+'"]').addClass('hidden');
+      $('.storyOption[data-sprint="'+sprint+'"]').removeClass('hidden');
       $('.kanban-trow[data-sprint="'+sprint+'"]').removeClass('hidden');
     }
   });

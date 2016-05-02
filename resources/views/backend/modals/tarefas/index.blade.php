@@ -12,7 +12,7 @@
            </div>
            <div class="form-group">
                <label class="control-label">Descrição:</label>
-                 <p class="form-static">{{$tarefa->obs}}</p>
+                 <p class="form-static" style='white-space: pre-line'>{{$tarefa->obs}}</p>
            </div>
            <div class="form-group">
                <label class="control-label">História :</label>
