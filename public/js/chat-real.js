@@ -37,7 +37,6 @@ $(document).ready(function() {
        changeToTime(id);
     });
 
-
      $(document).on('keydown', '.chat-text-area', function(event) {
       var rec = $(this).attr('data-id');
         if(event.which == 13) {
@@ -92,6 +91,8 @@ function appendRealMessage(dados){
       total = total + 1;
       $('#msgsTotalHeader').html(total);
       $('#msgsTotalHeader').removeClass('hidden');
+      var snd = new Audio(urlbaseGeral + "/sounds/beep.wav");
+      snd.play();
   }else{
     markAsRead(dados.sender);
     var header = dados.header;

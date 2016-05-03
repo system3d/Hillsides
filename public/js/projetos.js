@@ -1211,7 +1211,7 @@
       dataType: 'html',
       })
       .done(function(response) {
-        drawModal(response, '25%');
+        drawModal(response, '50%');
       });
   });
 

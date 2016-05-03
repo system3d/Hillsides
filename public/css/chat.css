@@ -29,8 +29,14 @@
 	margin-bottom: 0 !important;
 }
 
+#chat_search{
+	position: absolute;
+	left: 0;
+}
+
 #chat_search_field{
 	width: 230px !important;
+	padding-left: 25px;
 }
 
 .li-chat-control:hover{
@@ -48,11 +54,9 @@
 	background: #F6FEFF;
 }
 
-/*.chat_menu{
-	width: 100%;
-	margin-bottom: 0;
-	padding: 0 !important;
-}*/
+.chat_menu{
+	margin-top: 40px;
+}
 
 .chat_menu h4{
 	margin-left: 45px !important;
@@ -169,8 +173,13 @@ h3.chat-title{
 }
 
 
+#chat_search_field{
+	border-color: #222d32;
+	background-color: #EEF6FA;
+}
+
 #chat_search_field:focus{
-	border-color: #222d32 !important;
+	background-color: white !important;
 }
 
 #chat_menu_list{
@@ -181,4 +190,14 @@ h3.chat-title{
 	max-height: 300px;
 	overflow-y:auto;
 	overflow-x: hidden;
+}
+.input-fa-wrapper{
+	position: relative;
+}
+.fa-search-input{
+	 position: absolute;
+	 top: 11px;
+	 left: 7.5px;
+	 color: #222d32;
+	 z-index: 2000000;
 }

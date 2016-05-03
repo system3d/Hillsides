@@ -679,3 +679,17 @@ textarea {
     height: auto;
     margin-left: 25%;
 }
+
+.logout-header{
+    color: white;
+    height: 50px !important;
+    margin: none !important;
+    border-right: 1px ridge rgba(200,200,200,0.2);
+    float: left;
+    padding: 15px 15px;
+}
+
+.logout-header:hover{
+    color: white;
+    background: #367fa9;
+}

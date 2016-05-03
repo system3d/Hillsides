@@ -208,7 +208,7 @@ $(document).on('click', '#new-est-side', function(event) {
 	    dataType: 'html',
 		  })
 		  .done(function(response) {
-		  	drawModal(response, '25%');
+		  	drawModal(response, '50%');
 		  });
 	});
 

@@ -17,8 +17,10 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </a>
+          <a href="{{url('logout')}}" data-toggle="tooltip" data-html="true" data-placement='right' title='Logout' class='logout-header'><i style='font-size:15px' class="fa fa-sign-out"></i></a>
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+
                <li class="dropdown notifications-menu">
                     <!-- Menu toggle button -->
                     <a href="" class="dropdown-toggle notifysDown" data-toggle="dropdown">
@@ -81,6 +83,7 @@
               <li>
                 <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
               </li> -->
+               
             </ul>
           </div>
         </nav>

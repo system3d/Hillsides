@@ -4,8 +4,8 @@ $(document).ready(function($) {
 	// 		updateChatStatus();
 	// });
 	var windWidth = $(window).height();
-	var maxContatosHeight = windWidth - 200;
-	maxContatosHeight = (maxContatosHeight > 500) ? maxContatosHeight : 500;
+	var maxContatosHeight = windWidth - 400;
+	maxContatosHeight = (maxContatosHeight > 400) ? maxContatosHeight : 400;
 	$('#chat_menu_list').css('max-height', maxContatosHeight );
 
 	$('#controlSidebarIcon').click(function(event) {

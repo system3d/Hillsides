@@ -16,7 +16,7 @@
                    <label for="fullname" class="control-label">Escolha um Icone:</label>
                     <div class="row">
                       @foreach($icones as $icone)
-                        <div class="col-md-3 icons-default-choose" style='padding-bottom:5px' data-icon='{{$icone->icone}}' data-task='{{$tarefa->id}}'>
+                        <div class="col-md-2 icons-default-choose" style='padding-bottom:10px' data-icon='{{$icone->icone}}' data-task='{{$tarefa->id}}'>
                           <img src="{{  asset('img/icones/'.$icone->icone.'?'.date('s')) }}" alt="" class="img-modal">
                         </div>
                       @endforeach
