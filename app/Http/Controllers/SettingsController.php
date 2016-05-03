@@ -195,13 +195,15 @@ class SettingsController extends Controller
     public function setIcon(request $request){
     	$id = $request['id'];
     	$tarefa = trd::find($id);
-    	return view('backend.modals.settings.icon', compact('tarefa'));
+      $icones = \App\Icone::all();
+    	return view('backend.modals.settings.icon', compact('tarefa','icones'));
     }
 
     public function proj_setIcon(request $request){
       $id = $request['id'];
       $tarefa = ttf::find($id);
-      return view('backend.modals.settings.proj-icon', compact('tarefa'));
+      $icones = \App\Icone::all();
+      return view('backend.modals.settings.proj-icon', compact('tarefa','icones'));
     }
 
     public function setColor(request $request){
@@ -218,61 +220,100 @@ class SettingsController extends Controller
 
     public function storeIcon(request $request){
     	$dados = $request->all();
-    	$image = $dados['icon'];
-    	$tarefa = trd::find($dados['tarefa']);
-		 $exts = array('jpg', 'jpeg', 'png', 'gif', 'jpe', 'jif', 'jfif', 'jfi');
-	        $extension = $image->getClientOriginalExtension();
-	        if(!in_array($extension, $exts)){
-	           $response['msg'] = 'Extensão Invalida';
-			   $response['status'] = 'error';
-			   return $response;
-	        }
-	    $name = $tarefa->id.'default.'.$extension;
-	    $path = 'public/img/icones/';
-	    $request->file('icon')->move($path, $name);
-	 	if(file_exists($path.$name)){
-	 		$toUp = array('icone' => $name);
-	 		$tarefa->update($toUp);
-	 		if($tarefa){
-	 			$response['msg'] = 'Icone Atualizado com Sucesso';
-		    	$response['status'] = 'success';
-		    	$response['img'] =  asset('img/icones/'.$name);
-		    	$response['idt'] = $tarefa->id;
-	 		}
-	 	}else{
-	 	    $response['msg'] = 'Error ao salvar imagem';
-		    $response['status'] = 'error';
-	 	}
-	 	return $response;
+      if(isset($dados['select'])){
+        $path = 'public/img/icones/';
+        $tarefa = trd::find($dados['tarefa']);
+        if(file_exists($path.$dados['icon'])){
+          $toUp = array('icone' => $dados['icon']);
+          $tarefa->update($toUp);
+          if($tarefa){
+            $response['msg'] = 'Icone Atualizado com Sucesso';
+              $response['status'] = 'success';
+              $response['img'] =  asset('img/icones/'.$dados['icon']);
+              $response['idt'] = $tarefa->id;
+          }
+        }else{
+            $response['msg'] = 'Error ao salvar icone';
+            $response['status'] = 'error';
+        }
+        return $response;
+
+      }else{
+        	$image = $dados['icon'];
+        	$tarefa = trd::find($dados['tarefa']);
+    		 $exts = array('jpg', 'jpeg', 'png', 'gif', 'jpe', 'jif', 'jfif', 'jfi');
+    	        $extension = $image->getClientOriginalExtension();
+    	        if(!in_array($extension, $exts)){
+    	           $response['msg'] = 'Extensão Invalida';
+    			   $response['status'] = 'error';
+    			   return $response;
+    	        }
+    	    $name = $tarefa->id.'default.'.$extension;
+    	    $path = 'public/img/icones/';
+    	    $request->file('icon')->move($path, $name);
+    	 	if(file_exists($path.$name)){
+    	 		$toUp = array('icone' => $name);
+    	 		$tarefa->update($toUp);
+    	 		if($tarefa){
+    	 			$response['msg'] = 'Icone Atualizado com Sucesso';
+    		    	$response['status'] = 'success';
+    		    	$response['img'] =  asset('img/icones/'.$name);
+    		    	$response['idt'] = $tarefa->id;
+    	 		}
+    	 	}else{
+    	 	    $response['msg'] = 'Error ao salvar icone';
+    		    $response['status'] = 'error';
+    	 	}
+    	 	return $response;
+        }
     }
 
     public function proj_storeIcon(request $request){
       $dados = $request->all();
-      $image = $dados['icon'];
-      $tarefa = ttf::find($dados['tarefa']);
-     $exts = array('jpg', 'jpeg', 'png', 'gif', 'jpe', 'jif', 'jfif', 'jfi');
-          $extension = $image->getClientOriginalExtension();
-          if(!in_array($extension, $exts)){
-             $response['msg'] = 'Extensão Invalida';
-         $response['status'] = 'error';
-         return $response;
-          }
-      $name = $tarefa->id.'.'.$extension;
-      $path = 'public/img/icones/';
-      $request->file('icon')->move($path, $name);
-    if(file_exists($path.$name)){
-      $toUp = array('icone' => $name);
-      $tarefa->update($toUp);
-      if($tarefa){
-        $response['msg'] = 'Icone Atualizado com Sucesso';
-          $response['status'] = 'success';
-          $response['id'] = $tarefa->projeto_id;
+      if(isset($dados['select'])){
+        $path = 'public/img/icones/';
+        $tarefa = ttf::find($dados['tarefa']);
+        if(file_exists($path.$dados['icon'])){
+          $toUp = array('icone' => $dados['icon']);
+          $tarefa->update($toUp);
+           if($tarefa){
+          $response['msg'] = 'Icone Atualizado com Sucesso';
+            $response['status'] = 'success';
+            $response['id'] = $tarefa->projeto_id;
+        }
+      }else{
+          $response['msg'] = 'Error ao salvar icone';
+          $response['status'] = 'error';
       }
-    }else{
-        $response['msg'] = 'Error ao salvar imagem';
-        $response['status'] = 'error';
+        return $response;
+
+      }else{
+        $image = $dados['icon'];
+        $tarefa = ttf::find($dados['tarefa']);
+       $exts = array('jpg', 'jpeg', 'png', 'gif', 'jpe', 'jif', 'jfif', 'jfi');
+            $extension = $image->getClientOriginalExtension();
+            if(!in_array($extension, $exts)){
+               $response['msg'] = 'Extensão Invalida';
+           $response['status'] = 'error';
+           return $response;
+            }
+        $name = $tarefa->id.'.'.$extension;
+        $path = 'public/img/icones/';
+        $request->file('icon')->move($path, $name);
+      if(file_exists($path.$name)){
+        $toUp = array('icone' => $name);
+        $tarefa->update($toUp);
+        if($tarefa){
+          $response['msg'] = 'Icone Atualizado com Sucesso';
+            $response['status'] = 'success';
+            $response['id'] = $tarefa->projeto_id;
+        }
+      }else{
+          $response['msg'] = 'Error ao salvar icone';
+          $response['status'] = 'error';
+      }
+      return $response;
     }
-    return $response;
     }
 
     public function storeColor(request $request){

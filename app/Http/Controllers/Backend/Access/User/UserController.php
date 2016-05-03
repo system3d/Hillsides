@@ -19,6 +19,7 @@ use App\Http\Requests\Backend\Access\User\PermanentlyDeleteUserRequest;
 use App\Repositories\Frontend\User\UserContract as FrontendUserContract;
 use App\Http\Requests\Backend\Access\User\ResendConfirmationEmailRequest;
 use App\Models\Access\User\User as userr;
+use Illuminate\Http\Request;
 
 /**
  * Class UserController
@@ -218,5 +219,39 @@ class UserController extends Controller
     {
         $user->sendConfirmationEmail($user_id);
         return redirect()->back()->withFlashSuccess(trans('alerts.backend.users.confirmation_email'));
+    }
+
+    public function avatar(){
+        $user = access()->user();
+      return view('backend.modals.avatar', compact('user'));
+    }
+
+    public function avatarStore(request $request){
+        $dados = $request->all();
+        $user = access()->user();
+        $image = $dados['icon'];
+         $exts = array('jpg', 'jpeg', 'png', 'gif', 'jpe', 'jif', 'jfif', 'jfi');
+            $extension = $image->getClientOriginalExtension();
+            if(!in_array($extension, $exts)){
+               $response['msg'] = 'Extensão Invalida';
+               $response['status'] = 'error';
+               return $response;
+            }
+        $name = $user->id.'.'.$extension;
+        $path = 'public/img/avatar/';
+        $request->file('icon')->move($path, $name);
+        if(file_exists($path.$name)){
+            $toUp = array('avatar' => $name);
+            $user->update($toUp);
+            if($user){
+                $response['msg'] = 'Avatar Atualizado com Sucesso';
+                $response['status'] = 'success';
+                $response['img'] =  asset('img/avatar/'.$name);
+            }
+        }else{
+            $response['msg'] = 'Error ao salvar avatar';
+            $response['status'] = 'error';
+        }
+        return $response;
     }
 }

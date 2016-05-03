@@ -10,10 +10,20 @@
        		<div class="col-md-12">
             <div class="form-group">
                    <label for="fullname" class="control-label">Icone Atual:</label>
-                     <img src="{{  asset('img/icones/'.$tarefa->icone.'?'.date('s')) }}" alt="" class="img-circle img-modal">
+                     <img src="{{  asset('img/icones/'.$tarefa->icone.'?'.date('s')) }}" alt="" class="img-modal">
+                </div>
+                <div class="form-group">
+                   <label for="fullname" class="control-label">Escolha um Icone:</label>
+                    <div class="row">
+                      @foreach($icones as $icone)
+                        <div class="col-md-3 icons-default-choose" style='padding-bottom:5px' data-icon='{{$icone->icone}}' data-task='{{$tarefa->id}}'>
+                          <img src="{{  asset('img/icones/'.$icone->icone.'?'.date('s')) }}" alt="" class="img-modal">
+                        </div>
+                      @endforeach
+                    </div>
                 </div>
        			<div class="form-group">
-                   <label for="fullname" class="control-label">Novo Icone:</label>
+                   <label for="fullname" class="control-label">Ou Envie outro icone de sua preferencia:</label>
                      <input type="file" class="form-control" required="" data-parsley-trigger="change" name="icon" style='width:100%'>
                 </div>
 

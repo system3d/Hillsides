@@ -3,6 +3,14 @@ $(document).ready(function($) {
 	// 	if($(this).parent('#chat_users_list').hasClass('collapsed-box'))
 	// 		updateChatStatus();
 	// });
+	var windWidth = $(window).height();
+	var maxContatosHeight = windWidth - 200;
+	maxContatosHeight = (maxContatosHeight > 500) ? maxContatosHeight : 500;
+	$('#chat_menu_list').css('max-height', maxContatosHeight );
+
+	$('#controlSidebarIcon').click(function(event) {
+		organizeWindows();
+	});
 
 	$(document).on('keyup', '#chat_search_field', function(event) {
 		var search = $(this).val();
@@ -142,11 +150,24 @@ function chatWindowCreator(r,receiver){
 }
 
 function organizeWindows(){
-	var xc = 1;
-	$('.chat-window').each(function(index, el) {
-		$(this).css('right', xc*282);
-		xc++;
-	});
+	var xc = 0;
+	if($('#control-sidebar-principal').hasClass('control-sidebar-open')){
+		$('.chat-window').each(function(index, el) {
+			if(xc == 0)
+				$(this).css('right', 240);
+			else
+				$(this).css('right', (xc*282) + 240);
+			xc++;
+		});
+	}else{
+		$('.chat-window').each(function(index, el) {
+			if(xc == 0)
+				$(this).css('right', 10);
+			else
+				$(this).css('right', (xc*282) + 10);
+			xc++;
+		});
+	}
 }
 
 function capWindows(){

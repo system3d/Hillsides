@@ -30,7 +30,11 @@
 }
 
 #chat_search_field{
-	width: 245px !important;
+	width: 230px !important;
+}
+
+.li-chat-control:hover{
+	background: #222d32 !important;
 }
 
 .chat_list_img{
@@ -44,11 +48,11 @@
 	background: #F6FEFF;
 }
 
-.chat_menu{
+/*.chat_menu{
 	width: 100%;
 	margin-bottom: 0;
 	padding: 0 !important;
-}
+}*/
 
 .chat_menu h4{
 	margin-left: 45px !important;
@@ -60,7 +64,7 @@
 .chat_menu li{
 	background: #222d32;
 	color: #b8c7ce;
-	padding:10px 15px !important;
+	padding:10px 15px;
 }
 
 .chat_menu small{
@@ -75,6 +79,7 @@
 .chat_menu li:hover{
 	background: #181f23;
 	cursor: pointer !important;
+	width: 100% !important;
 }
 
 .bg-dark-blue{
@@ -152,4 +157,28 @@ h3.chat-title{
 .count-unread{
 	position: absolute;
 	right: 7.5px;
+}
+
+#ulHeaderMenuChat .fa-check {
+	position: absolute;
+	right: 7.5px;
+}
+
+.li-chat-control{
+	padding-left: 0 !important;
+}
+
+
+#chat_search_field:focus{
+	border-color: #222d32 !important;
+}
+
+#chat_menu_list{
+	width: 100%;
+	position: absolute;
+	left: 0;
+	padding: 0 !important;
+	max-height: 300px;
+	overflow-y:auto;
+	overflow-x: hidden;
 }

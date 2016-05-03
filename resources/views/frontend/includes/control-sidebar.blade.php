@@ -1,8 +1,9 @@
       <!-- Control Sidebar -->
-      <aside class="control-sidebar control-sidebar-dark">
+      <aside class="control-sidebar control-sidebar-dark" id='control-sidebar-principal'>
         <!-- Create the tabs -->
         <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
           <li class='active'><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
+          <li><a href="#control-sidebar-tab-chat" data-toggle="tab"><i class="fa fa-comments"></i></a></li>
           <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
         </ul>
         <!-- Tab panes -->
@@ -12,8 +13,8 @@
             <ul class="control-sidebar-menu">
                   <li class="user-header">
                       <div class="profile-pic">
-                        <img src="{{ asset('img/avatar/'.access()->user()->avatar) }}" class="img-circle" alt="User Image">
-                        <div class="edit"><a href="#"><i class="fa fa-pencil fa-lg"></i></a></div>
+                        <img src="{{ asset('img/avatar/'.access()->user()->avatar) }}" class="img-circle" alt="User Image" id='this-user-avatar'>
+                        <div class="edit"><a href="#" class='edit-user-avatar'><i class="fa fa-pencil fa-lg"></i></a></div>
                       </div>
                     <p>
                       {{access()->user()->name}}
@@ -109,8 +110,94 @@
             <a href="{{url('logout')}}" class="btn btn-default btn-block" style='width:80%;margin-left: 10%;margin-top: 20px;'> <i class="fa fa-sign-out"></i>&nbsp;&nbsp; Logout</a>
 
           </div><!-- /.tab-pane -->
-          <!-- Stats tab content -->
-          <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div><!-- /.tab-pane -->
+
+
+
+
+
+
+        <div class="tab-pane" id="control-sidebar-tab-chat">
+          <ul class="chat_menu" id='chat_menu_list'>
+      @foreach(access()->user()->locatario->users->sortBy('name') as $chat_user)
+      @if($chat_user->isOnline() && $chat_user->id != access()->user()->id)
+      <li class='chat_user' data-id="{{$chat_user->id}}" data-name='{{$chat_user->name}}'  data-off='false'><!-- start message -->
+          <div class="pull-left">
+            <img src="{{ asset('img/avatar/'.$chat_user->avatar) }}" class="img-circle chat_list_img" alt="User Image">
+          </div>
+          <h4>
+            {{str_limit($chat_user->name,20,'...')}}
+          </h4>
+            <?php $lastActivityObj =  timeDiff($chat_user->lastActivity->data);?>
+          <small class='chat_user_status' data-time='{{$lastActivityObj["t"]}}'>
+            <i class="fa fa-circle text-success"></i> Online
+          </small>
+      </li><!-- end message -->
+      @endif
+      @endforeach
+      @foreach(access()->user()->locatario->users->sortBy('name') as $chat_user)
+      @if(!$chat_user->isOnline() && $chat_user->id != access()->user()->id)
+      <li class='chat_user' data-id="{{$chat_user->id}}" data-name='{{strtolower($chat_user->name)}}' data-off='true'><!-- start message -->
+          <div class="pull-left">
+            <img src="{{ asset('img/avatar/'.$chat_user->avatar) }}" class="img-circle chat_list_img" alt="User Image">
+          </div>
+          <h4>
+            {{str_limit($chat_user->name,20,'...')}}
+          </h4>
+            @if(isset($chat_user->lastActivity->data))
+            <?php $lastActivityObj =  timeDiff($chat_user->lastActivity->data);?>
+              @if($lastActivityObj['t'] < 86000)
+              <small class='chat_user_status' data-time='{{$lastActivityObj["t"]}}'>
+                Visto(a) por último à 
+                @if($lastActivityObj['h'] > 0)
+                    @if($lastActivityObj['h'] == 1)
+                      {{$lastActivityObj['h']}} hora
+                    @else
+                      {{$lastActivityObj['h']}} horas
+                    @endif
+                @elseif($lastActivityObj['m'] > 0)
+                  @if($lastActivityObj['m'] == 1)
+                    {{$lastActivityObj['m']}} minuto
+                  @else
+                    {{$lastActivityObj['m']}} minutos
+                  @endif
+                @else
+                  1 minuto
+                @endif
+              @else
+              <small class='chat_user_status' data-time='0'>
+              <i class="fa fa-circle text-danger"></i> Offline
+              @endif
+            @else
+            <small class='chat_user_status' data-time='0'>
+            <i class="fa fa-circle text-danger"></i> Offline
+            @endif
+          </small>
+      </li><!-- end message -->
+      @endif
+      @endforeach
+      <li class='li-chat-control'>
+          <form id='chat_search'>
+      <div class="input-group">
+        <input type="text" name="message" id='chat_search_field' placeholder="Procurar..." class="form-control">
+      </div>
+    </form>
+      </li>
+    </ul>
+
+
+
+        </div>
+
+
+
+
+
+
+
+
+
+
+
           <!-- Settings tab content -->
           <div class="tab-pane" id="control-sidebar-settings-tab">
             <form method="post">
@@ -228,7 +315,7 @@
                             <span id='BTCS{{$trp->id}}' class="back-t-change" style='background:{{$trp->cor}}'></span>
                           </a> 
                         <a href="#" data-id='{{$trp->id}}' data-toggle="tooltip" data-html="true" title='Icone' class='icon-t-change'>
-                          <img class='img-circle img-icon' src="{{ asset('img/icones/'.$trp->icone) }}" id='t-icon-{{$trp->id}}'>
+                          <img class='img-icon' src="{{ asset('img/icones/'.$trp->icone) }}" id='t-icon-{{$trp->id}}'>
                         </a>
                         
                         <a href="#" data-toggle="tooltip" data-html="true" title='Deletar' class="delete-trp text-red"><i class="fa fa-trash"></i></a>

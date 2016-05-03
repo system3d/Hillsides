@@ -1,5 +1,38 @@
 $(document).ready(function() {
 
+	$(document).on('click', '.edit-user-avatar', function(event) {
+		event.preventDefault();
+		 $('#loader').removeClass('hidden'); 
+         $.ajax({
+            url: urlbaseGeral+"/admin/access/user/avatar",
+            type: 'POST',
+            dataType: 'html',
+          }).done(function(response) {
+            drawModal(response, '20%');
+          });
+        $('#loader').addClass('hidden');
+	});
+
+	    $(document).on('submit', '#trocar-avatar-user', function(event) {
+    	event.preventDefault();
+    	var formData = new FormData(this);
+    	 $.ajax({
+            type:'POST',
+            url: urlbaseGeral+"/admin/access/user/avatar/store",
+            data:formData,
+            cache:false,
+            contentType: false,
+            processData: false,
+        }).done(function(r) {
+    	 	flashMessage(r.status, r.msg);
+    	 	if(r.status == 'success'){
+    	 		var today = new Date();
+    	 		$('#this-user-avatar').attr("src",r.img+'?'+today.getTime());
+    	 	}
+    	 	$('#modal').modal("hide");
+	    });
+    });
+
 $(document).on('click', '#new-est-side', function(event) {
 		event.preventDefault();
 		var thisLink = $(this).find('i');
@@ -236,6 +269,24 @@ $(document).on('click', '#new-est-side', function(event) {
             cache:false,
             contentType: false,
             processData: false,
+        }).done(function(r) {
+    	 	flashMessage(r.status, r.msg);
+    	 	if(r.status == 'success'){
+    	 		var today = new Date();
+    	 		$('#t-icon-'+r.idt).attr("src",r.img+'?'+today.getTime());
+    	 	}
+    	 	$('#modal').modal("hide");
+	    });
+    });
+
+    $(document).on('click', '.icons-default-choose', function(event) {
+    	event.preventDefault();
+    	var icon = $(this).attr('data-icon');
+    	var task = $(this).attr('data-task');
+    	$.ajax({
+            type:'POST',
+            url: urlbaseGeral+"/settings/storeIcon",
+            data:{icon:icon,select:true,tarefa:task}
         }).done(function(r) {
     	 	flashMessage(r.status, r.msg);
     	 	if(r.status == 'success'){

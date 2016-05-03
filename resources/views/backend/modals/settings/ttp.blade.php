@@ -25,7 +25,7 @@
 		                            <span id='BTCSP{{$tipoTarefa->id}}' class="back-tp-change" style='background:{{$tipoTarefa->cor}}'></span>
 		                          </a> 
 								 <a href="#" data-id='{{$tipoTarefa->id}}' data-toggle="tooltip" data-html="true" title='Icone' class='icon-tp-change'>
-		                          <img class='img-circle img-p-icon' src="{{ asset('img/icones/'.$tipoTarefa->icone) }}?{{time()}}" id='tp-icon-{{$tipoTarefa->id}}'>
+		                          <img class='img-p-icon' src="{{ asset('img/icones/'.$tipoTarefa->icone) }}?{{time()}}" id='tp-icon-{{$tipoTarefa->id}}'>
 		                        </a>
 								<a href="#" class="btn btn-danger btn-xs excluir-conf-tipoTarefa" data-id='{{$tipoTarefa->id}}' data-toggle="tooltip" data-html="true" title='Excluir'><i class="fa fa-trash"></i></a>
 							</td>

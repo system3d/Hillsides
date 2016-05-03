@@ -634,7 +634,7 @@ response +=           '</ul>';
 response +=         '</div>';
 response +=        '<div class="tarefa-footer">';
 response +=          '<img class="img-circle tarefa-img tarefa-img-user" data-tarefa="'+task.id+'" src="'+task.user_icone+'" data-id="'+task.assignee_id+'" data-toggle="tooltip" data-html="true" title="'+task.assignee+'">';
-response +=          '<img class="img-circle tarefa-img tarefa-img-tipo tarefa-info" data-id="'+task.id+'" src="'+task.tipo_icone+'"  data-toggle="tooltip" data-html="true" title="'+task.tipo+'">';
+response +=          '<img class="tarefa-img tarefa-img-tipo tarefa-info" data-id="'+task.id+'" src="'+task.tipo_icone+'"  data-toggle="tooltip" data-html="true" title="'+task.tipo+'">';
 response +=       '</div>';
 response +=     '</div>';
 
@@ -746,7 +746,7 @@ response +=           '</ul>';
 response +=         '</div>';
 response +=        '<div class="tarefa-footer">';
 response +=          '<img class="img-circle tarefa-img tarefa-img-user" data-tarefa="'+task.id+'" src="'+task.user_icone+'" data-id="'+task.assignee_id+'" data-toggle="tooltip" data-html="true" title="'+task.assignee+'">';
-response +=          '<img class="img-circle tarefa-img tarefa-img-tipo tarefa-info" data-id="'+task.id+'" src="'+task.tipo_icone+'"  data-toggle="tooltip" data-html="true" title="'+task.tipo+'">';
+response +=          '<img class="tarefa-img tarefa-img-tipo tarefa-info" data-id="'+task.id+'" src="'+task.tipo_icone+'"  data-toggle="tooltip" data-html="true" title="'+task.tipo+'">';
 response +=       '</div>';
 response +=     '</div>';
 

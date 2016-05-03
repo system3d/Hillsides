@@ -10,6 +10,8 @@ Route::group([
     Route::group(['namespace' => 'User'], function() {
         Route::resource('users', 'UserController', ['except' => ['show']]);
 
+        Route::post('user/avatar', array('as' => 'user/avatar', 'uses' => 'UserController@avatar'));
+        Route::post('user/avatar/store', array('as' => 'user/avatar/store', 'uses' => 'UserController@avatarStore'));
         Route::get('users/deactivated', 'UserController@deactivated')->name('admin.access.users.deactivated');
         Route::get('users/deleted', 'UserController@deleted')->name('admin.access.users.deleted');
         Route::get('account/confirm/resend/{user_id}', 'UserController@resendConfirmationEmail')->name('admin.account.confirm.resend');

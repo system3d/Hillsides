@@ -68,12 +68,14 @@
           })
           .done(function(response) {
             drawModal(response, '50%');
+             $('#loader').addClass('hidden'); 
           });
-        $('#loader').addClass('hidden'); 
+       
          });
 
  	$(document).on('click', '.proj-row', function(event) {
  		event.preventDefault();
+    $('#loader').removeClass('hidden'); 
  		var id = $(this).find('.projeto-info').attr('data-id');
  		$.ajax({
             url: urlbaseGeral+"/projetos/info",
@@ -83,6 +85,7 @@
           })
           .done(function(response) {
             drawModal(response, '50%');
+            $('#loader').addClass('hidden'); 
           });
  	});
 
@@ -1224,6 +1227,35 @@
             processData: false,
         }).done(function(r) {
         flashMessage(r.status, r.msg);
+        if(r.status == 'success'){
+         var sid = r.id;
+         $.ajax({
+        url: urlbaseGeral + "/projetos/conf/tpTarefa",
+        type: 'POST',
+        data: {id:sid},
+        dataType: 'html',
+      }).done(function(response){
+        shouldReload = true;
+        window.modal_history.pop();
+        window.modal_width.pop();
+        window.modal_history.pop();
+        window.modal_width.pop();
+        drawModal(response,'25%');
+      });
+        }
+      });
+    });
+
+     $(document).on('click', '.icons-default-choose-proj', function(event) {
+      event.preventDefault();
+      var icon = $(this).attr('data-icon');
+      var task = $(this).attr('data-task');
+      $.ajax({
+            type:'POST',
+            url: urlbaseGeral+"/projetos/conf/storeIcon",
+            data:{icon:icon,select:true,tarefa:task}
+        }).done(function(r) {
+       flashMessage(r.status, r.msg);
         if(r.status == 'success'){
          var sid = r.id;
          $.ajax({
