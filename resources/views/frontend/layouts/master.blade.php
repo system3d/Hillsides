@@ -69,7 +69,7 @@
  @include('frontend.includes.control-sidebar')
 </div><!-- ./wrapper -->
 
-
+@include('backend.includes.config')
 <!-- Includes all the global required JS libs -->
 @include('frontend.includes.scripts')
 

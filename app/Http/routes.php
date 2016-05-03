@@ -73,6 +73,7 @@ Route::post('settings/setIcon', array('middleware' => 'admin', 'as' => 'settings
 Route::post('settings/storeIcon', array('middleware' => 'admin', 'as' => 'settings/storeIcon', 'uses' => 'SettingsController@storeIcon'));
 Route::post('settings/setColor', array('middleware' => 'admin', 'as' => 'settings/setColor', 'uses' => 'SettingsController@setColor'));
 Route::post('settings/storeColor', array('middleware' => 'admin', 'as' => 'settings/storeColor', 'uses' => 'SettingsController@storeColor'));
+Route::post('settings/chat', array('middleware' => 'admin', 'as' => 'settings/chat', 'uses' => 'SettingsController@chat'));
 
 Route::get('projetos', array('middleware' => 'admin', 'as' => 'projetos', 'uses' => 'ProjetosController@index'));
 Route::post('projetos/criar', array('middleware' => 'admin', 'as' => 'projetos/criar', 'uses' => 'ProjetosController@criar'));

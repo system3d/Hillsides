@@ -41,6 +41,10 @@ trait UserRelationship
         return $this->hasMany('App\Cliente');
     }
 
+     public function settings() {
+        return $this->hasMany('App\Setting');
+    }
+
     public function projetos() {
         return $this->hasMany('App\Projetos');
     }

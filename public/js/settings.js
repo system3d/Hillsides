@@ -1,5 +1,9 @@
 $(document).ready(function() {
 
+	if(config.chat_sounds == '1'){
+		$('#chat-settingss-sound').prop('checked',false);
+	}
+
 	$(document).on('click', '.edit-user-avatar', function(event) {
 		event.preventDefault();
 		 $('#loader').removeClass('hidden'); 
@@ -312,6 +316,26 @@ $(document).on('click', '#new-est-side', function(event) {
 	      	$('#BTCS'+r.id).css('background', r.cor);
 	      }
 	    })
+     });
+
+     $(document).on('change', '.chat-config-check', function(event) {
+     	var checkbox = $(this);
+     	var type = $(this).attr('data-type');
+     	var val = $(this).is(":checked") ? 1 : 0;
+     	$.ajax({
+     		url: urlbaseGeral + '/settings/chat',
+     		type: 'POST',
+     		dataType: 'html',
+     		data: {type: type,val:val,model:'chat'},
+     	})
+     	.done(function(r) {
+     		if(r != '200'){
+     			checkbox.prop('checked', function(_, checked) {return !checked;});
+     		}else{
+     			config.chat_sounds = (config.chat_sounds == '0') ? '1' : '0';
+     		}
+     	});
+     	
      });
 
 });

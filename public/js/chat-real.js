@@ -91,12 +91,18 @@ function appendRealMessage(dados){
       total = total + 1;
       $('#msgsTotalHeader').html(total);
       $('#msgsTotalHeader').removeClass('hidden');
-      var snd = new Audio(urlbaseGeral + "/sounds/beep.wav");
-      snd.play();
+      if(config.chat_sounds != '0'){
+        var snd = new Audio(urlbaseGeral + "/sounds/beep.wav");
+        snd.play();
+      }
   }else{
     markAsRead(dados.sender);
     var header = dados.header;
     insertMsg(header.id,dados.message,header.name,header.date,header.status,dados.sender,1);
+    if(config.chat_sounds != '0'){
+        var snd2 = new Audio(urlbaseGeral + "/sounds/pop.wav");
+        snd2.play();
+      }
        $('.chat-window[data-id="'+dados.sender+'"]').removeClass('collapsed-box');
        $('.chat-window[data-id="'+dados.sender+'"]').find('.box-body').css('display', 'block');
        $('.chat-window[data-id="'+dados.sender+'"]').find('.box-footer').css('display', 'block');

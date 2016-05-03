@@ -15,6 +15,7 @@ use App\Tipo_Tarefa as ttf;
 use App\Status_Projeto_Default as spd;
 use App\Status_Tarefa_Default as sfd;
 use App\Tipo_Tarefa_Default as trd;
+use App\Setting as sets;
 use Kanban;
 
 class SettingsController extends Controller
@@ -592,6 +593,18 @@ class SettingsController extends Controller
       $response['status'] = 'error';
   }
   return $response;
+   }
+
+   public function chat(request $request){
+    $dados = $request->all();
+    $thisSet = sets::where('model',$dados['model'])->where('name',$dados['type'])->where('user_id',access()->user()->id)->first();
+    if(isset($thisSet->id)){
+      $thisSet = $thisSet->update(['param'=>$dados['val']]);
+      if($thisSet) return '200'; else return '300';
+    }else{
+      $thisSetN = sets::create(['model'=>$dados['model'], 'name'=>$dados['type'], 'param'=>$dados['val'],'user_id'=>access()->user()->id,'locatario_id'=>access()->user()->locatario_id]);
+      if(isset($thisSetN->id)) return '200'; else return '300';
+    }
    }
 
 }

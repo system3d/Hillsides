@@ -244,7 +244,14 @@
               
               
 
-              <h3 class="control-sidebar-heading">Chat Settings</h3>
+              <h3 class="control-sidebar-heading">Configurações do Chat</h3>
+
+              <div class="form-group">
+                <label class="control-sidebar-subheading">
+                  Desabilitar Sons
+                  <input type="checkbox" class="pull-right chat-config-check" data-type='sounds' checked id='chat-settingss-sound'>
+                </label>
+              </div><!-- /.form-group -->
 
               <div class="form-group">
                 <label class="control-sidebar-subheading">
@@ -268,7 +275,7 @@
               </div><!-- /.form-group -->
             </form>
           </div><!-- /.tab-pane -->
-            
+
         </div>
       </aside><!-- /.control-sidebar -->
        <div class="control-sidebar-bg"></div>
