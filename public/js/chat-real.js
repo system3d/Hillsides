@@ -96,8 +96,11 @@ function appendRealMessage(dados){
         snd.play();
       }
   }else{
-    markAsRead(dados.sender);
     var header = dados.header;
+    markAsRead(dados.sender);
+    var $element =  $('.chat-user-header[data-id="'+dados.sender+'"]');
+    $element.find('p').html(dados.message.substring(0,30));
+    $element.find('h4').find('small').html('<i class="fa fa-clock-o"></i> '+header.date);
     insertMsg(header.id,dados.message,header.name,header.date,header.status,dados.sender,1);
     if(config.chat_sounds != '0'){
         var snd2 = new Audio(urlbaseGeral + "/sounds/pop.wav");
@@ -109,8 +112,7 @@ function appendRealMessage(dados){
        var thisWindow = $('.chat-window[data-id="'+dados.sender+'"]').find('.direct-chat-messages');
        thisWindow.scrollTop(thisWindow.prop('scrollHeight'));
        $('.istiping-block[data-id="'+dados.sender+'"]').addClass("visNone");
-  }
-  
+  }  
 }
 
 var typing = false; 

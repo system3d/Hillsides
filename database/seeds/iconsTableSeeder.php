@@ -17,6 +17,26 @@ class iconsTableSeeder extends Seeder
         $icon->save();
 
         $icon             = new $icon_model;
+        $icon->icone       = 'checked-symbol.png';
+        $icon->timestamps = false;
+        $icon->save();
+
+        $icon             = new $icon_model;
+        $icon->icone       = 'cross-mark-on-a-black-circle-background.png';
+        $icon->timestamps = false;
+        $icon->save();
+
+        $icon             = new $icon_model;
+        $icon->icone       = 'default.png';
+        $icon->timestamps = false;
+        $icon->save();
+
+        $icon             = new $icon_model;
+        $icon->icone       = 'warning-sign-on-a-triangular-background.png';
+        $icon->timestamps = false;
+        $icon->save();
+
+        $icon             = new $icon_model;
         $icon->icone       = 'archive-black-box.png';
         $icon->timestamps = false;
         $icon->save();
@@ -37,6 +57,11 @@ class iconsTableSeeder extends Seeder
         $icon->save();
 
         $icon             = new $icon_model;
+        $icon->icone       = 'cut.png';
+        $icon->timestamps = false;
+        $icon->save();
+
+        $icon             = new $icon_model;
         $icon->icone       = 'book.png';
         $icon->timestamps = false;
         $icon->save();
@@ -48,11 +73,6 @@ class iconsTableSeeder extends Seeder
 
         $icon             = new $icon_model;
         $icon->icone       = 'camera-retro.png';
-        $icon->timestamps = false;
-        $icon->save();
-
-        $icon             = new $icon_model;
-        $icon->icone       = 'checked-symbol.png';
         $icon->timestamps = false;
         $icon->save();
 
@@ -82,21 +102,6 @@ class iconsTableSeeder extends Seeder
         $icon->save();
 
         $icon             = new $icon_model;
-        $icon->icone       = 'cross-mark-on-a-black-circle-background.png';
-        $icon->timestamps = false;
-        $icon->save();
-
-        $icon             = new $icon_model;
-        $icon->icone       = 'cut.png';
-        $icon->timestamps = false;
-        $icon->save();
-
-        $icon             = new $icon_model;
-        $icon->icone       = 'default.png';
-        $icon->timestamps = false;
-        $icon->save();
-
-        $icon             = new $icon_model;
         $icon->icone       = 'delivery-truck-silhouette.png';
         $icon->timestamps = false;
         $icon->save();
@@ -112,12 +117,7 @@ class iconsTableSeeder extends Seeder
         $icon->save();
 
         $icon             = new $icon_model;
-        $icon->icone       = 'envelope.png';
-        $icon->timestamps = false;
-        $icon->save();
-
-        $icon             = new $icon_model;
-        $icon->icone       = 'exclamation-sign.png';
+        $icon->icone       = 'envelope-black.png';
         $icon->timestamps = false;
         $icon->save();
 
@@ -216,11 +216,6 @@ class iconsTableSeeder extends Seeder
         $icon->timestamps = false;
         $icon->save();
 
-        $icon             = new $icon_model;
-        $icon->icone       = 'warning-sign-on-a-triangular-background.png';
-        $icon->timestamps = false;
-        $icon->save();
-
         //Socials
         $icon             = new $icon_model;
         $icon->icone       = 'android-character-symbol.png';
@@ -229,6 +224,16 @@ class iconsTableSeeder extends Seeder
 
         $icon             = new $icon_model;
         $icon->icone       = 'apple-logo.png';
+        $icon->timestamps = false;
+        $icon->save();
+
+        $icon             = new $icon_model;
+        $icon->icone       = 'windows-logo-silhouette.png';
+        $icon->timestamps = false;
+        $icon->save();
+
+        $icon             = new $icon_model;
+        $icon->icone       = 'linux-logo.png';
         $icon->timestamps = false;
         $icon->save();
 
@@ -264,11 +269,6 @@ class iconsTableSeeder extends Seeder
 
         $icon             = new $icon_model;
         $icon->icone       = 'twitter-sign.png';
-        $icon->timestamps = false;
-        $icon->save();
-
-        $icon             = new $icon_model;
-        $icon->icone       = 'windows-logo-silhouette.png';
         $icon->timestamps = false;
         $icon->save();
 

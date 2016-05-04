@@ -101,19 +101,6 @@
 </div>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
           <!-- Settings tab content -->
           <div class="tab-pane" id="control-sidebar-settings-tab">
             <form method="post">

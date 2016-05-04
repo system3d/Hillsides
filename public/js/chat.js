@@ -75,8 +75,6 @@ $(document).ready(function($) {
 		}
 	});
 
-	
-
 
 });
 
@@ -90,6 +88,7 @@ function updateChatStatus(){
 		  	UpdateChatListStatus(response);
 	 	});
 }
+
 
 function UpdateChatListStatus(rr){
 	var status = jQuery.parseJSON(rr);
