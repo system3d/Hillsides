@@ -619,6 +619,10 @@ textarea {
     cursor: pointer;
 }
 
+td.hoverPointer:hover{
+    background: whitesmoke;
+}
+
 #estagiosTable tbody{
     border-bottom: none;
     border-top: none;

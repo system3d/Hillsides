@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 use App\Projeto as proj; 
 use App\Tipo_Projeto as tproj;
 use App\Estagio_Default as esdef;
@@ -362,11 +364,15 @@ class ProjetosController extends Controller
               $custoToSave = array('valor' => $custo, 'tipo_id' => $tipo_custo, 'tarefa_id' => $tasko->id, 'user_id' => $user_id, 'locatario_id' => $loc_id);
               $custoSaved = custo::create($custoToSave);
             }
-
-            if(isset($tar->anexos->first()->id)){
+            if( ($tar->anexos->count()) > 0 ){
               foreach($tar->anexos as $append){
                 $oldPath = 'anexos/'.$loc_id.'/'.$tar->projeto_id.'/'.$tar->id.'/';
                 $newPath = 'anexos/'.$loc_id.'/'.$pro_id.'/'.$tasko->id.'/';
+                Storage::copy($oldPath.$append->descricao, $newPath.$append->descricao);
+                if(Storage::exists($newPath.$append->descricao)){
+                   $appended = array('path' => $newPath.$append->descricao, 'descricao' => $append->descricao, 'tarefa_id' => $tasko->id, 'locatario_id' => $loc_id, 'tamanho' => $append->tamanho);
+                   $anexoD = anexo::create($appended);
+                }
               }
             }
 
@@ -376,6 +382,11 @@ class ProjetosController extends Controller
       foreach($teamplate->equipes as $equipe){
         $proj->equipes()->attach($equipe);
       }
+
+      $response['msg'] = 'Projeto Criado com Sucesso';
+      $response['status'] = 'success';
+      return $response;
+
    }
 
    public function getProjetos(request $request){
