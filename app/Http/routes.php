@@ -78,6 +78,7 @@ Route::post('settings/chat', array('middleware' => 'admin', 'as' => 'settings/ch
 Route::get('projetos', array('middleware' => 'admin', 'as' => 'projetos', 'uses' => 'ProjetosController@index'));
 Route::post('projetos/criar', array('middleware' => 'admin', 'as' => 'projetos/criar', 'uses' => 'ProjetosController@criar'));
 Route::post('projetos/store', array('middleware' => 'admin', 'as' => 'projetos/store', 'uses' => 'ProjetosController@store'));
+Route::post('projetos/teamplate', array('middleware' => 'admin', 'as' => 'projetos/teamplate', 'uses' => 'ProjetosController@teamplate'));
 Route::post('projetos/getProjetos', array('middleware' => 'admin', 'as' => 'projetos/getProjetos', 'uses' => 'ProjetosController@getProjetos'));
 Route::post('projetos/info', array('middleware' => 'admin', 'as' => 'projetos/info', 'uses' => 'ProjetosController@info'));
 Route::post('projetos/toggleFavorite', array('middleware' => 'admin', 'as' => 'projetos/toggleFavorite', 'uses' => 'ProjetosController@toggleFavorite'));

@@ -56,7 +56,7 @@
         @endif
        @if(!empty($tarefa->disciplina_id))
 		     <div class="form-group">
-	               <label class="control-label">Endereço:</label>
+	               <label class="control-label">Disciplina:</label>
 	                 <p class="form-static">{{$tarefa->disciplina->descricao}}</p>
 	           </div>
 	    @endif

@@ -9,9 +9,13 @@
             columns:  [
             { "data": "nome" },
             { "data": "desc"},
+            { "data": "tipo" },
             { "data": "cliente" },
             { "data": "criado" },
             { "data": "status" },
+        ],
+        columnDefs: [
+           { type: 'date-uk', targets: 4 }
         ],
         "iDisplayLength": 25,
             "language": {
@@ -54,6 +58,24 @@
         $('#modal_loader').addClass('hidden');
 	  });
  	});
+
+  $(document).on('submit', '#projeto-teamplate', function(event) {
+    $('#modal_loader').removeClass('hidden');
+    var values = $(this).serializeAndEncode();
+    event.preventDefault();
+    $.ajax({
+      url: urlbaseGeral+"/projetos/teamplate",
+      data: {dados: values},
+      type: 'POST',
+      dataType: 'json',
+    })
+    .done(function(r) {
+      flashMessage(r.status, r.msg);
+      $('#modal').modal("hide");
+      $('#projetosTable').DataTable().ajax.reload();
+        $('#modal_loader').addClass('hidden');
+    });
+  });
 
 
  	$(document).on('click', '.projeto-info', function(event) {

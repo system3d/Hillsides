@@ -16,9 +16,15 @@
             "language": {
               "emptyTable": "Nenhuma Equipe Cadastrada."
             },
+        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+            $(nRow).addClass('equipe-row');
+            $(nRow).addClass('hoverPointer');
+            return nRow;
+        }
         });
 
  	 $(document).on('click', '.equipe-info', function(event) {
+         $('#loader').removeClass('hidden'); 
  		var id = event.target.id;
  		$.ajax({
 		    url: urlbaseGeral+"/equipes/info",
@@ -28,8 +34,26 @@
 		  })
 		  .done(function(response) {
 		  	drawModal(response, '40%');
+            $('#loader').addClass('hidden');
 		  });
  	});
+
+     $(document).on('click', '.equipe-row', function(event) {
+        event.preventDefault();
+    $('#loader').removeClass('hidden'); 
+        var id = $(this).find('.equipe-info').attr('id');
+        id = id.replace('EID','');
+        $.ajax({
+            url: urlbaseGeral+"/equipes/info",
+            type: 'POST',
+            dataType: 'html',
+            data:{id:id},
+          })
+          .done(function(response) {
+            drawModal(response, '40%');
+            $('#loader').addClass('hidden'); 
+          });
+    });
 
      $(document).on('click', '.info-edit-equipe', function(event) {
         var id = event.target.id;

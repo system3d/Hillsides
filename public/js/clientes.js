@@ -17,6 +17,11 @@
             "language": {
               "emptyTable": "Nenhum Cliente Cadastrado."
             },
+        "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
+			$(nRow).addClass('client-row');
+			$(nRow).addClass('hoverPointer');
+			return nRow;
+		}
         });
 
  	$(document).on('click', '#cadastrarCliente', function(event) {
@@ -37,6 +42,7 @@
  	});
 
  	$(document).on('click', '.cliente-info', function(event) {
+ 		$('#loader').removeClass('hidden'); 
  		var id = event.target.id;
  		$.ajax({
 		    url: urlbaseGeral+"/cadastro/clienteinfo",
@@ -46,7 +52,25 @@
 		  })
 		  .done(function(response) {
 		  	drawModal(response);
+		  	$('#loader').addClass('hidden');
 		  });
+ 	});
+
+ 	$(document).on('click', '.client-row', function(event) {
+ 		event.preventDefault();
+    $('#loader').removeClass('hidden'); 
+ 		var id = $(this).find('.cliente-info').attr('id');
+ 		id = id.replace('CID','');
+ 		$.ajax({
+            url: urlbaseGeral+"/cadastro/clienteinfo",
+            type: 'POST',
+            dataType: 'html',
+            data:{id:id},
+          })
+          .done(function(response) {
+            drawModal(response);
+            $('#loader').addClass('hidden'); 
+          });
  	});
 
  	$(document).on('submit', '#cliente_atualizar', function(event) {

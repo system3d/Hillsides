@@ -1,6 +1,10 @@
 <div class="box box-primary box-kanban">
   <div class="box-header with-border">
-    <h3 class="box-title">{{$projeto->descricao}}</h3>
+    <h3 class="box-title">{{$projeto->descricao}}
+    @if($projeto->tipo->descricao == 'Teamplate')
+     (Teamplate)
+    @endif
+    </h3>
     <div class="box-tools pull-right">
       <button class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="" data-original-title="Navegação"><i class="fa fa-minus"></i></button>
     </div>

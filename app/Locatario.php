@@ -19,7 +19,7 @@ class Locatario extends Model
 	}
 
 	public function projetos() {
-		return $this->hasMany('App\Projetos');
+		return $this->hasMany('App\Projeto');
 	}
 
 	public function equipes() {

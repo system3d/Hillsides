@@ -20,6 +20,10 @@ use App\Sprint as sprint;
 use App\historia as historia;
 use App\Disciplina as disc;
 use App\Etapa as etapa;
+use App\Tarefa as task;
+use App\Cronograma as crono;
+use App\Custo as custo;
+use App\Anexo as anexo;
 
 class ProjetosController extends Controller
 {
@@ -174,13 +178,214 @@ class ProjetosController extends Controller
 	
    }
 
+   public function teamplate(request $request){
+      $Alldados = $request->all();
+      $dadosBefore = urldecode($Alldados['dados']);
+      $dados = explode('&', $dadosBefore);
+      foreach($dados as $dado){
+          $check2 = explode('=',$dado);
+          if($check2[1] != ''){
+            $check[$check2[0]] = $check2[1];
+          }
+      }
+      $user_id = access()->user()->id;
+      $loc_id = access()->user()->locatario_id;
+      $checkName = proj::where('descricao',$check['descricao'])->first();
+      if(isset($checkName->id)){
+        $response['msg'] = 'Nome em uso.';
+        $response['status'] = 'error';
+        return $response;
+      }
+      $teamplate = proj::find($check['teamplate-id']);
+      if(!isset($teamplate->id)){
+          $response['msg'] = 'Teamplate inválido';
+          $response['status'] = 'error';
+          return $response;
+      }
+      $projData = array(
+          'descricao'  => $check['descricao'],
+          'obs'        => $check['obs'],
+          'cliente_id' => $check['cliente_id'],
+          'tipo_id'    => tproj::where('descricao','Projeto')->first()->id,
+          'user_id'    => $user_id,
+          'locatario_id' => $loc_id,
+          'favorito'   => 0
+      );
+      $proj = proj::create($projData);
+      $status = $teamplate->status_id;    
+
+      if(!$proj->id){
+        $response['msg'] = 'Erro ao criar novo Projeto.';
+        $response['status'] = 'error';
+        return $response;
+      }
+      $pro_id = $proj->id;
+      //Status de Projeto
+      foreach($teamplate->statuses as $stats){
+        $statData = array(
+          'descricao'    => $stats->descricao,
+          'user_id'      => $user_id,
+          'locatario_id' => $loc_id,
+          'projeto_id'   => $pro_id
+        );
+        sp::create($statData);
+      }
+
+      if($status == '0'){
+          $statusNewQ = sp::where('descricao', 'Ativo')->where('projeto_id',$proj->id)->first();
+        }else{
+          $statusOld = sp::find($status);
+          $statusNewQ = sp::where('descricao', $statusOld->descricao)->where('projeto_id',$proj->id)->first();
+        }
+        $statusNew = array('status_id' => $statusNewQ->id);
+        $newU = $proj->update($statusNew);
+        if(!$newU){
+          $response['msg'] = 'Erro ao atribuir Status ao Projeto';
+        $response['status'] = 'error';
+        return $response;
+      }
+
+      //Status de Tarefas
+      $task_stat = array();
+      foreach($teamplate->status_tarefa as $stats){
+        $statData = array(
+          'descricao'    => $stats->descricao,
+          'locatario_id' => $loc_id,
+          'projeto_id'   => $pro_id
+        );
+        $sft = sf::create($statData);
+        $task_stat[$stats->id] = $sft->id;
+      }
+      //Tipos de Tarefas
+      $task_tipos = array();
+      foreach($teamplate->tipos_tarefa as $stats){
+        $statData = array(
+          'descricao'    => $stats->descricao,
+          'icone'        => $stats->icone,
+          'cor'          => $stats->cor,
+          'user_id'      => $user_id,
+          'locatario_id' => $loc_id,
+          'projeto_id'   => $pro_id
+        );
+        $ttipo = tr::create($statData);
+        $task_tipos[$stats->id] = $ttipo->id;
+      }
+      //Estagios
+      $task_est = array();
+      foreach($teamplate->estagios as $stats){
+        $statData = array(
+          'descricao'    => $stats->descricao,
+          'ordem'        => $stats->ordem,
+          'locatario_id' => $loc_id,
+          'projeto_id'   => $pro_id
+        );
+        $estt = es::create($statData);
+        $task_est[$stats->id] = $estt->id;
+      }
+       //Disciplinas
+      $task_dist = array();
+      foreach($teamplate->disciplinas as $stats){
+        $statData = array(
+          'descricao'    => $stats->descricao,
+          'obs'          => $stats->obs,
+          'user_id'      => $user_id,
+          'locatario_id' => $loc_id,
+          'projeto_id'   => $pro_id
+        );
+        $disct = disc::create($statData);
+        $task_dist[$stats->id] = $disct->id;
+      }
+      //Etapa
+      $task_etapa = array();
+      foreach($teamplate->etapas as $stats){
+        $statData = array(
+          'descricao'    => $stats->descricao,
+          'obs'          => $stats->obs,
+          'user_id'      => $user_id,
+          'locatario_id' => $loc_id,
+          'projeto_id'   => $pro_id
+        );
+        $etapat = etapa::create($statData);
+        $task_etapa[$stats->id] = $etapat->id;
+      }
+      //Sprint
+      foreach($teamplate->sprints as $stats){
+        $statData = array(
+          'descricao'    => $stats->descricao,
+          'obs'          => $stats->obs,
+          'inicio'       => $stats->inicio,
+          'termino'      => $stats->termino,
+          'custo'        => $stats->custo,
+          'user_id'      => $user_id,
+          'locatario_id' => $loc_id,
+          'projeto_id'   => $pro_id
+        );
+        $sprinto = sprint::create($statData);
+        foreach($stats->historias as $hist){
+          $statData = array(
+          'descricao'    => $hist->descricao,
+          'obs'          => $hist->obs,
+          'user_id'      => $user_id,
+          'locatario_id' => $loc_id,
+          'sprint_id'    => $sprinto->id
+        );
+          $this_hist = historia::create($statData);
+          foreach($hist->tarefas as $tar){
+            $t_disc = !empty($tar->disciplina_id) ? $task_dist[$tar->disciplina_id] : null;
+            $t_etapa = !empty($tar->etapa_id) ? $task_etapa[$tar->etapa_id] : null;
+            $t_est = $tar->estagio_id == 2 ? 2 : ($tar->estagio_id == 1 ? 1 : $task_est[$tar->estagio_id]);
+            $statData = array(
+              'descricao'    => $tar->descricao,
+              'obs'          => $tar->obs,
+              'user_id'      => $user_id,
+              'locatario_id' => $loc_id,
+              'sprint_id'    => $sprinto->id,
+              'historia_id'  => $this_hist->id,
+              'assignee_id'  => $tar->assignee_id,
+              'tipo_id'      => $task_tipos[$tar->tipo_id],
+              'estagio_id'   => $t_est,
+              'status_id'    => $task_stat[$tar->status_id],
+              'disciplina_id'=> $t_disc,
+              'etapa_id'     => $t_etapa,
+              'projeto_id'   => $pro_id
+            );
+            $tasko = task::create($statData);
+
+            if(isset($tar->cronograma->id)){
+              $cronoToSave = array('previsto' => $tar->cronograma->previsto, 'realizado' => $tar->cronograma->realizado, 'tarefa_id' => $tasko->id, 'user_id' => $user_id, 'locatario_id' => $loc_id);
+              $crono = crono::create($cronoToSave);
+            }
+
+            if(isset($tar->custo->id)){
+              $custo = $tar->custo->valor;
+              $tipo_custo = $tar->custo->tipo_id;
+              $custoToSave = array('valor' => $custo, 'tipo_id' => $tipo_custo, 'tarefa_id' => $tasko->id, 'user_id' => $user_id, 'locatario_id' => $loc_id);
+              $custoSaved = custo::create($custoToSave);
+            }
+
+            if(isset($tar->anexos->first()->id)){
+              foreach($tar->anexos as $append){
+                $oldPath = 'anexos/'.$loc_id.'/'.$tar->projeto_id.'/'.$tar->id.'/';
+                $newPath = 'anexos/'.$loc_id.'/'.$pro_id.'/'.$tasko->id.'/';
+              }
+            }
+
+          }
+        }
+      }
+      foreach($teamplate->equipes as $equipe){
+        $proj->equipes()->attach($equipe);
+      }
+   }
+
    public function getProjetos(request $request){
    	$projetos = proj::all();
 	$data = array();
 	foreach($projetos as $projeto){
 		$data[] = array(
 			'nome'     => '<a href="#" class="projeto-info" data-id="'.$projeto->id.'">'.$projeto->descricao.'</a>',
-			'desc'     => $projeto->obs,
+			'desc'     => str_limit($projeto->obs,150),
+      'tipo'     => $projeto->tipo->descricao,
 			'cliente'  => $projeto->cliente->razao,
 			'status'   => $projeto->status->descricao,
       'criado'   => date('d/m/Y', strtotime($projeto->created_at))
