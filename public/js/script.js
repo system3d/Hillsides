@@ -2,7 +2,6 @@ $(document).ready(function() {
 
   function refreshToken() {
       $.get(urlbaseGeral + '/system/refresh-token').done(function(data){
-        dd(data);
           $.ajaxSetup({
               headers: {
                   'X-CSRF-TOKEN': data

@@ -121,14 +121,36 @@ class ChatController extends Controller
 
   public function getUsers(request $request){
     $users = access()->user()->locatario->users->sortBy('name');
-    $users = $users->keyBy('id');
-    $users->forget(access()->user()->id);
+    // $users = $users->keyBy('id');
+    // $users->forget(access()->user()->id);
+    $sid = access()->user()->id;
+    foreach($users as $user){
+      if($user->id != $sid){
+          $riv = $user->id;
+          $messages = msg::select('created_at')->where(function ($query) use($sid,$riv){
+            $query->where('sender_id', $sid)
+                ->where('receiver_id', $riv);
+          })->orWhere(function($query) use($sid,$riv){
+            $query->where('receiver_id', $sid)
+                ->where('sender_id', $riv);
+            })->orderBy('created_at','desc')->first();
+          $user->last = $messages->created_at;
+        }
+      }
     return json_encode($users);
   }
 
   public function getMessages(request $request){
-    $id = access()->user()->id;
-    $msgs = msg::where('sender_id',$id)->orWhere('receiver_id',$id)->orderBy('created_at')->get();
+    $dados = $request->all();
+    $riv = $dados['id'];
+    $sid = access()->user()->id;
+    $msgs = msg::where(function ($query) use($sid,$riv){
+        $query->where('sender_id', $sid)
+            ->where('receiver_id', $riv);
+      })->orWhere(function($query) use($sid,$riv){
+        $query->where('receiver_id', $sid)
+            ->where('sender_id', $riv);
+        })->orderBy('created_at')->get();
     return json_encode($msgs);
   }
 }
