@@ -166,3 +166,9 @@ Route::post('chat/send', array('middleware' => 'admin', 'as' => 'chat/send', 'us
 Route::post('chat/read', array('middleware' => 'admin', 'as' => 'chat/read', 'uses' => 'ChatController@read'));
 
 Route::get('teste', array('middleware' => 'admin', 'as' => 'teste', 'uses' => 'KanbanController@teste'));
+
+Route::get('system/refresh-token', array('middleware' => 'admin', 'as' => 'system/refresh-token', 'uses' => 'SettingsController@token'));
+
+Route::get('mensagens', array('middleware' => 'admin', 'as' => 'mensagens', 'uses' => 'ChatController@index'));
+Route::post('messages/getUsers', array('middleware' => 'admin', 'as' => 'messages/getUsers', 'uses' => 'ChatController@getUsers'));
+Route::post('messages/getMessages', array('middleware' => 'admin', 'as' => 'messages/getMessages', 'uses' => 'ChatController@getMessages'));

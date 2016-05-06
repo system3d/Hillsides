@@ -70,6 +70,9 @@
                                 </a>
                               </li>
                               @endforeach
+                              <li class='footer msg-footer'>
+                                <button class='btn btn-primary btn-block' id='go-to-message' href="{{url('mensagens')}}">Ver Todas</button>
+                              </li>
                             </ul>
                         </li>
                     </ul>

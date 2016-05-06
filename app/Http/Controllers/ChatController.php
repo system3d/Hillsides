@@ -13,6 +13,11 @@ use App\Http\Requests;
 
 class ChatController extends Controller
 {
+    public function index(){
+      $messages = getLastMessages();
+      return view('backend.messages.index', compact('messages'));
+    }
+
     public function updateStatus(request $request){
     	$dados = $request->all();
     	$users = access()->user()->locatario->users;
@@ -112,5 +117,18 @@ class ChatController extends Controller
      $response = ['do' => 0];
     }
      return $response;
+  }
+
+  public function getUsers(request $request){
+    $users = access()->user()->locatario->users->sortBy('name');
+    $users = $users->keyBy('id');
+    $users->forget(access()->user()->id);
+    return json_encode($users);
+  }
+
+  public function getMessages(request $request){
+    $id = access()->user()->id;
+    $msgs = msg::where('sender_id',$id)->orWhere('receiver_id',$id)->orderBy('created_at')->get();
+    return json_encode($msgs);
   }
 }

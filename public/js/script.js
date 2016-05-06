@@ -1,5 +1,18 @@
 $(document).ready(function() {
 
+  function refreshToken() {
+      $.get(urlbaseGeral + '/system/refresh-token').done(function(data){
+        dd(data);
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': data
+              }
+          });
+      });
+  };
+
+  setInterval(refreshToken, 300000);
+
   $( document ).ajaxError(function() {
     flashMessage('error', 'Erro na resposta do servidor');
     $('#modal').modal("hide");

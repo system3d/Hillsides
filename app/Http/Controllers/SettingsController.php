@@ -607,4 +607,8 @@ class SettingsController extends Controller
     }
    }
 
+   public function token(){
+     return  csrf_token();
+   }
+
 }

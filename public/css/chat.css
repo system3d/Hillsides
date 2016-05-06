@@ -201,3 +201,6 @@ h3.chat-title{
 	 color: #222d32;
 	 z-index: 2000000;
 }
+.msg-footer{
+	border: none !important;
+}

@@ -3,6 +3,12 @@ $(document).ready(function($) {
 	// 	if($(this).parent('#chat_users_list').hasClass('collapsed-box'))
 	// 		updateChatStatus();
 	// });
+	$(document).on('click', '#go-to-message', function(event) {
+		event.preventDefault();
+		window.location.href = urlbaseGeral + '/mensagens';
+	});
+
+
 	var windWidth = $(window).height();
 	var maxContatosHeight = windWidth - 400;
 	maxContatosHeight = (maxContatosHeight > 400) ? maxContatosHeight : 400;

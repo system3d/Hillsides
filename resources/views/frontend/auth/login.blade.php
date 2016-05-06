@@ -13,13 +13,13 @@
 
                         <div class="form-group has-feedback">
                             {!! Form::label('email', 'E-Mail:', ['class' => 'control-label']) !!}
-                                {!! Form::input('email', 'email', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.email')]) !!}
+                                {!! Form::input('email', 'email', null, ['class' => 'form-control', 'placeholder' => trans('E-Mail')]) !!}
                                 <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
                         </div><!--form-group-->
 
                         <div class="form-group has-feedback">
                             {!! Form::label('password', 'Senha:', ['class' => 'control-label']) !!}
-                                {!! Form::input('password', 'password', null, ['class' => 'form-control', 'placeholder' => trans('validation.attributes.frontend.password')]) !!}
+                                {!! Form::input('password', 'password', null, ['class' => 'form-control', 'placeholder' => trans('Senha')]) !!}
                                 <span class="glyphicon glyphicon-lock form-control-feedback"></span>
                         </div><!--form-group-->
 
