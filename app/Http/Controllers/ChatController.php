@@ -148,6 +148,7 @@ class ChatController extends Controller
   public function getMessages(request $request){
     $dados = $request->all();
     $riv = $dados['id'];
+
     $sid = access()->user()->id;
     $msgs = msg::where(function ($query) use($sid,$riv){
         $query->where('sender_id', $sid)
@@ -155,7 +156,21 @@ class ChatController extends Controller
       })->orWhere(function($query) use($sid,$riv){
         $query->where('receiver_id', $sid)
             ->where('sender_id', $riv);
-        })->orderBy('created_at')->get();
-    return json_encode($msgs);
+        })->orderBy('created_at','desc')->skip($dados['skip'])->take($dados['take'])->get();
+    foreach($msgs as $msg){
+      $msg->day = $this->setDay($msg->created_at);
+    }
+
+    if($msgs->count() < 20){
+      $response['done'] = true;
+    }else{
+      $response['done'] = false;
+    }
+    $response['msgs'] = $msgs;
+    return json_encode($response);
+  }
+
+  private function setDay($val){
+    return date('Y-m-d',strtotime($val));
   }
 }

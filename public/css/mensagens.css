@@ -11,6 +11,7 @@
 
 .msg-messages-content ul{
 	padding: 0 !important;
+	margin-right: 5px !important;
 }
 
 .msg-messages-content-wrapper .textarea-wrapper{
@@ -48,8 +49,9 @@
 }
 
 .msg-users-content li{
-	 list-style: none;
-	padding: 7.5px 20px;
+	list-style: none;
+	border-left: 5px solid rgba(0,0,0,0);
+	padding: 7.5px 15px;
 }
 
 .msg-users-content li h4{
@@ -143,4 +145,37 @@
 
 #messages-box-wrapper .img-circle{
 	border-radius: 10px;
+}
+
+.list-loader{
+	text-align: center;
+	width: 100%;
+	background: #fff !important;
+	font-size: 20px;
+	padding: 15px 0;
+}
+
+.end-talk{
+	text-align: center;
+	width: 100%;
+	background: #fff !important;
+	font-size: 16px;
+	color: #323232;
+	padding: 15px 0;
+}
+
+.day-marker{
+	text-align: center;
+	margin: 5px;
+	padding: 5px;
+}
+
+.day-marker span{
+	margin: 5px;
+	background: #FFECBE;
+	font-size: 16px;
+	font-weight: bold;
+	border-radius: 5px;
+	padding: 5px;
+	border: 1px solid #FFD094;
 }

@@ -227,6 +227,22 @@ if (! function_exists('datePtFormat')) {
     }
 }
 
+if (! function_exists('datePtFormatFull')) {
+    /**
+     * Get the fallback locale
+     *
+     * @return \Illuminate\Foundation\Application|mixed
+     */
+    function datePtFormatFull($time)
+    {
+        $resp = date('j \d\e M, H:i',strtotime($time));
+        $nmeng = array('Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec');
+        $nmpt = array('Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro');
+        $r = str_ireplace($nmeng, $nmpt, $resp);
+        return $r;
+    }
+}
+
 if (! function_exists('getLastMessages')) {
 
     function getLastMessages()

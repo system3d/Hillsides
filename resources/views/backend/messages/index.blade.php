@@ -29,22 +29,27 @@
 		        </ul>
 			</div>
 			<div class="col-md-10 msg-messages-content-wrapper">
-				<div class="msg-messages-content message-overflow">
+				<div class="msg-messages-content message-overflow" ng-scroll>
 					<ul>
-						<li ng-repeat='msg in messages | orderBy : created_at' ng-class="{msgSender: thisUserId == msg.sender_id}" class='msg-content-box'>
-							 <div class="pull-left">
-				            <img ng-src="img/avatar/[[users[msg.sender_id].avatar]]" class="img-circle chat_list_img" alt="User Image">
-				          </div>
-				          <h4>
-				            [[users[msg.sender_id].name]]
-				            <small class="chat_user_status">
-				            	<i class="fa fa-paper-plane-o" aria-hidden="true"></i>&nbsp;&nbsp;[[msg.created_at | date_br]]
-				            </small>
-				          </h4>
-				          <p>
-				          	[[msg.message]]
-				          </p>
-						</li>
+						<li class='list-loader' ng-show='loading'><i class="fa fa-refresh fa-spin" aria-hidden="true"></i></li>
+						<li class='end-talk' ng-show='endTalk'><i>Fim da Conversa.</i></li>
+						<ul ng-repeat="(key, value) in messages | orderBy : sortMsgs| groupBy: 'day' ">
+							<li class='day-marker'><span>[[key | formatDate]]</span></li>
+							<li ng-repeat='msg in value | orderBy : sortMsgs' ng-class="{msgSender: thisUserId == msg.sender_id}" class='msg-content-box'>
+								 <div class="pull-left">
+					            <img ng-src="img/avatar/[[users[msg.sender_id].avatar]]" class="img-circle chat_list_img" alt="User Image">
+					          </div>
+					          <h4>
+					            [[users[msg.sender_id].name]]
+					            <small class="chat_user_status">
+					            	<i class="fa fa-paper-plane-o" aria-hidden="true"></i>&nbsp;&nbsp;[[msg.created_at | date_br]]
+					            </small>
+					          </h4>
+					          <p>
+					          	[[msg.message]]
+					          </p>
+							</li>
+						</ul>
 					</ul>
 				</div>
 				<div class="textarea-wrapper">
@@ -63,5 +68,6 @@
 @section('scripts')
 	{!! Html::script('js/messages/document.js') !!}
 	{!! Html::script('plugins/angular/angular.min.js') !!}
+	{!! Html::script('plugins/angular/angular-filter.min.js') !!}
 	{!! Html::script('js/messages/app.js') !!}
 @endsection

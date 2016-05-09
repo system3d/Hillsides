@@ -1,4 +1,4 @@
-var ChatApp = angular.module('ChatApp', ['DateFilters']).config(function($interpolateProvider){
+var ChatApp = angular.module('ChatApp', ['DateFilters', 'angular.filter']).config(function($interpolateProvider){
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 });
@@ -10,6 +10,8 @@ var ChatCtrl = ChatApp.controller("ChatCtrl",[ '$scope', '$http', 'socket', '$ti
   $scope.lastMessage = 0;
   $scope.activeUser = 0;
   $scope.isTyping = false;
+  $scope.changeTyping = true;
+  $scope.loading = false;
 
     $scope.initChat = function() {
       $http.post($scope.urlBase+"/messages/getUsers")
@@ -71,8 +73,14 @@ var ChatCtrl = ChatApp.controller("ChatCtrl",[ '$scope', '$http', 'socket', '$ti
       }else{
         $scope.activeUser = id;
       }
-      $http.post($scope.urlBase+"/messages/getMessages",{id:id}).then(function(response) {
-        $scope.messages = response.data;
+      $scope.endTalk = false;
+      $scope.take = 20;
+      $scope.skip = 0;
+      $http.post($scope.urlBase+"/messages/getMessages",{id:$scope.activeUser,skip:$scope.skip,take:$scope.take}).then(function(response) {
+        $scope.messages = response.data.msgs;
+        if(response.data.done){
+          $scope.endTalk = true;
+        }
         setTimeout(downWeGo, 0);
         $scope.users[$scope.activeUser].unreads = 0;
         markAsRead($scope.activeUser);
@@ -82,6 +90,24 @@ var ChatCtrl = ChatApp.controller("ChatCtrl",[ '$scope', '$http', 'socket', '$ti
   $scope.setIsTyping = function($event){
     if($event.which != 13){
       socket.emit("typing", {sender: $scope.thisUserId,receiver:$scope.activeUser});
+    }
+  }
+
+  $scope.refreshMessages = function(h){
+    if(!$scope.endTalk){
+      $scope.loading = true;
+      $http.post($scope.urlBase+"/messages/getMessages",{id:$scope.activeUser,skip:$scope.messages.length,take:20}).then(function(response) {
+         if(response.data.done){
+            $scope.endTalk = true;
+          }
+         angular.forEach(response.data.msgs, function(msg, key) {
+          $scope.messages.push(msg);
+         });
+         $timeout(function() {
+             midWeGo(h);
+             $scope.loading = false;
+          }, 1000);
+      });
     }
   }
 
@@ -95,6 +121,16 @@ var ChatCtrl = ChatApp.controller("ChatCtrl",[ '$scope', '$http', 'socket', '$ti
     }
     return date;
 };
+
+  $scope.sortMsgs = function(msg) {
+
+      var str = msg.created_at.replace(/-/g,'/');
+      str = str.split('.');
+      var date = new Date(str[0]);
+    
+    return date;
+};
+
     var canal = 'message-'+$scope.thisUserId;
     socket.on(canal, function(data) {
        var dados = data.data.data.message;
@@ -124,10 +160,14 @@ var ChatCtrl = ChatApp.controller("ChatCtrl",[ '$scope', '$http', 'socket', '$ti
   socket.on(canalTyp, function(data) {
      var rec = data.receiver;
      if(rec == $scope.activeUser){
-      $scope.isTyping = true;
-      $timeout(function() {
-        $scope.isTyping = false;
-    }, 3000);
+        if($scope.changeTyping){
+          $scope.isTyping = true;
+          $scope.changeTyping = false;
+            $timeout(function() {
+              $scope.isTyping = false;
+              $scope.changeTyping = true;
+          }, 3000);
+        }
      }
   });
 
@@ -160,6 +200,33 @@ angular.module('DateFilters', []).filter('date_br', function() {
     }else{
       return 'Nenhuma Mensagem';
     }
+  }
+}).filter('formatDate', function() {
+  return function(input) {
+    var str = input.replace(/-/g,'/');
+      str = str.split('.');
+      var data = new Date(str[0]);
+      var dia = data.getDate();
+      if (dia.toString().length == 1)
+        dia = "0"+dia;
+      var mes = data.getMonth();
+      var months = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho','Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+      var mes = months[mes];
+      var formated = dia+' de '+mes;
+      
+      var hj = new Date();
+      var diahj = hj.getDate();
+      if (diahj.toString().length == 1)
+        diahj = "0"+diahj;
+      var meshj = hj.getMonth();
+
+      var hoje = diahj+' de '+months[meshj];
+
+      if(formated == hoje){
+        return 'Hoje';
+      }else{
+        return formated;
+      }
   }
 });
 
@@ -203,8 +270,28 @@ ChatApp.factory('socket', function ($rootScope) {
   };
 });
 
+ChatApp.directive("ngScroll", function ($window) {
+    return function(scope, element, attrs) {
+
+        element.bind("scroll", function() {
+             if (this.scrollTop == 0) {
+              var scrollCenter = this.scrollHeight;
+                 scope.refreshMessages(scrollCenter);
+             }
+            scope.$apply();
+        });
+    };
+});
+
 
 function downWeGo(){
   var thisWindow2 = $('.msg-row').find('.msg-messages-content');
   thisWindow2.scrollTop(thisWindow2.prop('scrollHeight'));
+};
+
+function midWeGo(h){
+  var thisWindow2 = $('.msg-row').find('.msg-messages-content');
+  var height = thisWindow2.prop('scrollHeight');
+  var hh = (height - h) - 15;
+  thisWindow2.scrollTop(hh);
 };

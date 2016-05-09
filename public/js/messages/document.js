@@ -1,6 +1,6 @@
 $(document).ready(function($) {
 	var windHeight = $(window).height();
-	var boxHeight = windHeight - 150;
+	var boxHeight = windHeight - 130;
 	if(boxHeight < 440){
 		boxHeight = 440;
 	}
