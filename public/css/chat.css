@@ -204,3 +204,16 @@ h3.chat-title{
 .msg-footer{
 	border: none !important;
 }
+
+#go-to-message{
+	border: none !important;
+    color: #888888;
+    font-size: 12px;
+	background: #fff !important;
+	border-radius: 0 !important;
+}
+
+#go-to-message:hover, #go-to-message:active{
+	border: none !important;
+	background: whitesmoke !important;
+}

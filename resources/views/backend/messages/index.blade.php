@@ -23,23 +23,36 @@
 			          </h4>
 			          <small class='chat_user_status'>
 			           <i class="fa fa-paper-plane-o" aria-hidden="true"></i>&nbsp;&nbsp;[[user.last.date | date_br]]
+			           <label class='pull-right label bg-green' ng-show='user.unreads > 0'>[[user.unreads]]</label>
 			          </small>
 			      </li><!-- end message -->
 		        </ul>
 			</div>
-			<div class="col-md-10 msg-messages-content message-overflow">
-				<ul>
-					<li ng-repeat='msg in messages | orderBy : created_at'>
-						 <div class="pull-left">
-			            <img ng-src="img/avatar/[[users[msg.sender_id].avatar]]" class="img-circle chat_list_img" alt="User Image">
-			          </div>
-			          <h4>
-			            [[users[msg.sender_id].name | limitTo : 20 : 0]][[user.name.length > 20 ? '...' : '']]&nbsp;&nbsp;&nbsp;&nbsp;[[msg.created_at | date_br]]<br>
-			            [[msg.message]]
-			          </h4>
-					</li>
-
-				</ul>
+			<div class="col-md-10 msg-messages-content-wrapper">
+				<div class="msg-messages-content message-overflow">
+					<ul>
+						<li ng-repeat='msg in messages | orderBy : created_at' ng-class="{msgSender: thisUserId == msg.sender_id}" class='msg-content-box'>
+							 <div class="pull-left">
+				            <img ng-src="img/avatar/[[users[msg.sender_id].avatar]]" class="img-circle chat_list_img" alt="User Image">
+				          </div>
+				          <h4>
+				            [[users[msg.sender_id].name]]
+				            <small class="chat_user_status">
+				            	<i class="fa fa-paper-plane-o" aria-hidden="true"></i>&nbsp;&nbsp;[[msg.created_at | date_br]]
+				            </small>
+				          </h4>
+				          <p>
+				          	[[msg.message]]
+				          </p>
+						</li>
+					</ul>
+				</div>
+				<div class="textarea-wrapper">
+					<span>&nbsp;<small  ng-show='isTyping'>[[users[activeUser].name]] está digitando ...</small></span>
+					<form ng-submit='sendMessage()' name='messageForm'>
+						<textarea name="message" ng-keydown='setIsTyping($event)' ng-model="messageContent" ng-enter="sendMessage()" class='form-control' placeholder='Digite Aqui...' required></textarea>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

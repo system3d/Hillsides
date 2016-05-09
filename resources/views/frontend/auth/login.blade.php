@@ -30,7 +30,7 @@
                                         
                                     </label>
 
-                                    {!! Form::submit(trans('labels.frontend.auth.login_button'), ['class' => 'btn btn-primary btn-flat', 'style' => 'float:right']) !!}
+                                    {!! Form::submit(trans('Login'), ['class' => 'btn btn-primary btn-flat', 'style' => 'float:right']) !!}
                                 </div>
                         </div><!--form-group-->
 

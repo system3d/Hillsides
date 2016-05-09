@@ -93,6 +93,7 @@ class ChatController extends Controller
    	 	$response['time'] = datePtFormat($new->created_at);
    	 	$header['name'] = str_limit($new->sender->name,25);
    	 	$header['date'] = datePtFormat($new->created_at);
+      $header['created_at'] = $new->created_at;
    	 	$header['status'] = 'R';
       $header['avatar'] = $new->sender->avatar;
    	 	$header['id'] = $new->id;
@@ -108,7 +109,8 @@ class ChatController extends Controller
    }
 
    public function read(request $request){
-    $id = $request->all()['id'];
+    $dados = $request->all();
+    $id = $dados['id'];
     $update = msg::where('sender_id',$id)->where('receiver_id',access()->user()->id)->where('status',0)->update(['status'=>1]);
     if($update > 0){
       $response = ['do' => 1];
@@ -134,8 +136,11 @@ class ChatController extends Controller
             $query->where('receiver_id', $sid)
                 ->where('sender_id', $riv);
             })->orderBy('created_at','desc')->first();
-          $user->last = $messages->created_at;
+          if(isset($messages->created_at))
+            $user->last = $messages->created_at;
         }
+        $unreads = msg::select('id')->where('sender_id',$riv)->where('receiver_id',$sid)->where('status',0)->get();
+        $user->unreads = $unreads->count();
       }
     return json_encode($users);
   }

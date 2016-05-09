@@ -1,8 +1,29 @@
-.msg-messages-content{
+.msg-messages-content-wrapper{
 	height: 100% !important;
-	overflow-y: auto;
 	border-left: 1px solid #BFBFBF;
 	padding: 10px !important;
+}
+
+.msg-messages-content{
+	height: 85% !important;
+	overflow-y: auto;
+}
+
+.msg-messages-content ul{
+	padding: 0 !important;
+}
+
+.msg-messages-content-wrapper .textarea-wrapper{
+	height: 15% !important;
+}
+
+.msg-messages-content-wrapper form{
+	margin-top: 5px;
+	height: 77%;
+}
+
+.msg-messages-content-wrapper textarea{
+	height: 100%;
 }
 
 .msg-users-content{
@@ -73,7 +94,7 @@
 
 .message-overflow::-webkit-scrollbar-thumb
 {
-   background: #3c8dbc;
+   background: #2B6D93;
    -webkit-border-radius: 7px;
 }
 
@@ -84,4 +105,42 @@
 .input-chat-search{
 	margin: 4%;
 	width: 92%;
+}
+
+.msg-content-box{
+	width: 100%;
+	background: #DEFFDB;
+	padding: 7px;
+	border-radius: 5px;
+	margin-bottom: 5px;
+	list-style: none;
+}
+
+.msgSender{
+	background: #D5EAFF;
+}
+
+.msg-content-box .chat_list_img{
+	width: 50px;
+	height: 50px;
+	margin-top: 8px;
+	margin-left: 4px;
+}
+.msg-content-box h4{
+	margin-top: 5px !important;
+	padding-left: 60px;
+	font-weight: 600;
+}
+.msg-content-box h4 small{
+	float: right;
+	margin-right: 15px;
+}
+
+.msg-content-box p{
+	padding-left: 65px;
+	font-size: 14px;
+}
+
+#messages-box-wrapper .img-circle{
+	border-radius: 10px;
 }
