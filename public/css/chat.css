@@ -7,6 +7,10 @@
 
 }
 
+#messages-box-wrapper li{
+	list-style: none;
+}
+
 #chat_windows_container{
 	position: fixed;
 	right: 280px;
@@ -216,4 +220,8 @@ h3.chat-title{
 #go-to-message:hover, #go-to-message:active{
 	border: none !important;
 	background: whitesmoke !important;
+}
+
+.day-marker{
+	list-style: none !important;
 }

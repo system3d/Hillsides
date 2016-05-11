@@ -1,4 +1,4 @@
-var ChatApp = angular.module('ChatApp', ['DateFilters', 'angular.filter']).config(function($interpolateProvider){
+var ChatApp = angular.module('ChatApp', ['DateFilters', 'angular.filter', 'luegg.directives']).config(function($interpolateProvider){
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
 });
@@ -56,7 +56,11 @@ var ChatCtrl = ChatApp.controller("ChatCtrl",[ '$scope', '$http', 'socket', '$ti
           'created_at'  : today
         };
         $scope.messages.push(tempMsg);
-        setTimeout(downWeGo, 0);
+        // setTimeout(downWeGo, 0);
+        $scope.glued = true;
+         $timeout(function() {
+              $scope.glued = false;
+          }, 1);
         var msgContent = $scope.messageContent;
         $scope.messageContent = '';
         $http({
@@ -81,7 +85,11 @@ var ChatCtrl = ChatApp.controller("ChatCtrl",[ '$scope', '$http', 'socket', '$ti
         if(response.data.done){
           $scope.endTalk = true;
         }
-        setTimeout(downWeGo, 0);
+        // setTimeout(downWeGo, 0);
+         $scope.glued = true;
+         $timeout(function() {
+              $scope.glued = false;
+          }, 1);
         $scope.users[$scope.activeUser].unreads = 0;
         markAsRead($scope.activeUser);
       });
@@ -144,7 +152,11 @@ var ChatCtrl = ChatApp.controller("ChatCtrl",[ '$scope', '$http', 'socket', '$ti
           };
           $scope.messages.push(tempMsg);
           $scope.isTyping = false;
-          setTimeout(downWeGo, 0);
+          // setTimeout(downWeGo, 0);
+           $scope.glued = true;
+         $timeout(function() {
+              $scope.glued = false;
+          }, 1);
           markAsRead(dados.sender);
        }else{
         angular.forEach($scope.users, function(user, key) {
@@ -284,10 +296,10 @@ ChatApp.directive("ngScroll", function ($window) {
 });
 
 
-function downWeGo(){
-  var thisWindow2 = $('.msg-row').find('.msg-messages-content');
-  thisWindow2.scrollTop(thisWindow2.prop('scrollHeight'));
-};
+// function downWeGo(){
+//   var thisWindow2 = $('.msg-row').find('.msg-messages-content');
+//   thisWindow2.scrollTop(thisWindow2.prop('scrollHeight'));
+// };
 
 function midWeGo(h){
   var thisWindow2 = $('.msg-row').find('.msg-messages-content');

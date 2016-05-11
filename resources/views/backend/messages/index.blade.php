@@ -29,7 +29,7 @@
 		        </ul>
 			</div>
 			<div class="col-md-10 msg-messages-content-wrapper">
-				<div class="msg-messages-content message-overflow" ng-scroll>
+				<div class="msg-messages-content message-overflow" ng-scroll scroll-glue='glued == true'>
 					<ul>
 						<li class='list-loader' ng-show='loading'><i class="fa fa-refresh fa-spin" aria-hidden="true"></i></li>
 						<li class='end-talk' ng-show='endTalk'><i>Fim da Conversa.</i></li>
@@ -69,5 +69,6 @@
 	{!! Html::script('js/messages/document.js') !!}
 	{!! Html::script('plugins/angular/angular.min.js') !!}
 	{!! Html::script('plugins/angular/angular-filter.min.js') !!}
+	{!! Html::script('plugins/scroll-glue.js') !!}
 	{!! Html::script('js/messages/app.js') !!}
 @endsection
