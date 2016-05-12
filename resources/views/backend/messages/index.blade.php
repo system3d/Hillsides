@@ -8,7 +8,7 @@
 
 @section('content')
 
-<div class="box box-primary" id='messages-box-wrapper' ng-app="ChatApp" ng-controller="ChatCtrl" ng-init="initChat()" ng-cloak>
+<div class="box box-primary" id='messages-box-wrapper' ng-app="ChatApp" ng-controller="ChatCtrl" ng-cloak hs-window hs-minus='135' hs-min='440'>
 	<div class="box-body">
 		<div class="row msg-row">
 			<div class="col-md-2 msg-users-content message-overflow">
@@ -66,7 +66,6 @@
 @endsection
 
 @section('scripts')
-	{!! Html::script('js/messages/document.js') !!}
 	{!! Html::script('plugins/angular/angular.min.js') !!}
 	{!! Html::script('plugins/angular/angular-filter.min.js') !!}
 	{!! Html::script('plugins/scroll-glue.js') !!}

@@ -44,6 +44,7 @@ class LocaleMiddleware
             }
 
         }
+        date_default_timezone_set('America/Sao_Paulo');
         return $next($request);
     }
 }
