@@ -85,7 +85,7 @@ var ChatCtrl = ChatApp.controller("ChatCtrl",[ '$scope', '$http', 'socket', '$ti
         if(response.data.done){
           $scope.endTalk = true;
         }
-        // setTimeout(downWeGo, 0);
+         $scope.scrollHeight = 0;
          $scope.glued = true;
          $timeout(function() {
               $scope.glued = false;
@@ -111,10 +111,11 @@ var ChatCtrl = ChatApp.controller("ChatCtrl",[ '$scope', '$http', 'socket', '$ti
          angular.forEach(response.data.msgs, function(msg, key) {
           $scope.messages.push(msg);
          });
-         $timeout(function() {
-             midWeGo(h);
-             $scope.loading = false;
-          }, 1000);
+         $scope.scrollHeight = h;
+         // $timeout(function() {
+         //     midWeGo(h);
+         //     $scope.loading = false;
+         //  }, 1000);
       });
     }
   }
@@ -284,13 +285,18 @@ ChatApp.factory('socket', function ($rootScope) {
 
 ChatApp.directive("ngScroll", function ($window) {
     return function(scope, element, attrs) {
-
+        restrict: 'A',
+        scope.scrollHeight = element[0].scrollHeight;
         element.bind("scroll", function() {
              if (this.scrollTop == 0) {
               var scrollCenter = this.scrollHeight;
                  scope.refreshMessages(scrollCenter);
              }
             scope.$apply();
+        }),
+        scope.$watch("scrollHeight", function (newValue, oldValue) {
+            var newH = (newValue - oldValue) - 10;
+              element[0].scrollTop = newH;
         });
     };
 });
@@ -301,9 +307,9 @@ ChatApp.directive("ngScroll", function ($window) {
 //   thisWindow2.scrollTop(thisWindow2.prop('scrollHeight'));
 // };
 
-function midWeGo(h){
-  var thisWindow2 = $('.msg-row').find('.msg-messages-content');
-  var height = thisWindow2.prop('scrollHeight');
-  var hh = (height - h) - 15;
-  thisWindow2.scrollTop(hh);
-};
+// function midWeGo(h){
+  // var thisWindow2 = $('.msg-row').find('.msg-messages-content');
+  // var height = thisWindow2.prop('scrollHeight');
+  // var hh = (height - h) - 15;
+  // thisWindow2.scrollTop(hh);
+// };
