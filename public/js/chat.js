@@ -129,6 +129,35 @@ function createChatWindow(sender,receiver){
 	 	});
 }
 
+function markAsRead(id){
+  var id = id;
+  $.ajax({
+    url: urlbaseGeral + '/chat/read',
+    type: 'POST',
+    dataType: 'json',
+    data: {id: id},
+  })
+  .done(function( r ) {
+    if(r.do == 1){
+      var $element =  $('.chat-user-header[data-id="'+id+'"]');
+      $element.removeClass('chat-msg-header-0').addClass('chat-msg-header-1');
+      var count = parseInt($element.find('.count-unread').html());
+      var total = parseInt($('#msgsTotalHeader').html());
+      count = !isNaN(count) ? count : 0;
+      total = total - count;
+      $('#msgsTotalHeader').html(total);
+      if(total > 0)
+        $('#msgsTotalHeader').removeClass('hidden');
+      else
+        $('#msgsTotalHeader').addClass('hidden');
+      $element.find('.count-unread').remove();
+      if(!$element.find('p').find('.fa-check').length)
+        $element.find('p').append('<i class="fa fa-check text-success pull-right"></i>');
+    }
+  });
+  
+}
+
 function chatWindowCreator(r,receiver){
 	var count = $('.chat-window').length;
 	var x = 0;
