@@ -12,12 +12,6 @@ $(document).ready(function() {
 
   setInterval(refreshToken, 300000);
 
-  $( document ).ajaxError(function() {
-    flashMessage('error', 'Erro na resposta do servidor');
-    $('#modal').modal("hide");
-    $('#modal_loader').addClass('hidden');
-  });
-
   $('#fa-estagios-sidebar').click(function(event) {
     $('#set-est-side').toggleClass('hidden');
     $(this).find('.fa-sidebar').toggleClass('fa-plus-square fa-minus-square');

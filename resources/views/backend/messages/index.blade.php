@@ -45,7 +45,7 @@
 					            	<i class="fa fa-paper-plane-o" aria-hidden="true"></i>&nbsp;&nbsp;[[msg.created_at | date_br]]
 					            </small>
 					          </h4>
-					          <p>
+					          <p style='word-break:break-all'>
 					          	[[msg.message]]
 					          </p>
 							</li>

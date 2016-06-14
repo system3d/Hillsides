@@ -143,6 +143,7 @@ Route::get('kanban/{id}', array('middleware' => 'admin', 'as' => 'kanban', 'uses
 Route::post('kanban/historia', array('middleware' => 'admin', 'as' => 'kanban/historia', 'uses' => 'KanbanController@historia'));
 Route::post('kanban/criarHistoria', array('middleware' => 'admin', 'as' => 'kanban/criarHistoria', 'uses' => 'KanbanController@criarHistoria'));
 Route::post('kanban/setHistory', array('middleware' => 'admin', 'as' => 'kanban/setHistory', 'uses' => 'KanbanController@setHistory'));
+Route::post('kanban/return', array('middleware' => 'admin', 'as' => 'kanban/return', 'uses' => 'KanbanController@return'));
 
 Route::post('tarefa', array('middleware' => 'admin', 'as' => 'tarefa', 'uses' => 'TarefasController@index'));
 Route::post('tarefa/criar', array('middleware' => 'admin', 'as' => 'tarefa/criar', 'uses' => 'TarefasController@criar'));
@@ -164,6 +165,7 @@ Route::post('chat/updateStatus', array('middleware' => 'admin', 'as' => 'chat/up
 Route::post('chat/window', array('middleware' => 'admin', 'as' => 'chat/window', 'uses' => 'ChatController@window'));
 Route::post('chat/send', array('middleware' => 'admin', 'as' => 'chat/send', 'uses' => 'ChatController@send'));
 Route::post('chat/read', array('middleware' => 'admin', 'as' => 'chat/read', 'uses' => 'ChatController@read'));
+Route::post('chat/reset', array('middleware' => 'admin', 'as' => 'chat/reset', 'uses' => 'ChatController@reset'));
 
 Route::get('teste', array('middleware' => 'admin', 'as' => 'teste', 'uses' => 'KanbanController@teste'));
 

@@ -256,7 +256,8 @@ class TarefasController extends Controller
         unset($check['custo']);
         unset($check['tipo_custo']);
         $check['obs'] = htmlentities($check['obs']);
-
+        $hist = hist::find($check['historia_id']);
+        $check['sprint_id'] = $hist->sprint_id;
         $task = task::find($id);
 
         

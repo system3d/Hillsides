@@ -1,7 +1,7 @@
 <div class="panel panel-info">
    <div class="panel-heading">
    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-       <h4>Novo Sprint para {{$projeto->descricao}}</h4>
+       <h4>Novo Subprojeto para {{$projeto->descricao}}</h4>
    </div>
    <div class="panel-body">
        <form id="sprint_cadastro" class='modal_form' data-parsley-validate="">

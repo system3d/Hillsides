@@ -2,7 +2,7 @@
 <div class="panel panel-info">
    <div class="panel-heading">
    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-       <h4>Nova Historia para {{$obj->descricao}}</h4>
+       <h4>Novo Agrupamento para {{$obj->descricao}}</h4>
    </div>
    <div class="panel-body">
        <form id="historia_cadastro" class='modal_form' data-parsley-validate="">
@@ -20,12 +20,21 @@
                       <textarea id="message" rows="3" class="form-control" data-parsley-trigger="keyup" name="obs" style='width:100%'></textarea>
                 </div>
 
-                @if($tipo == 'sprint')
+                @if($tipo == 'sprint' && $force != '1')
                 <div class="form-group">
                      <label for="fullname" class="control-label">Sprint:</label>
                      <input type="hidden"  name="sprint_id" value='{{$obj->id}}'>
                      <p class="form-static" style='font-size:16px;margin-left: 7.5px;'>{{$obj->descricao}}</p>
                 </div>
+                @elseif($tipo == 'sprint' && $force == '1')
+                  <div class="form-group">
+                     <label for="fullname" class="control-label">Sprint:</label>
+                       <select class="form-control" required="" style='width:100%' name='sprint_id'>
+                         @foreach($projeto->sprints as $sprint)
+                          <option value="{{$sprint->id}}" <?php if($sprint->id == $obj->id) echo 'selected'; ?>>{{$sprint->descricao}}</option>
+                         @endforeach
+                       </select>
+                  </div>
                 @else
                   <div class="form-group">
                    <label for="fullname" class="control-label">Sprint:</label>
@@ -51,8 +60,8 @@
   <div class="alert alert-info">
    <div class="alert-heading" style='color:white;background:#00c0ef'>
    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h4><i class="icon fa fa-warning"></i> Nenhum Sprint Cadastrada!</h4>
-    <a href="#" class='create-sprint' data-proj-id='{{$projeto->id}}'>Cadastre um Sprint</a> em {{$projeto->descricao}} para criar Histórias.
+    <h4><i class="icon fa fa-warning"></i> Nenhum Subprojeto Cadastrada!</h4>
+    <a href="#" class='create-sprint' data-proj-id='{{$projeto->id}}'>Cadastre um Subprojeto</a> em {{$projeto->descricao}} para criar Agrupamentos.
   </div>
 </div>
 @endif

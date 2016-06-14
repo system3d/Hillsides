@@ -11,11 +11,8 @@
         <!-- Header Navbar: style can be found in header.less -->
         <nav class="navbar navbar-static-top" role="navigation">
           <!-- Sidebar toggle button-->
-          <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+          <a href="#" id='returnLastKanban' class='logout-header' role="button" data-toggle="tooltip" data-html="true" data-placement='right' title='Voltar Para Kanban'>
+            <i style='font-size:15px' class="fa fa-th-large"></i></a>
           </a>
           <a href="{{url('logout')}}" data-toggle="tooltip" data-html="true" data-placement='right' title='Logout' class='logout-header'><i style='font-size:15px' class="fa fa-sign-out"></i></a>
           <div class="navbar-custom-menu">

@@ -17,9 +17,9 @@
             <a href="#" class="btn btn-primary" id='loadProjInfoKanban' data-id='{{$projeto->id}}'>
               <i class="fa fa-folder"></i>&nbsp;&nbsp;Projeto</a>
              <a href="#" class="btn btn-warning projeto-sprints" id='loadProjSprintKanban' data-id='{{$projeto->id}}'>
-              <i class="fa fa-refresh"></i>&nbsp;&nbsp;Sprints</a>
+              <i class="fa fa-refresh"></i>&nbsp;&nbsp;SubProj.</a>
             <a href="#" class="btn btn-info" id='hist-proj' data-id='{{$projeto->id}}'>
-              <i class="fa fa-book"></i>&nbsp;&nbsp;Histórias</a>
+              <i class="fa fa-book"></i>&nbsp;&nbsp;Agrup.</a>
             <a href="#" class="btn btn-success" id='novaTarefaKanban' data-id='{{$projeto->id}}'>
               <i class="fa fa-external-link"></i>&nbsp;&nbsp;Nova Tarefa</a>
 
@@ -40,7 +40,7 @@
          <hr>
 
           <div class="form-group selectSprints">
-          <label for="sprints">Sprints: </label>
+          <label for="sprints">SubProj.: </label>
            <select id="selectSprints" class="form-control" required="required" name="obra">
             <option value="0">Todos</option>
             @foreach($projeto->sprints as $sprint)
@@ -50,7 +50,7 @@
           </div>
 
            <div class="form-group selectStory">
-          <label for="sprints">Histórias: </label>
+          <label for="sprints">Agrup.: </label>
            <select id="selectStory" class="form-control" required="required" name="obra">
             <option value="0">Todas</option>
             @foreach($projeto->historias() as $historia)
@@ -70,7 +70,7 @@
           </div>
 
            <div class="form-group selectSprints">
-          <label for="sprints">Encarregado: </label>
+          <label for="sprints">Responsável: </label>
            <select id="selectUser" class="form-control" required="required" name="obra">
             <option value="0">Todos</option>
             @foreach($users as $user)
@@ -100,7 +100,7 @@
           </div>
 
           <div class="form-group">
-            <a href="#" class="btn btn-info" data-toggle="tooltip" data-id='{{$projeto->id}}' title='Carregar Tarefas' id='load_tasks'><i class="fa fa-refresh"></i>&nbsp;&nbsp;Caregar</a>
+            <a href="#" class="btn btn-info" data-toggle="tooltip" data-id='{{$projeto->id}}' title='Carregar Tarefas' id='load_tasks'><i class="fa fa-refresh"></i>&nbsp;&nbsp;Carregar</a>
           </div>
          
       </form>

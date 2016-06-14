@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Access\User\User as user;
 use App\Mensagem as msg;
+use App\Setting as set;
 use Event;
 use App\Events\MessageSend;
 use App\Events\ChatMiscEvent;
+use Carbon\Carbon;
+use DB;
 
 use App\Http\Requests;
 
@@ -148,15 +151,25 @@ class ChatController extends Controller
   public function getMessages(request $request){
     $dados = $request->all();
     $riv = $dados['id'];
-
+    $uid = access()->user()->id;
+    $reset = set::where('user_id',$uid)->where('model','chat')->where('name','reset')->first();
+    if(isset($reset->param)){
+       $rp = Carbon::now();
+       $td = explode(' ',$reset->param);
+       $d = explode('-',$td[0]);
+       $t = explode(':',$td[1]);
+       $rp->year($d[0])->month($d[1])->day($d[2])->hour($t[0])->minute($t[1])->second($t[2]);
+    }else{
+      $rp = null;
+    }
     $sid = access()->user()->id;
-    $msgs = msg::where(function ($query) use($sid,$riv){
+    $msgs = msg::where('created_at', '>=', $rp)->where(function ($query) use($sid,$riv){
         $query->where('sender_id', $sid)
             ->where('receiver_id', $riv);
       })->orWhere(function($query) use($sid,$riv){
         $query->where('receiver_id', $sid)
             ->where('sender_id', $riv);
-        })->orderBy('created_at','desc')->skip($dados['skip'])->take($dados['take'])->get();
+        })->where('created_at', '>=', $rp)->orderBy('created_at','desc')->skip($dados['skip'])->take($dados['take'])->get();
     foreach($msgs as $msg){
       $msg->day = $this->setDay($msg->created_at);
     }
@@ -168,6 +181,27 @@ class ChatController extends Controller
     }
     $response['msgs'] = $msgs;
     return json_encode($response);
+  }
+
+  public function reset(request $request){
+    $uid = access()->user()->id;
+    $last = set::where('user_id',$uid)->where('model','chat')->where('name','reset')->first();
+    if(!isset($last->id)){
+      $created = set::create(['model' => 'chat', 'name' => 'reset', 'param' => date('Y-m-d H:i:s'), 'user_id' => $uid, 'locatario_id' => access()->user()->locatario_id]);
+    }else{
+      $created = $last->update(['param' => date('Y-m-d H:i:s')]);
+    }
+    $r = [];
+    if($created){
+      $r['status'] = 'success';
+      $r['msg'] = 'Histórico deletado com sucesso.';
+      Event::fire(new ChatMiscEvent('reset',access()->user()->id, access()->user()->id));
+    }
+    else{
+      $r['status'] = 'error';
+      $r['msg'] = 'Erro ao deletar Histórico.';
+    }
+    return $r;
   }
 
   private function setDay($val){

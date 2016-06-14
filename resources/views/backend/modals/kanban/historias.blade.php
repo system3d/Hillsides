@@ -2,7 +2,7 @@
 <div class="panel panel-success">
    <div class="panel-heading">
    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-       <h4>Historias de {{$obj->descricao}}</h4>
+       <h4>Agrupamentos de {{$obj->descricao}}</h4>
    </div>
    <div class="panel-body">
 	   <div class="row">
@@ -38,7 +38,7 @@
 					@endif
 				</table>
 				</div>
-				<a href="#" style='margin:15px' data-id='{{$obj->id}}' class="btn btn-primary kanban-criar-historia">Nova História</a>
+				<a href="#" style='margin:15px' data-id='{{$obj->id}}' class="btn btn-primary kanban-criar-historia">Novo Agrupamento</a>
 				<a href='#' data-dismiss="modal" aria-hidden="true" class="btn btn-warning pull-right voltar-table" style='margin:15px'>Voltar</a>
 	   		</div>
 	   </div>
@@ -48,8 +48,8 @@
   <div class="alert alert-info">
    <div class="alert-heading" style='color:white;background:#00c0ef'>
    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h4><i class="icon fa fa-warning"></i> Nenhum Sprint Cadastrada!</h4>
-    <a href="#" class='create-sprint' data-id='{{$projeto->id}}'>Cadastre um Sprint</a> em {{$projeto->descricao}} para criar Histórias.
+    <h4><i class="icon fa fa-warning"></i> Nenhum Subprojeto Cadastrada!</h4>
+    <a href="#" class='create-sprint' data-id='{{$projeto->id}}'>Cadastre um Subprojeto</a> em {{$projeto->descricao}} para criar Agrupamentos.
   </div>
 </div>
 @endif

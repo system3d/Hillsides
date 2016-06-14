@@ -138,11 +138,11 @@ $(document).ready(function() {
 
    $(document).on('click', '#loadProjHistKanban', function(event) {
      event.preventDefault();
-     var id = $(this).attr('data-id');
+     var id = $(this).attr('data-id'); 
      $.ajax({
         url: urlbaseGeral+"/kanban/historia",
         type: 'POST',
-        data: {id:id},
+        data: {id:ids},
         dataType: 'html',
       })
       .done(function(response) {
@@ -340,6 +340,7 @@ $(document).on('click', '.tarefa-delete', function(event) {
         $('.kanban-trow[data-sprint="'+sprint+'"]').removeClass('hidden');
       }
     }else{
+      handleStoryEquipes(hist);
       $('#selectSprints').prop('disabled', 'disabled');
       $('.kanban-trow').addClass('hidden');
       $('.kanban-trow[data-story="'+hist+'"]').removeClass('hidden');
@@ -351,6 +352,7 @@ $(document).on('click', '.tarefa-delete', function(event) {
     if(sprint == 0){
       $('.kanban-trow').removeClass('hidden');
       $('.storyOption').removeClass('hidden');
+      getTarefas();
     }else{
       $('.kanban-trow').addClass('hidden');
       $('.storyOption[data-sprint!="'+sprint+'"]').addClass('hidden');
@@ -380,7 +382,12 @@ $(document).on('click', '.tarefa-delete', function(event) {
         $(el).removeClass('hidden');
       });
     }
+     toggleHistorys();
     event.stopPropagation();
+  });
+
+  $(document).on('change', '#kanban-search', function(e){
+    toggleHistorys();
   });
 
   /////////////
@@ -614,6 +621,7 @@ function getTarefas(){
             }
             setColor();
           }
+          toggleHistorys();
          $('#kanban_loader').addClass('hidden');
         });
 }
@@ -764,4 +772,31 @@ function singleTaskHidden(id){
           injectTask(th,r.historia_id,r.estagio_id);
           setColorSingle(r.id);
         });
+}
+
+function toggleHistorys(){
+  var histories = $('#kanbanBody').find('.kanban-trow');
+  var hide;
+  histories.each(function(r){
+    hide = true;
+    var tasks = $(histories[r]).find('.tarefa');
+    tasks.each(function(i){
+      if(!$(tasks[i]).hasClass('hidden')){
+        hide = false;
+      }
+    })
+    if(hide){
+      $(histories[r]).addClass('hidden');
+    }else{
+      $(histories[r]).removeClass('hidden');
+    }
+  })
+}
+
+function handleStoryEquipes(id){
+
+}
+
+function handleEquipeResp(ids){
+
 }

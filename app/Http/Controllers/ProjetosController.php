@@ -584,6 +584,7 @@ class ProjetosController extends Controller
   public function historias(request $request){
     $id = $request['id'];
     $tipo = $request['tipo'];
+    $force = 0;
     if($tipo == 'sprint'){
       $obj = sprint::find($id);
       $historias = $obj->historias;
@@ -592,12 +593,22 @@ class ProjetosController extends Controller
       $obj = proj::find($id);
       $historias = $obj->historias();
     }
-    return view('backend.modals.projetos.historias', compact('obj','tipo','historias'));
+
+    if(isset($request['sprint'])){
+      if($request['sprint'] !== '0'){
+        $obj = sprint::find($request['sprint']);
+        $historias = $obj->historias;
+        $tipo = 'sprint';
+        $force = 1;
+      }  
+    }
+    return view('backend.modals.projetos.historias', compact('obj','tipo','historias','force'));
   }
 
   public function criarHistoria(request $request){
     $id = $request['id'];
     $tipo = $request['tipo'];
+    $force = $request['force'];
     if($tipo == 'sprint'){
       $obj = sprint::find($id);
       $projeto = $obj->projeto;
@@ -606,7 +617,7 @@ class ProjetosController extends Controller
       $obj = proj::find($id);
       $projeto = $obj;
     }
-    return view('backend.modals.projetos.criar-historia', compact('obj','tipo','projeto'));
+    return view('backend.modals.projetos.criar-historia', compact('obj','tipo','projeto','force'));
   }
 
   public function editarHistoria(request $request){

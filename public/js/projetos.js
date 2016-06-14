@@ -424,11 +424,12 @@
 
   $(document).on('click', '#hist-proj', function(event) {
     event.preventDefault();
+    var sprint = $('#selectSprints').val();
      var id = $(this).attr('data-id');
      $.ajax({
         url: urlbaseGeral+"/projetos/historias",
         type: 'POST',
-        data: {id:id, tipo:'projeto'},
+        data: {id:id, tipo:'projeto',sprint:sprint},
         dataType: 'html',
       })
       .done(function(response) {
@@ -444,10 +445,11 @@
     event.preventDefault();
     var id = $(this).attr('data-id');
     var tipo = $(this).attr('data-tipo');
+    var force = $(this).attr('data-force');
      $.ajax({
         url: urlbaseGeral+"/projetos/criarHistoria",
         type: 'POST',
-        data: {id:id, tipo:tipo},
+        data: {id:id, tipo:tipo, force:force},
         dataType: 'html',
       })
       .done(function(response) {

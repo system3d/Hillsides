@@ -1,7 +1,7 @@
 <div class="panel panel-success">
    <div class="panel-heading">
    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-       <h4>Sprints de {{$projeto->descricao}}</h4>
+       <h4>Subprojetos de {{$projeto->descricao}}</h4>
    </div>
    <div class="panel-body">
 	   <div class="row">
@@ -52,7 +52,7 @@
 					@endif
 				</table>
 				</div>
-				<a href="#" style='margin:15px' data-proj-id='{{$projeto->id}}' class="btn btn-primary create-sprint">Novo Sprint</a>
+				<a href="#" style='margin:15px' data-proj-id='{{$projeto->id}}' class="btn btn-primary create-sprint">Novo Subprojeto</a>
 				<a href='#' id='voltar_modal' class="btn btn-warning pull-right" style='margin:15px'>Voltar</a>
 	   		</div>
 	   </div>

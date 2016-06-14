@@ -212,6 +212,13 @@ var ChatCtrl = ChatApp.controller("ChatCtrl",[ '$scope', '$http', 'socket', '$ti
      }
   });
 
+    var canalMisc = 'chat-misc-reset-'+$scope.thisUserId;
+  socket.on(canalMisc, function(data) {
+    if(data.data.data.message.params === $scope.thisUserId){
+       $scope.messages = [];
+    }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
+  });
+
 }]);
 
 

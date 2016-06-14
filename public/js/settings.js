@@ -338,4 +338,29 @@ $(document).on('click', '#new-est-side', function(event) {
      	
      });
 
+     $(document).on('click', '#deleteChatHistory', function (e){
+		$.ajax({
+     		url: urlbaseGeral + '/chat/reset',
+     		type: 'POST',
+     		dataType: 'json'
+     	})
+     	.done(function(r) {
+     		flashMessage(r.status, r.msg);
+     	});
+	});
+
+     $(document).on('click','#returnLastKanban', function(e){
+     	e.preventDefault();
+     	console.log('de');
+     	$.ajax({
+     		url: urlbaseGeral + '/kanban/return',
+     		type: 'POST',
+     		dataType: 'html'
+     	})
+     	.done(function(r) {
+     		window.location.href = r;
+     	});
+     })
+
 });
+

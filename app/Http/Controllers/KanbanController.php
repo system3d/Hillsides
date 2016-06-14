@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Projeto as proj;
+use App\Setting as set;
 use Cache;
 use Kanban;
 use JavaScript;
@@ -42,6 +43,13 @@ class KanbanController extends Controller
         );
       }
       JavaScript::put(['thisProjetoId'=>$projeto->id]);
+      
+           $last = set::where('model', 'kanban')->where('name','return')->where('user_id',access()->user()->id)->first();
+    if(!isset($last->param)){
+      set::create(['model' => 'kanban', 'name' => 'return', 'param' => $id, 'user_id' => access()->user()->id, 'locatario_id' => access()->user()->locatario_id]);
+    }else{
+      $last->update(['param' => $id]);
+    }
     	return view('backend.kanban', compact('projeto', 'columnWidth','users', 'dados'));
     }
 
@@ -60,6 +68,15 @@ class KanbanController extends Controller
     unset($dados['projeto']);
     Cache::put('history-'.access()->user()->id, $dados,5);
     return route('kanban',[$projeto]);
+  }
+
+  public function return(request $request){
+    $last = set::where('model', 'kanban')->where('name','return')->where('user_id',access()->user()->id)->first();
+    if(!isset($last->param)){
+      return url('projetos');
+    }else{
+      return url('kanban/'.$last->param);
+    }
   }
 
   public function teste(){
