@@ -93,7 +93,7 @@
                   <?php $didOProj = true; ?>
                   @endif
                  @endforeach
-                 @if(!$didOProj)
+                 @if(!isset($didOProj))
                   <option value="0">Nenhum Teamplate Cadastrado</option>
                  @endif
                </select>
