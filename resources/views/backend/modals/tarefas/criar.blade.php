@@ -24,10 +24,18 @@
                <input type="text" class="form-control" required="" data-parsley-trigger="change" name="descricao" style='width:100%'>
             </div>
             <div class="form-group">
-               <label for="historia" class="control-label">História <i class="text-red">*</i> :</label>
-                 <select class="form-control" required="" style='width:100%' name='historia_id'>
+               <label for="sprint" class="control-label">Subprojeto <i class="text-red">*</i> :</label>
+                 <select class="form-control" required="" style='width:100%' name='sprint_id' id='make-tarefa-sprint'>
+                   @foreach($projeto->sprints as $sprint)
+                    <option value="{{$sprint->id}}">{{$sprint->descricao}}</option>
+                   @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+               <label for="historia" class="control-label">Agrupamento <i class="text-red">*</i> :</label>
+                 <select class="form-control" required="" style='width:100%' name='historia_id' id='make-tarefa-historia'>
                    @foreach($projeto->historias() as $hist)
-                    <option value="{{$hist->id}}">{{$hist->descricao}}</option>
+                    <option value="{{$hist->id}}" data-sprint='{{$hist->sprint->id}}' class='tarefa-make-historia-option'>{{$hist->descricao}}</option>
                    @endforeach
                  </select>
             </div>

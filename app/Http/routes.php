@@ -174,3 +174,6 @@ Route::get('system/refresh-token', array('middleware' => 'admin', 'as' => 'syste
 Route::get('mensagens', array('middleware' => 'admin', 'as' => 'mensagens', 'uses' => 'ChatController@index'));
 Route::post('messages/getUsers', array('middleware' => 'admin', 'as' => 'messages/getUsers', 'uses' => 'ChatController@getUsers'));
 Route::post('messages/getMessages', array('middleware' => 'admin', 'as' => 'messages/getMessages', 'uses' => 'ChatController@getMessages'));
+Route::post('navigation/histchanged', array('middleware' => 'admin', 'as' => 'navigation/histchanged', 'uses' => 'KanbanController@histchanged'));
+Route::post('navigation/equipchanged', array('middleware' => 'admin', 'as' => 'navigation/equipchanged',
+ 'uses' => 'KanbanController@equipchanged'));

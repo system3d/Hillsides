@@ -64,6 +64,7 @@
 
 .chat_menu{
 	margin-top: 40px;
+	list-style: none;
 }
 
 .chat_menu h4{

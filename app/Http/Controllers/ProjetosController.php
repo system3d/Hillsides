@@ -26,6 +26,7 @@ use App\Tarefa as task;
 use App\Cronograma as crono;
 use App\Custo as custo;
 use App\Anexo as anexo;
+use App\Setting as set;
 
 class ProjetosController extends Controller
 {
@@ -46,6 +47,11 @@ class ProjetosController extends Controller
         if($request['kanban'] == 'nao'){
           $kanban = false;
         }
+      }
+      $projeto->favorito = false;
+      $fav = set::where('model','projeto')->where('name','favorito')->where('param',$request['id'])->first();
+      if(isset($fav->id)){
+        $projeto->favorito = true;
       }
       return view('backend.modals.projetos.info', compact('projeto', 'kanban'));
    }
@@ -414,10 +420,16 @@ class ProjetosController extends Controller
    public function toggleFavorite(request $request){
    	 $id = $request['id'];
    	 $proj = proj::find($id);
-   	 $up = ($proj->favorito == 0) ? 1 : 0;
-   	 $toUp = array('favorito' => $up);
-   	 $proj->update($toUp);
-   	 die('success');
+   	 $fav = set::where('model','projeto')->where('name','favorito')->where('param',$id)->first();
+     if(isset($fav->id)){
+      $fav->delete();
+     }else{
+      $fav = set::create(['model'=>'projeto','name'=>'favorito','param'=>$id,'user_id'=>access()->user()->id,'locatario_id'=>access()->user()->id]);
+     }
+     if($fav)
+   	  die('success');
+     else
+      die('error');
    }
 
    public function editar(request $request){

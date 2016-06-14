@@ -167,6 +167,7 @@ $(document).ready(function() {
       })
       .done(function(response) {
         drawModal(response, '60%');
+        handleTarefaSprintChange();
       });
     $('#loader').addClass('hidden'); 
    });
@@ -340,11 +341,11 @@ $(document).on('click', '.tarefa-delete', function(event) {
         $('.kanban-trow[data-sprint="'+sprint+'"]').removeClass('hidden');
       }
     }else{
-      handleStoryEquipes(hist);
       $('#selectSprints').prop('disabled', 'disabled');
       $('.kanban-trow').addClass('hidden');
       $('.kanban-trow[data-story="'+hist+'"]').removeClass('hidden');
     }
+    handleStoryEquipes(hist);
   });
 
   $(document).on('change', '#selectSprints', function(event) {
@@ -360,6 +361,11 @@ $(document).on('click', '.tarefa-delete', function(event) {
       $('.kanban-trow[data-sprint="'+sprint+'"]').removeClass('hidden');
     }
   });
+
+  $(document).on('change','#selectEquipe', function(e){
+    handleEquipeResp($('#selectEquipe').val());
+  })
+
 
   //////////////////
 
@@ -536,6 +542,10 @@ $(document).on('click', '.tarefa-delete', function(event) {
   $('#RefreshPage').click(function(event) {
     reloadKBPageActual();
   });
+
+  $(document).on('change', '#make-tarefa-sprint', function(e){
+    handleTarefaSprintChange();
+  })
 
 });
 
@@ -794,9 +804,79 @@ function toggleHistorys(){
 }
 
 function handleStoryEquipes(id){
-
+  var equipes = $('#selectEquipe').find('.equipeOption');
+  equipes.removeClass('hidden');
+  $.ajax({
+    url: urlbaseGeral+"/navigation/histchanged",
+    type: 'POST',
+    dataType: 'json',
+    data:{id:id},
+  }).done(function(r) {
+    var equipes = $('#selectEquipe').find('.equipeOption');
+    if(r.status === 'success'){
+      var eqs = [];
+      equipes.each(function(v){
+        var e = $(equipes[v]);
+        var hide = true;
+        r.equipes.forEach(function(v){
+          if(v === parseInt(e.val())){
+            hide = false;
+            eqs.push(v);
+          }
+        })
+        if(hide){
+          e.addClass('hidden');
+        }else{
+          e.removeClass('hidden');
+        }
+      })
+      handleEquipeResp(eqs);
+    }
+  });
 }
 
 function handleEquipeResp(ids){
+  var users = $('#selectUser').find('.assigneeOption');
+  users.removeClass('hidden');
+   $.ajax({
+    url: urlbaseGeral+"/navigation/equipchanged",
+    type: 'POST',
+    dataType: 'json',
+    data:{ids:ids},
+  }).done(function(r) {
+    users.each(function(x){
+      var u = $(users[x]);
+       var hide = true;
+      r.forEach(function(v){
+        if(parseInt(u.val()) === v){
+          hide = false;
+        }
+      })
+      if(hide){
+          u.addClass('hidden');
+        }else{
+          u.removeClass('hidden');
+        }
+    })
+  })
+}
 
+function handleTarefaSprintChange(){
+  var sprint = $('#make-tarefa-sprint').val();
+  var hs = $('#make-tarefa-historia').find('.tarefa-make-historia-option');
+  hs.removeClass('hidden');
+  var xx = 0;
+  hs.each(function(i){
+    var h = $(hs[i]);
+    h.prop("selected", false)
+    if(parseInt(h.attr('data-sprint')) === parseInt(sprint)){
+      h.removeClass('hidden');
+      if(xx < 1){
+       h.prop("selected", 'selected')
+       xx = 5;
+      }
+    }else{
+      h.addClass('hidden'); 
+    }
+  })
 }

@@ -11,7 +11,8 @@ class Projeto extends Model
 {
     protected $table = 'projetos';
     public $timestamps = true;
-	protected $fillable = ['descricao', 'obs', 'favorito', 'cliente_id', 'tipo_id', 'status_id', 'user_id', 'locatario_id'];
+	protected $fillable = ['descricao', 'obs', 'cliente_id', 'tipo_id', 'status_id', 'user_id', 'locatario_id'];
+	protected $visible = ['descricao', 'obs', 'cliente_id', 'tipo_id', 'status_id', 'user_id', 'locatario_id'];
 
 	protected static function boot()
     {

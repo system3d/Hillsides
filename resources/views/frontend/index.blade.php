@@ -7,28 +7,46 @@
                 <div class="panel-heading">
                     <h4>Projetos Favoritos</h4>
                 </div>
-                <div class="panel-body">
-                    <ul>
+                <div class="panel-body" style='margin-bottom: 0 !important;'>
+                    <ul id='dashboard-favorites'>
+                        @foreach($favoritos as $favorito)
                         <li>
-                            Blalala
+                            {{$favorito->descricao}}
+                                <a href='{{url("kanban")."/".$favorito->id}}' type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-html="true" title='Kanbam do Projeto'><i class="fa fa-th-large"></i></a>
                         </li>
+                        @endforeach
                     </ul>
                 </div>
                 <div class="panel-footer">
                     <div class="row">
-                        <button class='btn btn-success pull-right' data-toggle="modal" data-target="#modal">Criar Novo</button>
-                        <button href="#" class='btn btn-primary pull-left testedo'>Ver Todos</button>
+                        <a href="{{url('projetos')}}" class='btn btn-primary pull-right'>Ver Todos</a>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-5">
             <div class="panel panel-success">
-                <div class="panel-heading">
-                    <h4>Bienvenue</h4>
+                <div class="panel-heading" style='text-align: center;'>
+                    <h4>การอำลา</h4>
                 </div>
-                <div class="panel-body">
-                    bush telly bloody as busy as a fairy floss. It'll be bitzer bloody as busy as a gobful. Built like a cooee to gutful of bikkie. As cross as a bail up to gutful of bush telly. As stands out like strides piece of piss grab us a kindie. Lets throw a flick where lets get some uluru. As cross as a op shop no dramas flat out like a ten clicks away. Get a dog up ya coldie when as busy as a stubby. Come a vb flamin built like a roo bar.
+                <div class="panel-body" style='text-align: center;'>
+                   <i>Ai! laurië lantar lassi súrinen, <br>
+                    Yéni únótimë ve rámar aldaron! <br>
+                    Yéni ve lintë yuldar avánier <br>
+                    mi oromardi lissë-miruvóreva <br>
+                    Andúnë pella, Vardo tellumar <br>
+                    nu luini yassen tintilar i eleni <br>
+                    ómaryo airetári-lírinen. <br>
+                    Sí man i yulma nin enquantuva? <br>
+                    An sí Tintallë Varda Oiolossëo <br>
+                    ve fanyar máryat Elentári ortanë <br>
+                    ar ilyë tier undulávë lumbulë <br>
+                    ar sindanóriello caita mornië <br>
+                    i falmalinnar imbë met, ar hísië <br>
+                    untúpa Calaciryo míri oialë. <br>
+                    Sí vanwa ná, Rómello vanwa, Valimar! <br>
+                    Namárië! Nai hiruvalyë Valimar! <br>
+                    Nai elyë hiruva! Namárië!</i>
                 </div>
             </div>
         </div>

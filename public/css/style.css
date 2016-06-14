@@ -697,3 +697,30 @@ td.hoverPointer:hover{
     color: white;
     background: #367fa9;
 }
+
+.modal .btn{
+    margin-top: 5px;
+}
+
+#dashboard-favorites{
+    width: 100%;
+    list-style: none;
+    padding: none !important;
+    -webkit-padding-start: 0 !important;
+}
+
+#dashboard-favorites li{
+    margin-top: 10px;
+    width: 100%;
+    height: 40px;
+    font-size: 18px;
+    border-bottom: 1px solid #E8E8E8;
+}
+
+#dashboard-favorites li .btn{
+    float: right !important;
+}
+
+#dashboard-favorites li:last-child{
+    border-bottom: none;
+}

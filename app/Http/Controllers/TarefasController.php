@@ -148,8 +148,11 @@ class TarefasController extends Controller
         if($dados['story'] != 0){
             $params[] = array('name' => 'historia_id', 'value' => $dados['story']);
         }
-        if($dados['user'] != 0){
+        if($dados['user'] != 0 && $dados['user'] != 'null'){
             $params[] = array('name' => 'assignee_id', 'value' => $dados['user']);
+        }
+        if($dados['user'] == 'null'){
+          $params[] = array('name' => 'assignee_id', 'value' => null);
         }
         if($dados['dis'] != 0){
             $params[] = array('name' => 'disciplina_id', 'value' => $dados['dis']);
@@ -166,7 +169,7 @@ class TarefasController extends Controller
             }
         }
 
-        if($dados['equipe'] != 0){
+        if($dados['equipe'] != 0 && $dados['equipe'] != 'null'){
            $equipe = equipe::find($dados['equipe']);
            $members = array();
            foreach($equipe->users as $member){

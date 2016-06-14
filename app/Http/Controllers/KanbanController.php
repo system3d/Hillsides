@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Projeto as proj;
 use App\Setting as set;
+use App\Equipe as equipe;
+use App\Historia as hist;
 use Cache;
 use Kanban;
 use JavaScript;
@@ -26,7 +28,6 @@ class KanbanController extends Controller
             $users[] = $membro;
             $usersIn[] = $membro->id;
           }
-          
         }
       }
       $users = collect($users);
@@ -77,6 +78,54 @@ class KanbanController extends Controller
     }else{
       return url('kanban/'.$last->param);
     }
+  }
+
+  public function histchanged(request $request){
+    $history = hist::find($request['id']);
+    $r = [];
+    if(isset($history->id)){
+      $es = [];
+      foreach($history->tarefas as $t){
+        if(isset($t->assignee->id)){
+          foreach($t->assignee->equipes as $e){
+            if(!in_array($e->id, $es)){
+              $es[] = $e->id;
+            }
+          }
+        }
+      }
+      if(count($es) > 0){
+        $r['status'] = 'success';
+        $r['equipes'] = $es;
+      }else{
+         $r['status'] = 'error';
+      }
+    }else{
+      $r['status'] = 'error';
+    }
+    return $r;
+  }
+
+  public function equipchanged(request $request){
+    $idtemp = $request['ids'];
+    $ids = [];
+    if(!is_array($idtemp)){
+      $ids[] = $idtemp;
+    }else{
+      $ids = $idtemp;
+    }
+    $us = [];
+    foreach($ids as $id){
+      $e = equipe::find($id);
+      if(isset($e->id)){
+        foreach($e->users as $u){
+          if(!in_array($u->id, $us)){
+            $us[] = $u->id;
+          }
+        }
+      }
+    }
+    return $us;
   }
 
   public function teste(){
