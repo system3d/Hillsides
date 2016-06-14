@@ -6,3 +6,4 @@ storage/
 .env.php
 .env
 composer.lock
+public/img/avatar
