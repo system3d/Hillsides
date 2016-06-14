@@ -424,7 +424,7 @@ class ProjetosController extends Controller
      if(isset($fav->id)){
       $fav->delete();
      }else{
-      $fav = set::create(['model'=>'projeto','name'=>'favorito','param'=>$id,'user_id'=>access()->user()->id,'locatario_id'=>access()->user()->id]);
+      $fav = set::create(['model'=>'projeto','name'=>'favorito','param'=>$id,'user_id'=>access()->user()->id,'locatario_id'=>access()->user()->locatario_id]);
      }
      if($fav)
    	  die('success');
