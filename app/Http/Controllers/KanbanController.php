@@ -71,7 +71,7 @@ class KanbanController extends Controller
     return route('kanban',[$projeto]);
   }
 
-  public function return(request $request){
+  public function returnTo(request $request){
     $last = set::where('model', 'kanban')->where('name','return')->where('user_id',access()->user()->id)->first();
     if(!isset($last->param)){
       return url('projetos');
