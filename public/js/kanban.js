@@ -2,6 +2,11 @@ $(document).ready(function() {
     handleCookies();
     getTarefas();
 
+      $(".chosen-select").chosen({
+    width: "95%",
+    no_results_text: "Nenhum resultado para "
+  }); 
+
     $('#load_tasks').click(function(event) {
       event.preventDefault();
       getTarefas();

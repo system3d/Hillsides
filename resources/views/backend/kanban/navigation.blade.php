@@ -40,8 +40,8 @@
          <hr>
 
           <div class="form-group selectSprints">
-          <label for="sprints">SubProj.: </label>
-           <select id="selectSprints" class="form-control" required="required" name="obra">
+          <label for="sprints">Subprojeto: </label>
+           <select id="selectSprints" class="form-control chosen-select" required="required" name="obra">
             <option value="0">Todos</option>
             @foreach($projeto->sprints as $sprint)
               <option value="{{$sprint->id}}" <?php if((int) $dados['sprint'] == $sprint->id) echo 'selected'; ?>>{{$sprint->descricao}}</option>
@@ -50,8 +50,8 @@
           </div>
 
            <div class="form-group selectStory">
-          <label for="sprints">Agrup.: </label>
-           <select id="selectStory" class="form-control" required="required" name="obra">
+          <label for="sprints">Agrupamento: </label>
+           <select id="selectStory" class="form-control chosen-select" required="required" name="obra">
             <option value="0">Todas</option>
             @foreach($projeto->historias() as $historia)
               <option data-sprint='{{$historia->sprint_id}}' value="{{$historia->id}}" class='storyOption' <?php if((int) $dados['story'] == $historia->id) echo 'selected'; ?>>{{$historia->descricao}}</option>
@@ -61,7 +61,7 @@
 
            <div class="form-group selectSprints">
           <label for="sprints">Equipes: </label>
-           <select id="selectEquipe" class="form-control" required="required" name="obra">
+           <select id="selectEquipe" class="form-control chosen-select" required="required" name="obra">
             <option value="0">Todas</option>
             @foreach($projeto->equipes as $equipe)
               <option class='equipeOption' value="{{$equipe->id}}" <?php if((int) $dados['equipe'] == $equipe->id) echo 'selected'; ?>>{{$equipe->descricao}}</option>
@@ -71,7 +71,7 @@
 
            <div class="form-group selectSprints">
           <label for="sprints">Responsável: </label>
-           <select id="selectUser" class="form-control" required="required" name="obra">
+           <select id="selectUser" class="form-control chosen-select" required="required" name="obra">
             <option value="0">Todos</option>
             @foreach($users as $user)
               <option class='assigneeOption' value="{{$user->id}}" <?php if((int) $dados['user'] == $user->id) echo 'selected'; ?>>{{$user->name}}</option>
@@ -82,7 +82,7 @@
 
            <div class="form-group selectSprints">
           <label for="sprints">Disciplinas: </label>
-           <select id="selectDisc" class="form-control" required="required" name="obra">
+           <select id="selectDisc" class="form-control chosen-select" required="required" name="obra">
             <option value="0">Todas</option>
             @foreach($projeto->disciplinas as $disciplina)
               <option value="{{$disciplina->id}}" <?php if((int) $dados['dis'] == $disciplina->id) echo 'selected'; ?>>{{$disciplina->descricao}}</option>
@@ -92,7 +92,7 @@
 
            <div class="form-group selectSprints">
           <label for="sprints">Etapas: </label>
-           <select id="selectEtapa" class="form-control" required="required" name="obra">
+           <select id="selectEtapa" class="form-control chosen-select" required="required" name="obra">
             <option value="0">Todas</option>
             @foreach($projeto->etapas as $etapa)
               <option value="{{$etapa->id}}" <?php if((int) $dados['etapa'] == $etapa->id) echo 'selected'; ?>>{{$etapa->descricao}}</option>
@@ -101,6 +101,7 @@
           </div>
 
           <div class="form-group">
+          <br>
             <a href="#" class="btn btn-info" data-toggle="tooltip" data-id='{{$projeto->id}}' title='Carregar Tarefas' id='load_tasks'><i class="fa fa-refresh"></i>&nbsp;&nbsp;Carregar</a>
           </div>
          

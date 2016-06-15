@@ -162,25 +162,30 @@ class ChatController extends Controller
   public function getMessages(request $request){
     $dados = $request->all();
     $riv = $dados['id'];
-    $uid = access()->user()->id;
-    $reset = set::where('user_id',$uid)->where('model','chat')->where('name','reset')->first();
+    $sid = access()->user()->id;
+    $reset = set::where('user_id',$sid)->where('model','chat')->where('name','reset')->first();
     if(isset($reset->param)){
        $rp = Carbon::now();
        $td = explode(' ',$reset->param);
        $d = explode('-',$td[0]);
        $t = explode(':',$td[1]);
        $rp->year($d[0])->month($d[1])->day($d[2])->hour($t[0])->minute($t[1])->second($t[2]);
-    }else{
-      $rp = null;
-    }
-    $sid = access()->user()->id;
-    $msgs = msg::where('created_at', '>=', $rp)->where(function ($query) use($sid,$riv){
+       $msgs = msg::where('created_at', '>=', $rp)->where(function ($query) use($sid,$riv){
         $query->where('sender_id', $sid)
             ->where('receiver_id', $riv);
       })->orWhere(function($query) use($sid,$riv){
         $query->where('receiver_id', $sid)
             ->where('sender_id', $riv);
         })->where('created_at', '>=', $rp)->orderBy('created_at','desc')->skip($dados['skip'])->take($dados['take'])->get();
+    }else{
+      $msgs = msg::where(function ($query) use($sid,$riv){
+        $query->where('sender_id', $sid)
+            ->where('receiver_id', $riv);
+      })->orWhere(function($query) use($sid,$riv){
+        $query->where('receiver_id', $sid)
+            ->where('sender_id', $riv);
+        })->orderBy('created_at','desc')->skip($dados['skip'])->take($dados['take'])->get();
+    }
     foreach($msgs as $msg){
       $msg->day = $this->setDay($msg->created_at);
     }

@@ -61,6 +61,8 @@
 
      {!! Html::script('js/datatables_plugin.js') !!}
 
+     {!! Html::script('plugins/chosen/chosen.jquery.min.js') !!}
+
 
     <!-- Bootstrap Select -->
     {!! Html::script('js/bootstrap-select.min.js') !!}
