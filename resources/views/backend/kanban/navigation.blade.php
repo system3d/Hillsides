@@ -59,7 +59,7 @@
            </select>
           </div>
 
-           <div class="form-group selectSprints">
+           <div class="form-group" id='selectEquipes'>
           <label for="sprints">Equipes: </label>
            <select id="selectEquipe" class="form-control chosen-select" required="required" name="obra">
             <option value="0">Todas</option>
@@ -69,7 +69,7 @@
            </select>
           </div>
 
-           <div class="form-group selectSprints">
+           <div class="form-group selectUsers">
           <label for="sprints">Responsável: </label>
            <select id="selectUser" class="form-control chosen-select" required="required" name="obra">
             <option value="0">Todos</option>
@@ -80,7 +80,7 @@
            </select>
           </div>
 
-           <div class="form-group selectSprints">
+           <div class="form-group selectDiscs">
           <label for="sprints">Disciplinas: </label>
            <select id="selectDisc" class="form-control chosen-select" required="required" name="obra">
             <option value="0">Todas</option>
@@ -90,7 +90,7 @@
            </select>
           </div>
 
-           <div class="form-group selectSprints">
+           <div class="form-group selectEtapas">
           <label for="sprints">Etapas: </label>
            <select id="selectEtapa" class="form-control chosen-select" required="required" name="obra">
             <option value="0">Todas</option>

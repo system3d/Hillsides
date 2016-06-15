@@ -24,6 +24,9 @@ class ClienteController extends Controller
 {
 
    public function cliente(){
+    if(!isAllowed('criar-clientes')){
+      return view('backend.modals.unauthorized');
+    } 
    		return view('backend.modals.clientes.criar');
    }
 
@@ -132,7 +135,13 @@ class ClienteController extends Controller
    }
 
    public function clientesIndex(){
-   		return view('backend.clientes');
+   		
+      if(!isAllowed('ver-clientes')){
+         \Session::flash('flash_danger', 'Você não tem permissão para fazer isto.');
+         return redirect()->back();
+      } 
+      return view('backend.clientes');
+
    }
 
    public function getClientes(){
@@ -157,18 +166,27 @@ class ClienteController extends Controller
    }
 
   public function clienteinfo(Request $request){
+    if(!isAllowed('ver-clientes')){
+        return view('backend.modals.unauthorized');
+    }
   	$id = str_replace('CID', '', $request['id']);
   	$cliente = cliente::find($id);
   	return view('backend.modals.clientes.info', compact('cliente'));
   }
 
    public function clienteEdit(Request $request){
+    if(!isAllowed('editar-clientes')){
+        return view('backend.modals.unauthorized');
+    }
   	$id = str_replace('CDI', '', $request['id']);
   	$cliente = cliente::find($id);
   	return view('backend.modals.clientes.edit', compact('cliente'));
   }
 
   public function clienteUpdate(Request $request){
+     if(!isAllowed('editar-clientes')){
+        return '%error&Você não tem permissão para fazer isto.';
+    }
   	$Alldados = $request->all();
    	$dadosBefore = urldecode($Alldados['dados']);
    	$dados = explode('&', $dadosBefore);
@@ -186,6 +204,9 @@ class ClienteController extends Controller
   }
 
   public function clienteDelete(Request $request){
+    if(!isAllowed('deletar-clientes')){
+        return '%error&Você não tem permissão para fazer isto.';
+    }
   	$id = str_replace('DCI', '', $request['id']);
   	$cliente = cliente::find($id)->delete();
   	return '%success&Cliente Excluido com Sucesso';

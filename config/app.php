@@ -255,7 +255,7 @@ return [
         'Gravatar'    => Creativeorange\Gravatar\Facades\Gravatar::class,
         'Html'        => Collective\Html\HtmlFacade::class,
         'Socialite'   => Laravel\Socialite\Facades\Socialite::class,
-        'Kanban'      => App\Providers\KanbanServiceProvider::class,
+        'Kanban'      => App\Providers\KanbanServiceProvider::class
     ],
 
 ];

@@ -128,11 +128,34 @@ class KanbanController extends Controller
     return $us;
   }
 
-  public function teste(){
-    kanban::taskUpdate(4,79,80,2);
+  public function snippets(){
+    //return
+    if(!isAllowed(5)){
+      \Session::flash('flash_danger', 'Você não tem permissão para fazer isto.');
+      return redirect()->back();
+    }
+    //status
+    if(!isAllowed(5)){
+      return '401';
+    } 
+    //msg
+    if(!isAllowed(5)){
+      $r = [];
+      $r['status'] = 'error';
+      $r['msg'] = 'Você não tem permissão para fazer isto.';
+      return $r;
+    } 
+
+    //modal
+    if(!isAllowed(5)){
+      return view('backend.modals.unauthorized');
+    }
+
+    //dumb msg
+    if(!isAllowed(5)){
+      return '%error&Você não tem permissão para fazer isto.';
+    }
+
   }
 
 }
-
-// 294219580
-// x4x7i6

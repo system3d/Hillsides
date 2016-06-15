@@ -1,23 +1,17 @@
 <?php
 
-if (! function_exists('check_permission')) {
+if (! function_exists('isAllowed')) {
     /**
      * Helper to grab the application name
      *
      * @return mixed
      */
-    function check_permission($permission, $handle = 'modal')
+    function isAllowed($permission)
     {
         if(!access()->user()->allow($permission)){
-            if($handle == 'msg'){
-
-            }elseif($handle == 'msga'){
-
-            }elseif($handle == 'return'){
-
-            }elseif($handle == 'modal'){
-                
-            }
+            return false;
+        }else{
+            return true;
         }
     }
 }

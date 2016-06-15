@@ -579,6 +579,28 @@ class PermissionTableSeeder extends Seeder
         $new_permission->updated_at   = Carbon::now();
         $new_permission->save();
 
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'add-user-equipe-lider';
+        $new_permission->display_name = 'Adiciona Membros em Equipe que Lidera';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 48;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
+        $permission_model          = config('access.permission');
+        $new_permission               = new $permission_model;
+        $new_permission->name         = 'add-task-equipe-lider';
+        $new_permission->display_name = 'Cria Tarefa para Equipe que Lidera';
+        $new_permission->system       = true;
+        $new_permission->group_id     = 1;
+        $new_permission->sort         = 49;
+        $new_permission->created_at   = Carbon::now();
+        $new_permission->updated_at   = Carbon::now();
+        $new_permission->save();
+
 
 
         if (env('DB_CONNECTION') == 'mysql') {

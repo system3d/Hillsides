@@ -27,12 +27,24 @@ class NewRolesTableSeeder extends Seeder
 
         $userPermissions = [
 
+            33, //Criar tarefas Propias
+            35, //Ver Tarefas Equipe
+            40, //Avançar Tarefas Propias
+            44, // Criar Projetos Propios
+            47 //Visualizar Equipe que integra
 
         ];
 
         $liderPermissions = [
 
-            
+             35, //Ver Tarefas Equipe
+             41, //Avançar Tarefas Equipe
+             44, // Criar Projetos Propios
+             45, //Adiciona Membros a Equipe que lidera
+             46, //Cria Usuario Simples
+             47, //Visualiza Equipe 
+             48, //Adiciona Membros a equipe que lidera
+             49  //Cria Tarefas para equipe que lidera
 
         ];
 

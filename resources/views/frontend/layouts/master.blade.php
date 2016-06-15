@@ -45,7 +45,6 @@
       <section class="content">
 
         @include('includes.partials.messages')
-
         @yield('content')
 
         <div class="overlay dark loader" id='loader'>

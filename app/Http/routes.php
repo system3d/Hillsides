@@ -35,8 +35,12 @@ Route::group(['namespace' => 'Backend', 'prefix' => 'admin', 'middleware' => 'ad
     require (__DIR__ . '/Routes/Backend/Access.php');
     require (__DIR__ . '/Routes/Backend/LogViewer.php');
 });
+
+
+
+
+
 Route::get('cadastro/getClientes', array('middleware' => 'admin', 'as' => 'cadastro/getClientes', 'uses' => 'ClienteController@getClientes'));
-Route::get('teste', array('middleware' => 'web', 'as' => 'teste', 'uses' => 'Frontend\FrontendController@teste'));
 Route::post('cadastro/projeto', array('middleware' => 'admin', 'as' => 'cadastro/projeto', 'uses' => 'ClienteController@projeto'));
 Route::post('cadastro/cliente', array('middleware' => 'admin', 'as' => 'cadastro/cliente', 'uses' => 'ClienteController@cliente'));
 Route::post('cadastro/store', array('middleware' => 'admin', 'as' => 'cadastro/store', 'uses' => 'ClienteController@store'));
@@ -167,7 +171,7 @@ Route::post('chat/send', array('middleware' => 'admin', 'as' => 'chat/send', 'us
 Route::post('chat/read', array('middleware' => 'admin', 'as' => 'chat/read', 'uses' => 'ChatController@read'));
 Route::post('chat/reset', array('middleware' => 'admin', 'as' => 'chat/reset', 'uses' => 'ChatController@reset'));
 
-Route::get('teste', array('middleware' => 'admin', 'as' => 'teste', 'uses' => 'KanbanController@teste'));
+Route::get('tosto', array('middleware' => 'admin', 'as' => 'teste', 'uses' => 'KanbanController@teste'));
 
 Route::get('system/refresh-token', array('middleware' => 'admin', 'as' => 'system/refresh-token', 'uses' => 'SettingsController@token'));
 

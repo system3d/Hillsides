@@ -65,26 +65,33 @@ class ChatController extends Controller
     	$dados = $request->all();
       $uid = access()->user()->id;
       $reset = set::where('user_id',$uid)->where('model','chat')->where('name','reset')->first();
+      $sender = user::find($dados['sender']);
+      $receiver = user::find($dados['receiver']);
+      $sid = $sender->id;
+      $riv = $receiver->id;
       if(isset($reset->param)){
          $rp = Carbon::now();
          $td = explode(' ',$reset->param);
          $d = explode('-',$td[0]);
          $t = explode(':',$td[1]);
          $rp->year($d[0])->month($d[1])->day($d[2])->hour($t[0])->minute($t[1])->second($t[2]);
+         $messages = msg::where('created_at', '>=', $rp)->where(function ($query) use($sid,$riv){
+            $query->where('sender_id', $sid)
+                ->where('receiver_id', $riv);
+        })->orWhere(function($query) use($sid,$riv){
+            $query->where('receiver_id', $sid)
+                ->where('sender_id', $riv);
+            })->where('created_at', '>=', $rp)->orderBy('created_at')->take(40)->get();
       }else{
-        $rp = null;
+        $messages = msg::where(function ($query) use($sid,$riv){
+            $query->where('sender_id', $sid)
+                ->where('receiver_id', $riv);
+        })->orWhere(function($query) use($sid,$riv){
+            $query->where('receiver_id', $sid)
+                ->where('sender_id', $riv);
+            })->orderBy('created_at')->take(40)->get();
       }
-    	$sender = user::find($dados['sender']);
-    	$receiver = user::find($dados['receiver']);
-    	$sid = $sender->id;
-    	$riv = $receiver->id;
-    	$messages = msg::where('created_at', '>=', $rp)->where(function ($query) use($sid,$riv){
-	    $query->where('sender_id', $sid)
-	        ->where('receiver_id', $riv);
-	})->orWhere(function($query) use($sid,$riv){
-	    $query->where('receiver_id', $sid)
-	        ->where('sender_id', $riv);
-	    })->where('created_at', '>=', $rp)->orderBy('created_at')->take(40)->get();
+
     	if(isset($sender) && isset($receiver))
     		return view('backend.includes.partials.message', compact('sender', 'receiver','messages'));
     	else

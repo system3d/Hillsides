@@ -4,7 +4,10 @@ $(document).ready(function() {
 
       $(".chosen-select").chosen({
     width: "95%",
-    no_results_text: "Nenhum resultado para "
+    no_results_text: "Nenhum resultado para ",
+    search_contains: true,
+    display_disabled_options: false,
+
   }); 
 
     $('#load_tasks').click(function(event) {
@@ -355,14 +358,23 @@ $(document).on('click', '.tarefa-delete', function(event) {
 
   $(document).on('change', '#selectSprints', function(event) {
     var sprint = $(this).val();
+    var stories =  $('.storyOption');
+       stories.each(function(v){
+        var eq = $(stories[v]);
+        eq.prop('disabled', false).trigger('chosen:updated');
+      })
     if(sprint == 0){
       $('.kanban-trow').removeClass('hidden');
-      $('.storyOption').removeClass('hidden');
+      
+      // $('.storyOption').removeClass('hidden');
       getTarefas();
     }else{
       $('.kanban-trow').addClass('hidden');
-      $('.storyOption[data-sprint!="'+sprint+'"]').addClass('hidden');
-      $('.storyOption[data-sprint="'+sprint+'"]').removeClass('hidden');
+       stories =  $('.storyOption[data-sprint!="'+sprint+'"]');
+       stories.each(function(v){
+        var eq = $(stories[v]);
+        eq.prop('disabled', true).trigger('chosen:updated');
+      })
       $('.kanban-trow[data-sprint="'+sprint+'"]').removeClass('hidden');
     }
   });
@@ -669,6 +681,7 @@ return response;
 **/
 function injectTask(task,hist,est){
   $('.sortable-row[data-story="'+hist+'"][data-estagio="'+est+'"]').append(task);
+  toggleHistorys();
 }
   
 function setColor(){
@@ -810,7 +823,10 @@ function toggleHistorys(){
 
 function handleStoryEquipes(id){
   var equipes = $('#selectEquipe').find('.equipeOption');
-  equipes.removeClass('hidden');
+  equipes.each(function(v){
+    var eq = $(equipes[v]);
+    eq.prop('disabled', false).trigger('chosen:updated');
+  })
   $.ajax({
     url: urlbaseGeral+"/navigation/histchanged",
     type: 'POST',
@@ -830,9 +846,9 @@ function handleStoryEquipes(id){
           }
         })
         if(hide){
-          e.addClass('hidden');
+          e.prop('disabled', true).trigger('chosen:updated');
         }else{
-          e.removeClass('hidden');
+          e.prop('disabled', false).trigger('chosen:updated');
         }
       })
       handleEquipeResp(eqs);
@@ -842,28 +858,34 @@ function handleStoryEquipes(id){
 
 function handleEquipeResp(ids){
   var users = $('#selectUser').find('.assigneeOption');
-  users.removeClass('hidden');
-   $.ajax({
-    url: urlbaseGeral+"/navigation/equipchanged",
-    type: 'POST',
-    dataType: 'json',
-    data:{ids:ids},
-  }).done(function(r) {
-    users.each(function(x){
-      var u = $(users[x]);
-       var hide = true;
-      r.forEach(function(v){
-        if(parseInt(u.val()) === v){
-          hide = false;
-        }
-      })
-      if(hide){
-          u.addClass('hidden');
-        }else{
-          u.removeClass('hidden');
-        }
-    })
+  users.each(function(v){
+    var eq = $(users[v]);
+    eq.prop('disabled', false).trigger('chosen:updated');
   })
+  if(ids != 0){
+    $.ajax({
+      url: urlbaseGeral+"/navigation/equipchanged",
+      type: 'POST',
+      dataType: 'json',
+      data:{ids:ids},
+    }).done(function(r) {
+      users.each(function(x){
+        var u = $(users[x]);
+         var hide = true;
+        r.forEach(function(v){
+          if(parseInt(u.val()) === v){
+            hide = false;
+          }
+        })
+        if(hide){
+            u.prop('disabled', true).trigger('chosen:updated');
+          }else{
+            u.prop('disabled', false).trigger('chosen:updated');
+          }
+      })
+    })
+  }
+
 }
 
 function handleTarefaSprintChange(){
