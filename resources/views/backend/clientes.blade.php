@@ -7,7 +7,9 @@
 			<div class="box-tools pull-right">
 				<div class="pull-right" style='margin-bottom: 10px;'>
 					<div class="btn-group">
+					@permission('criar-clientes')
 						<button class="btn btn-primary btn-xs" id="cadastrarCliente">Cadastrar Cliente</button>
+					@endauth
 					</div>
 				</div>
 				<div class="clearfix"></div>

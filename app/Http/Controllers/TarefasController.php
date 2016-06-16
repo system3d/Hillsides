@@ -22,6 +22,15 @@ class TarefasController extends Controller
 
     public function index(request $request){
         $tarefa = task::find($request['id']);
+        if($tarefa->assignee_id !== access()->user()->id){
+          if(!isAllowed('ver-tarefas') && !isAllowed('ver-tarefas-equipe')){
+              return view('backend.modals.unauthorized');
+          }
+          if(!isAllowed('ver-tarefas')){
+            if(!in_array(access()->user()->id, $tarefa->lideres()))
+              return view('backend.modals.unauthorized');
+          }
+        }
         $estagioDesc  = ($tarefa->estagio_id == 1) ? 'Backlog' : (($tarefa->estagio_id == 2) ? 'Arquivada' : $tarefa->estagio->descricao);
         return view('backend.modals.tarefas.index', compact('tarefa', 'estagioDesc'));
     }
@@ -160,7 +169,7 @@ class TarefasController extends Controller
         if($dados['etapa'] != 0){
             $params[] = array('name' => 'etapa_id', 'value' => $dados['etapa']);
         }
-        $tarefas = task::select('id')->where('projeto_id', $dados['projeto']);
+        $tarefas = task::where('projeto_id', $dados['projeto']);
 
 
         if(count($params) > 0){
@@ -181,6 +190,22 @@ class TarefasController extends Controller
        $tasks =  $tarefas->orderBy('created_at')->get();
        $response=array();
        $taskes = array();
+
+       foreach($tasks as $key => $task){
+        if($task->assignee_id !== access()->user()->id){
+          if(!isAllowed('ver-tarefas') && !isAllowed('ver-tarefas-equipe')){
+              $tasks->forget($key);
+          }
+          if(!isAllowed('ver-tarefas')){
+            $membs = $task->membrosId();
+            if($membs){
+              if(!in_array(access()->user()->id, $membs))
+                $tasks->forget($key);
+            }
+            
+          }
+        }
+       }
        if($tasks->count() > 0){
          foreach($tasks as $task){
            $taskes[] = $this->getTarefa($task->id);
@@ -199,8 +224,18 @@ class TarefasController extends Controller
 
     public function moved(request $request){
         $dados = $request->all();
-        // return '405';
         $task = task::find($dados['id']);
+
+        if($task->assignee_id !== access()->user()->id){
+          if(!isAllowed('tarefa-geral') && !isAllowed('tarefa-equipe')){
+              return '405';
+          }
+          if(!isAllowed('tarefa-geral')){
+            if(!in_array(access()->user()->id, $task->lideres()))
+              return '405';
+          }
+        }
+
         $origem = $task->estagio_id;
         $toUp = array('estagio_id' => $dados['estagio']);
         $task->update($toUp);
@@ -211,6 +246,15 @@ class TarefasController extends Controller
     public function editar(request $request){
          $id = $request['id'];
         $tarefa = task::find($id);
+        if($tarefa->user_id !== access()->user()->id){
+          if(!isAllowed('editar-tarefas') && !isAllowed('ver-tarefas-equipe')){
+              return view('backend.modals.unauthorized');
+          }
+          if(!isAllowed('editar-tarefas')){
+            if(!in_array(access()->user()->id, $tarefa->lideres()))
+              return view('backend.modals.unauthorized');
+          }
+        }
         $projeto = $tarefa->projeto;
         $users = array();
         $usersIn = array();
@@ -263,7 +307,21 @@ class TarefasController extends Controller
         $check['sprint_id'] = $hist->sprint_id;
         $task = task::find($id);
 
-        
+        if($task->user_id !== access()->user()->id){
+          if(!isAllowed('editar-tarefas') && !isAllowed('ver-tarefas-equipe')){
+               $r = [];
+               $r['status'] = 'error';
+               $r['msg'] = 'Você não tem permissão para fazer isto.';
+              return $r;
+          }
+          if(!isAllowed('editar-tarefas')){
+            if(!in_array(access()->user()->id, $task->lideres()))
+               $r = [];
+               $r['status'] = 'error';
+               $r['msg'] = 'Você não tem permissão para fazer isto.';
+               return $r;
+          }
+        }
         
         if(isset($task->cronograma)){
           $cronoUp = crono::find($task->cronograma->id);
@@ -303,11 +361,31 @@ class TarefasController extends Controller
     public function excluir(request $request){
     $id = $request['id'];
     $new = task::find($id);
+     $idgo = $new->id;
+
+    if($task->user_id !== access()->user()->id){
+      if(!isAllowed('deletar-tarefas') && !isAllowed('ver-tarefas-equipe')){
+           $r = [];
+           $r['status'] = 'error';
+           $r['msg'] = 'Você não tem permissão para fazer isto.';
+           $r['id'] = $idgo;
+          return $r;
+      }
+      if(!isAllowed('deletar-tarefas')){
+        if(!in_array(access()->user()->id, $task->lideres()))
+           $r = [];
+           $r['status'] = 'error';
+           $r['msg'] = 'Você não tem permissão para fazer isto.';
+           $r['id'] = $idgo;
+           return $r;
+      }
+    }
+
     if($new->anexos->count() > 0){
         $path = storage_path().'/app/anexos/'.$new->locatario_id.'/'.$new->projeto_id.'/'.$new->id;
         $Ruin = File::deleteDirectory($path);
     }
-    $idgo = $new->id;
+   
     $new->delete();
     $response['msg'] = 'Tarefa Excluida com Sucesso';
     $response['status'] = 'success';
@@ -338,6 +416,25 @@ class TarefasController extends Controller
     $new = anexo::find($id);
     File::delete(storage_path().'/app/'.$new->path);
     $idgo = $new->tarefa_id;
+
+    if($new->tarefa->user_id !== access()->user()->id){
+      if(!isAllowed('editar-tarefas') && !isAllowed('ver-tarefas-equipe')){
+           $r = [];
+           $r['status'] = 'error';
+           $r['msg'] = 'Você não tem permissão para fazer isto.';
+           $r['id'] = $idgo;
+          return $r;
+      }
+      if(!isAllowed('editar-tarefas')){
+        if(!in_array(access()->user()->id,$new->tarefa->lideres()))
+           $r = [];
+           $r['status'] = 'error';
+           $r['msg'] = 'Você não tem permissão para fazer isto.';
+           $r['id'] = $idgo;
+           return $r;
+      }
+    }
+
     $new->delete();
     $response['msg'] = 'Anexo Excluido com Sucesso';
     $response['status'] = 'success';
@@ -356,10 +453,10 @@ class TarefasController extends Controller
     $file = $request['anexo'];
     $new = task::find($request['tarefa']);
     $idgo = $new->id;
-    $exts = array('jpg', 'jpeg', 'png', 'gif', 'jpe', 'jif', 'jfif', 'jfi','pdf','txt','zip','doc','rar','xls','ppt','xlsx','pptx');
+    $exts = array('js','jsx','php','phtml','php3', 'php4');
     $extension = $file->getClientOriginalExtension();
     $fileSize = $file->getSize();
-      if(!in_array($extension, $exts)){
+      if(in_array($extension, $exts)){
           $response['status'] = 'error';
           $response['msg'] = 'Extensão Invalida';
           return $response;

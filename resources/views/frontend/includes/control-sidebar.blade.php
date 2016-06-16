@@ -104,6 +104,7 @@
           <!-- Settings tab content -->
           <div class="tab-pane" id="control-sidebar-settings-tab">
             <form method="post">
+            @permission('config-geral')
               <h3 class="control-sidebar-heading">Configurações Gerais</h3>
               <small>Configurações a serem aplicadas na criação do projeto.</small>
               <br> <br>
@@ -229,7 +230,7 @@
                 </div>
               </div><!-- /.form-group -->
               
-              
+              @endauth
 
               <h3 class="control-sidebar-heading">Configurações do Chat</h3>
 

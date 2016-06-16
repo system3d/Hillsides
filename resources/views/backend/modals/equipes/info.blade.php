@@ -36,7 +36,8 @@
            <div id="novo-membro-wrapper" class='hidden row'>
              @if(access()->user()->locatario->users->count() - count($membros) > 0)
             <div class="col-md-8">
-               <select name="membro" id="novo-membro" class="form-control" data-equipe-id="{{$equipe->id}}">
+            <br>
+               <select name="membro" id="novo-membro" class="form-control chosen-select" data-equipe-id="{{$equipe->id}}">
                   @foreach(access()->user()->locatario->users as $user)
                     @if(!in_array($user->id, $membros))
                       <option value="{{$user->id}}">{{$user->name}}</option>
@@ -44,7 +45,7 @@
                   @endforeach
               </select>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-4" style='margin-top: 8.5px;'>
               <a href="#" id='save-membro' class="btn btn-success btn-sm"><i class="fa fa-check"></i></a>
               <a href="#" id='close-membro' class="btn btn-danger btn-sm"><i class="fa fa-times"></i></a>
             </div>
@@ -90,4 +91,13 @@
 		</div>
 	</div>
 </div>
+
+<script>
+  $(".chosen-select").chosen({
+    width: "95%",
+    no_results_text: "Nenhum resultado para ",
+    search_contains: true,
+    display_disabled_options: false,
+  });
+</script>
 		 

@@ -21,7 +21,7 @@
             $(nRow).addClass('hoverPointer');
             return nRow;
         }
-        });
+    });
 
  	 $(document).on('click', '.equipe-info', function(event) {
          $('#loader').removeClass('hidden'); 

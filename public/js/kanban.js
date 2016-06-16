@@ -2,7 +2,7 @@ $(document).ready(function() {
     handleCookies();
     getTarefas();
 
-      $(".chosen-select").chosen({
+  $(".chosen-select").chosen({
     width: "95%",
     no_results_text: "Nenhum resultado para ",
     search_contains: true,
@@ -114,7 +114,7 @@ $(document).ready(function() {
           })
           .done(function(r) {
             if(r == '405'){
-              flashMessage('warning', 'Você não tem permissão para fazer isto.');
+              flashMessage('error', 'Você não tem permissão para fazer isto.');
               $(ui.sender).sortable('cancel');
             }
           });

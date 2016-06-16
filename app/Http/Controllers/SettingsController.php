@@ -21,6 +21,12 @@ use Kanban;
 class SettingsController extends Controller
 {
     public function gravarEstagio(request $request){
+      if(!isAllowed('config-geral')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
     	$value = ucfirst($request['value']);
     	$last = esdef::orderBy('ordem', 'desc')->first();
     	$data = array(
@@ -48,6 +54,12 @@ class SettingsController extends Controller
     }
 
     public function deleteEstagio(request $request){
+      if(!isAllowed('config-geral')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
     	$dados = $request->all();
     	$id = $dados['id'];
     	$newO = esdef::find($id);
@@ -63,6 +75,12 @@ class SettingsController extends Controller
     }
 
      public function gravarStp(request $request){
+      if(!isAllowed('config-geral')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
      	$value = ucfirst($request['value']);
     	$data = array(
     		'descricao'    => $value,
@@ -88,6 +106,12 @@ class SettingsController extends Controller
      }
 
      public function deleteStp(request $request){
+      if(!isAllowed('config-geral')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
     	$dados = $request->all();
     	$id = $dados['id'];
     	$new = spd::find($id)->delete();
@@ -102,6 +126,12 @@ class SettingsController extends Controller
     }
 
     public function gravarSfp(request $request){
+      if(!isAllowed('config-geral')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
      	$value = ucfirst($request['value']);
     	$data = array(
     		'descricao'    => $value,
@@ -127,6 +157,12 @@ class SettingsController extends Controller
      }
 
      public function deleteSfp(request $request){
+      if(!isAllowed('config-geral')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
     	$dados = $request->all();
     	$id = $dados['id'];
     	$new = sfd::find($id)->delete();
@@ -141,6 +177,12 @@ class SettingsController extends Controller
     }
 
     public function gravarTrp(request $request){
+      if(!isAllowed('config-geral')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
      	$value = ucfirst($request['value']);
     	$data = array(
     		'descricao'    => $value,
@@ -169,6 +211,12 @@ class SettingsController extends Controller
      }
 
      public function deleteTrp(request $request){
+      if(!isAllowed('config-geral')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
     	$dados = $request->all();
     	$id = $dados['id'];
     	$new = trd::find($id)->delete();
@@ -183,6 +231,12 @@ class SettingsController extends Controller
     }
 
     public function setOrder(request $request){
+      if(!isAllowed('config-geral')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
     	$dados = $request['sorted'];
     	$ordem = 1;
     	foreach($dados as $dado){
@@ -194,6 +248,9 @@ class SettingsController extends Controller
     }
 
     public function setIcon(request $request){
+      if(!isAllowed('config-geral')){
+        return view('backend.modals.unauthorized');
+      } 
     	$id = $request['id'];
     	$tarefa = trd::find($id);
       $icones = \App\Icone::all();
@@ -201,6 +258,9 @@ class SettingsController extends Controller
     }
 
     public function proj_setIcon(request $request){
+      if(!isAllowed('editar-projetos')){
+        return view('backend.modals.unauthorized');
+      } 
       $id = $request['id'];
       $tarefa = ttf::find($id);
       $icones = \App\Icone::all();
@@ -208,18 +268,30 @@ class SettingsController extends Controller
     }
 
     public function setColor(request $request){
+      if(!isAllowed('config-geral')){
+        return view('backend.modals.unauthorized');
+      } 
       $id = $request['id'];
       $tarefa = trd::find($id);
       return view('backend.modals.settings.color', compact('tarefa'));
     }
 
     public function proj_setColor(request $request){
+      if(!isAllowed('editar-projetos')){
+        return view('backend.modals.unauthorized');
+      } 
       $id = $request['id'];
       $tarefa = ttf::find($id);
       return view('backend.modals.settings.proj-color', compact('tarefa'));
     }
 
     public function storeIcon(request $request){
+      if(!isAllowed('config-geral')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
     	$dados = $request->all();
       if(isset($dados['select'])){
         $path = 'public/img/icones/';
@@ -270,6 +342,12 @@ class SettingsController extends Controller
     }
 
     public function proj_storeIcon(request $request){
+      if(!isAllowed('editar-projetos')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
       $dados = $request->all();
       if(isset($dados['select'])){
         $path = 'public/img/icones/';
@@ -318,6 +396,12 @@ class SettingsController extends Controller
     }
 
     public function storeColor(request $request){
+      if(!isAllowed('config-geral')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
       $Alldados = $request->all();
       $dadosBefore = urldecode($Alldados['dados']);
       $dados = explode('&', $dadosBefore);
@@ -343,6 +427,12 @@ class SettingsController extends Controller
     }
 
     public function proj_storeColor(request $request){
+      if(!isAllowed('editar-projetos')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
       $Alldados = $request->all();
       $dadosBefore = urldecode($Alldados['dados']);
       $dados = explode('&', $dadosBefore);
@@ -373,6 +463,12 @@ class SettingsController extends Controller
 	  }
 
    public function proj_setOrder(request $request){
+    if(!isAllowed('editar-projetos')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
    	$req = $request->all();
    	$dados = $request['sorted'];
 	$ordem = 1;
@@ -389,6 +485,12 @@ class SettingsController extends Controller
    }
 
    public function proj_estagioEdit(request $request){
+    if(!isAllowed('editar-projetos')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
    	$Alldados = $request->all();
     $dadosBefore = urldecode($Alldados['dados']);
     $dados = explode('&', $dadosBefore);
@@ -421,6 +523,12 @@ class SettingsController extends Controller
    }
 
    public function proj_estagioExcluir(request $request){
+    if(!isAllowed('editar-projetos')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
    	$id = $request['id'];
     $new = estag::find($id);
     if(isset($new->tarefas->first()->id)){
@@ -438,12 +546,21 @@ class SettingsController extends Controller
    }
 
    public function proj_stProjeto(request $request){
+    if(!isAllowed('editar-projetos')){
+        return view('backend.modals.unauthorized');
+      } 
     $id = $request['id'];
     $projeto = proj::find($id);
     return view('backend.modals.settings.stProjeto', compact('projeto'));
   }
 
   public function proj_stEdit(request $request){
+    if(!isAllowed('editar-projetos')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
    	$Alldados = $request->all();
     $dadosBefore = urldecode($Alldados['dados']);
     $dados = explode('&', $dadosBefore);
@@ -468,12 +585,21 @@ class SettingsController extends Controller
    }
 
    public function proj_stNovo(request $request){
+    if(!isAllowed('editar-projetos')){
+        return view('backend.modals.unauthorized');
+      } 
    		$id = $request['id'];
 	    $projeto = proj::find($id);
 	    return view('backend.modals.settings.criar-stp', compact('projeto'));
    }
 
    public function proj_stExcluir(request $request){
+    if(!isAllowed('editar-projetos')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
    	$id = $request['id'];
     $new = stp::find($id);
     if(isset($new->projetos->first()->id)){
@@ -492,12 +618,21 @@ class SettingsController extends Controller
    ///
 
    public function proj_srTarefa(request $request){
+    if(!isAllowed('editar-projetos')){
+        return view('backend.modals.unauthorized');
+      } 
     $id = $request['id'];
     $projeto = proj::find($id);
     return view('backend.modals.settings.srTarefa', compact('projeto'));
   }
 
   public function proj_srEdit(request $request){
+    if(!isAllowed('editar-projetos')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
    	$Alldados = $request->all();
     $dadosBefore = urldecode($Alldados['dados']);
     $dados = explode('&', $dadosBefore);
@@ -522,12 +657,21 @@ class SettingsController extends Controller
    }
 
    public function proj_srNovo(request $request){
+    if(!isAllowed('editar-projetos')){
+        return view('backend.modals.unauthorized');
+      } 
    		$id = $request['id'];
 	    $projeto = proj::find($id);
 	    return view('backend.modals.settings.criar-stt', compact('projeto'));
    }
 
    public function proj_srExcluir(request $request){
+    if(!isAllowed('editar-projetos')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
    	$id = $request['id'];
     $new = stt::find($id);
     if(isset($new->tarefas->first()->id)){
@@ -544,18 +688,30 @@ class SettingsController extends Controller
    }
 
    public function proj_tpTarefa(request $request){
+    if(!isAllowed('editar-projetos')){
+        return view('backend.modals.unauthorized');
+      } 
       $id = $request['id'];
       $projeto = proj::find($id);
       return view('backend.modals.settings.ttp', compact('projeto'));
    }
 
     public function proj_ttCreate(request $request){
+      if(!isAllowed('editar-projetos')){
+        return view('backend.modals.unauthorized');
+      } 
       $id = $request['id'];
       $projeto = proj::find($id);
       return view('backend.modals.settings.criar-tt', compact('projeto'));
    }
 
    public function proj_ttExcluir(request $request){
+    if(!isAllowed('editar-projetos')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
     $id = $request['id'];
     $new = ttf::find($id);
     if(isset($new->tarefas->first()->id)){
@@ -572,6 +728,12 @@ class SettingsController extends Controller
    }
 
      public function proj_ttEdit(request $request){
+      if(!isAllowed('editar-projetos')){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
     $Alldados = $request->all();
     $dadosBefore = urldecode($Alldados['dados']);
     $dados = explode('&', $dadosBefore);

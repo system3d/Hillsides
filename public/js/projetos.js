@@ -19,7 +19,7 @@
         ],
         "iDisplayLength": 25,
             "language": {
-              "emptyTable": "Nenhum Projeto Cadastrada."
+              "emptyTable": "Nenhum Projeto Cadastrado."
             },
         "fnRowCallback": function( nRow, aData, iDisplayIndex ) {
 			$(nRow).addClass('proj-row');

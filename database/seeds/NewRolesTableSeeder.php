@@ -37,6 +37,7 @@ class NewRolesTableSeeder extends Seeder
 
         $liderPermissions = [
 
+             29, //Ver-Equipes
              35, //Ver Tarefas Equipe
              41, //Avançar Tarefas Equipe
              44, // Criar Projetos Propios

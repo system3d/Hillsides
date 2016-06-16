@@ -31,17 +31,23 @@ use App\Setting as set;
 class ProjetosController extends Controller
 {
     public function index(){
-    	
     	return view('backend.projetos');
     }
 
      public function criar(){
+      if(!isAllowed('ver-projetos') && !isAllowed('criar-projetos-self')){
+        \Session::flash('flash_danger', 'Você não tem permissão para fazer isto.');
+        return redirect()->back();
+      }
+
      	$tipos = tproj::all();
       return view('backend.modals.projetos.criar', compact('tipos'));
    }
 
    public function info(request $request){
+
       $projeto = proj::find($request['id']);
+
       $kanban = true;
       if(isset($request['kanban'])){
         if($request['kanban'] == 'nao'){
@@ -57,6 +63,13 @@ class ProjetosController extends Controller
    }
 
    public function store(request $request){
+    if(!isAllowed('criar-projetos-self') && !isAllowed('criar-projetos')){
+      $r = [];
+      $r['status'] = 'error';
+      $r['msg'] = 'Você não tem permissão para fazer isto.';
+      return $r;
+    } 
+
 	$Alldados = $request->all();
    	$dadosBefore = urldecode($Alldados['dados']);
    	$dados = explode('&', $dadosBefore);
@@ -187,6 +200,12 @@ class ProjetosController extends Controller
    }
 
    public function teamplate(request $request){
+    if(!isAllowed('criar-projetos-self') && !isAllowed('criar-projetos')){
+      $r = [];
+      $r['status'] = 'error';
+      $r['msg'] = 'Você não tem permissão para fazer isto.';
+      return $r;
+    } 
       $Alldados = $request->all();
       $dadosBefore = urldecode($Alldados['dados']);
       $dados = explode('&', $dadosBefore);
@@ -398,6 +417,21 @@ class ProjetosController extends Controller
    public function getProjetos(request $request){
    	$projetos = proj::all();
 	$data = array();
+  if(!isAllowed('ver-projetos')){
+    foreach($projetos as $key => $proj){
+      $remove = true;
+      if($proj->user_id !== access()->user()->id){
+        foreach($proj->equipes as $pe){
+        foreach($pe->users as $us){
+          if($us->id === access()->user()->id)
+            $remove = false;
+        }
+        }
+        if($remove)
+          $projetos->forget($key);
+      }
+    }
+  }
 	foreach($projetos as $projeto){
 		$data[] = array(
 			'nome'     => '<a href="#" class="projeto-info" data-id="'.$projeto->id.'">'.$projeto->descricao.'</a>',
@@ -433,13 +467,27 @@ class ProjetosController extends Controller
    }
 
    public function editar(request $request){
+    if(!isAllowed('criar-projetos-self') && !isAllowed('editar-projetos')){
+      return view('backend.modals.unauthorized');
+    } 
    	 $id = $request['id'];
    	 $projeto = proj::find($id);
+     if(!isAllowed('editar-projetos')){
+        if($projeto->user_id !== access()->user()->id){
+          return view('backend.modals.unauthorized');
+        }
+     }
    	 $tipos = tproj::all();
    	 return view('backend.modals.projetos.editar', compact('projeto', 'tipos'));
    }
 
    public function update(Request $request){
+    if(!isAllowed('criar-projetos-self') && !isAllowed('editar-projetos')){
+      $r = [];
+      $r['status'] = 'error';
+      $r['msg'] = 'Você não tem permissão para fazer isto.';
+      return $r;
+    } 
     $Alldados = $request->all();
     $dadosBefore = urldecode($Alldados['dados']);
     $dados = explode('&', $dadosBefore);
@@ -451,7 +499,16 @@ class ProjetosController extends Controller
     } 
     $id = $check['id'];
     unset($check['id']);
-    $new = proj::find($id)->update($check);
+    $new = proj::find($id);
+    if(!isAllowed('editar-projetos')){
+      if($new->user_id !== access()->user()->id){
+        $r = [];
+        $r['status'] = 'error';
+        $r['msg'] = 'Você não tem permissão para fazer isto.';
+        return $r;
+      }
+    }
+    $new->update($check);
     if(!isset($new)){
       $response['msg'] = 'Erro ao Atualizar Projeto';
       $response['status'] = 'error';
@@ -464,6 +521,12 @@ class ProjetosController extends Controller
   }
 
   public function excluir(request $request){
+    if(!isAllowed('criar-projetos-self') && !isAllowed('deletar-projetos')){
+      $r = [];
+      $r['status'] = 'error';
+      $r['msg'] = 'Você não tem permissão para fazer isto.';
+      return $r;
+    } 
     $iid = $request->all();
     $id = $iid['id'];
     $check = sprint::where('projeto_id',$id)->get();
@@ -472,7 +535,16 @@ class ProjetosController extends Controller
       $response['status'] = 'error';
       return $response;
     }else{
-      $deleted = proj::find($id)->delete();
+      $deleted = proj::find($id);
+      if(!isAllowed('editar-projetos')){
+        if($deleted->user_id !== access()->user()->id){
+          $r = [];
+          $r['status'] = 'error';
+          $r['msg'] = 'Você não tem permissão para fazer isto.';
+          return $r;
+        }
+    }
+      $deleted->delete();
       if($deleted){
         $response['msg'] = 'Projeto Excluído com Sucesso.';
         $response['status'] = 'success';
@@ -485,6 +557,9 @@ class ProjetosController extends Controller
   }
 
   public function equipes(request $request){
+    if(!isAllowed('editar-projetos')){
+      return view('backend.modals.unauthorized');
+    } 
      $id = $request['id'];
      $projeto = proj::find($id);
      $equipes = equipe::all();
@@ -499,6 +574,11 @@ class ProjetosController extends Controller
    }
 
    public function novaEquipe(request $request){
+    $response = [];
+    if(!isAllowed('editar-projetos')){
+      $response['msg'] = '%error&Você não tem permissão para fazer isto.';
+      return $response;
+    } 
     $id = $request['id'];
     $pid = $request['proj_id'];
     $projeto = proj::find($pid);
@@ -517,6 +597,11 @@ class ProjetosController extends Controller
    }
 
    public function removerEquipe(Request $request){
+    $response = [];
+    if(!isAllowed('editar-projetos')){
+      $response['msg'] = '%error&Você não tem permissão para fazer isto.';
+      return $response;
+    }
     $dados = $request->all();
     $id = $dados['id'];
     $eid = $dados['proj_id'];
@@ -535,24 +620,39 @@ class ProjetosController extends Controller
   }
 
   public function sprints(request $request){
+    if(!isAllowed('ver-sprints')){
+      return view('backend.modals.unauthorized');
+    }
     $id = $request['id'];
     $projeto = proj::find($id);
      return view('backend.modals.projetos.sprints', compact('projeto'));
   }
 
   public function criarSprint(request $request){
+    if(!isAllowed('criar-sprints')){
+      return view('backend.modals.unauthorized');
+    }
     $id = $request['id'];
     $projeto = proj::find($id);
     return view('backend.modals.projetos.criar-sprint', compact('projeto'));
   }
 
   public function editarSprint(request $request){
+    if(!isAllowed('editar-sprints')){
+      return view('backend.modals.unauthorized');
+    }
     $id = $request['id'];
     $sprint = sprint::find($id);
     return view('backend.modals.projetos.editar-sprint', compact('sprint'));
   }
 
   public function updateSprint(request $request){
+    if(!isAllowed('editar-sprints')){
+      $r = [];
+      $r['status'] = 'error';
+      $r['msg'] = 'Você não tem permissão para fazer isto.';
+      return $r;
+    } 
     $Alldados = $request->all();
     $dadosBefore = urldecode($Alldados['dados']);
     $dados = explode('&', $dadosBefore);
@@ -583,6 +683,12 @@ class ProjetosController extends Controller
   }
 
   public function excluirSprint(Request $request){
+    if(!isAllowed('deletar-sprints')){
+      $r = [];
+      $r['status'] = 'error';
+      $r['msg'] = 'Você não tem permissão para fazer isto.';
+      return $r;
+    }
     $id = $request['id'];
     $new = sprint::find($id);
     $proj_id = $new->projeto_id;
@@ -594,6 +700,9 @@ class ProjetosController extends Controller
   }
 
   public function historias(request $request){
+    if(!isAllowed('ver-sprints')){
+      return view('backend.modals.unauthorized');
+    }
     $id = $request['id'];
     $tipo = $request['tipo'];
     $force = 0;
@@ -618,6 +727,9 @@ class ProjetosController extends Controller
   }
 
   public function criarHistoria(request $request){
+    if(!isAllowed('criar-sprints')){
+      return view('backend.modals.unauthorized');
+    }
     $id = $request['id'];
     $tipo = $request['tipo'];
     $force = $request['force'];
@@ -633,6 +745,9 @@ class ProjetosController extends Controller
   }
 
   public function editarHistoria(request $request){
+    if(!isAllowed('editar-sprints')){
+      return view('backend.modals.unauthorized');
+    }
     $id = $request['id'];
     $tipo = $request['tipo'];
     $historia = historia::find($id);
@@ -640,7 +755,13 @@ class ProjetosController extends Controller
     return view('backend.modals.projetos.editar-historia', compact('historia','tipo','sprints'));
   }
 
-    public function updateHistoria(request $request){
+  public function updateHistoria(request $request){
+    if(!isAllowed('editar-sprints')){
+      $r = [];
+      $r['status'] = 'error';
+      $r['msg'] = 'Você não tem permissão para fazer isto.';
+      return $r;
+    } 
     $Alldados = $request->all();
     $dadosBefore = urldecode($Alldados['dados']);
     $dados = explode('&', $dadosBefore);
@@ -672,6 +793,12 @@ class ProjetosController extends Controller
   }
 
   public function excluirHistoria(request $request){
+    if(!isAllowed('deletar-sprints')){
+      $r = [];
+      $r['status'] = 'error';
+      $r['msg'] = 'Você não tem permissão para fazer isto.';
+      return $r;
+    } 
     $id = $request['id'];
     $tipo = $request['tipo'];
     $new = historia::find($id);
@@ -685,24 +812,33 @@ class ProjetosController extends Controller
   }
 
     public function disciplinas(request $request){
-    $id = $request['id'];
-   $projeto = proj::find($id);
-     return view('backend.modals.projetos.disciplinas', compact('projeto'));
-  }
+      if(!isAllowed('criar-disciplinas')){
+        return view('backend.modals.unauthorized');
+      }
+      $id = $request['id'];
+      $projeto = proj::find($id);
+      return view('backend.modals.projetos.disciplinas', compact('projeto'));
+    }
 
     public function criarDisciplinas(request $request){
+      if(!isAllowed('criar-disciplinas')){
+        return view('backend.modals.unauthorized');
+      }
     $id = $request['id'];
     $projeto = proj::find($id);
     return view('backend.modals.projetos.criar-disciplina', compact('projeto'));
   }
 
     public function editarDisciplinas(request $request){
+      if(!isAllowed('editar-disciplinas')){
+        return view('backend.modals.unauthorized');
+      }
     $id = $request['id'];
     $disciplina = disc::find($id);
     return view('backend.modals.projetos.editar-disciplina', compact('disciplina'));
   }
 
-      public function updateDisciplinas(request $request){
+  public function updateDisciplinas(request $request){
     $Alldados = $request->all();
     $dadosBefore = urldecode($Alldados['dados']);
     $dados = explode('&', $dadosBefore);
@@ -716,6 +852,14 @@ class ProjetosController extends Controller
     unset($check['id']);
 
     $disciplina = disc::find($id);
+
+    if(!isAllowed('editar-disciplinas')){
+      $r = [];
+      $r['status'] = 'error';
+      $r['msg'] = 'Você não tem permissão para fazer isto.';
+      $response['id'] = $disciplina->projeto_id;
+      return $r;
+    } 
 
     $new = $disciplina->update($check);
     if(!isset($new)){
@@ -734,6 +878,13 @@ class ProjetosController extends Controller
     $id = $request['id'];
     $new = disc::find($id);
     $idgo = $new->projeto_id;
+    if(!isAllowed('deletar-disciplinas')){
+      $r = [];
+      $r['status'] = 'error';
+      $r['msg'] = 'Você não tem permissão para fazer isto.';
+      $response['id'] = $idgo;
+      return $r;
+    } 
     $new->delete();
     $response['msg'] = 'Disciplina Excluida com Sucesso';
     $response['status'] = 'success';
@@ -746,24 +897,33 @@ class ProjetosController extends Controller
 
 
   public function etapas(request $request){
+    if(!isAllowed('criar-etapas')){
+      return view('backend.modals.unauthorized');
+    } 
     $id = $request['id'];
    $projeto = proj::find($id);
      return view('backend.modals.projetos.etapas', compact('projeto'));
   }
 
     public function criarEtapas(request $request){
+      if(!isAllowed('criar-etapas')){
+      return view('backend.modals.unauthorized');
+    } 
     $id = $request['id'];
     $projeto = proj::find($id);
     return view('backend.modals.projetos.criar-etapa', compact('projeto'));
   }
 
     public function editarEtapas(request $request){
+      if(!isAllowed('editar-etapas')){
+        return view('backend.modals.unauthorized');
+      } 
     $id = $request['id'];
     $etapa = etapa::find($id);
     return view('backend.modals.projetos.editar-etapa', compact('etapa'));
   }
 
-      public function updateEtapas(request $request){
+  public function updateEtapas(request $request){
     $Alldados = $request->all();
     $dadosBefore = urldecode($Alldados['dados']);
     $dados = explode('&', $dadosBefore);
@@ -777,6 +937,14 @@ class ProjetosController extends Controller
     unset($check['id']);
 
     $etapa = etapa::find($id);
+
+    if(!isAllowed('editar-etapas')){
+      $r = [];
+      $r['status'] = 'error';
+      $r['msg'] = 'Você não tem permissão para fazer isto.';
+      $response['id'] = $etapa->projeto_id;
+      return $r;
+    } 
 
     $new = $etapa->update($check);
     if(!isset($new)){
@@ -795,6 +963,13 @@ class ProjetosController extends Controller
     $id = $request['id'];
     $new = etapa::find($id);
     $idgo = $new->projeto_id;
+    if(!isAllowed('deletar-etapas')){
+      $r = [];
+      $r['status'] = 'error';
+      $r['msg'] = 'Você não tem permissão para fazer isto.';
+      $response['id'] = $idgo;
+      return $r;
+    } 
     $new->delete();
     $response['msg'] = 'Etapa Excluida com Sucesso';
     $response['status'] = 'success';

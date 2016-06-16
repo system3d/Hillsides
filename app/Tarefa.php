@@ -73,4 +73,41 @@ class Tarefa extends Model
 	public function anexos() {
 		return $this->hasMany('App\Anexo');
 	}
+
+	public function lideres() {
+		if(!isset($this->assignee->id)){
+			return null;
+		}
+		$peq = [];
+		foreach($this->projeto->equipes as $e){
+			array_push($peq, $e->id);
+		}
+		$lideres = [];
+		foreach($this->assignee->equipes as $equipe){
+			if(in_array($equipe->id, $peq)){
+				if(!in_array($equipe->responsavel->id, $lideres)){
+					array_push($lideres, $equipe->responsavel->id);
+				}
+			}
+		}
+		return $lideres;
+	}
+
+	public function membrosId(){
+		if(!isset($this->assignee->id)){
+			return null;
+		}
+		$members = [];
+		foreach($this->assignee->equipes as $eq){
+			foreach($eq->users as $e){
+				if(!in_array($e->id, $members)){
+					array_push($members, $e->id);
+				}
+			}
+		}
+		if(count($members) > 0)
+			return $members;
+		else
+			return null;
+	}
 }

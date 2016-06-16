@@ -44,34 +44,56 @@
       <?php $fav = ($projeto->favorito == 0) ? 'bg-purple' : 'btn-default-purple';
       $favT = ($projeto->favorito == 0) ? 'Adicionar a Favoritos' : 'Remover de Favoritos'; ?>
         <div class="form-group">
+
             <button class="btn {{$fav}} projeto-favorite" data-toggle="tooltip" data-html="true" title='{{$favT}}' data-id="{{$projeto->id}}"><i class="fa fa-star"></i></button>
+
             @if($kanban == true)
-            <a href='{{url("kanban")."/".$projeto->id}}' type="button" class="btn btn-success" data-toggle="tooltip" data-html="true" title='Kanbam do Projeto'><i class="fa fa-th-large"></i></a>
-            <button type="button" class="btn btn-primary info-edit-projeto" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Editar'><i class="fa fa-pencil"></i></button>
+              <a href='{{url("kanban")."/".$projeto->id}}' type="button" class="btn btn-success" data-toggle="tooltip" data-html="true" title='Kanbam do Projeto'><i class="fa fa-th-large"></i></a>
+              @if($projeto->userid !== access()->user()->id)
+                @permission('editar-projetos')
+                <button type="button" class="btn btn-primary info-edit-projeto" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Editar'><i class="fa fa-pencil"></i></button>
+                @endauth
+              @else
+                <button type="button" class="btn btn-primary info-edit-projeto" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Editar'><i class="fa fa-pencil"></i></button>
+              @endif
             @endif
+
+            @permission('editar-projetos')
             <button class="btn bg-orange projeto-equipes" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Equipes do Projeto'><i class="fa fa-users" ></i></button>
+            @endauth
+
             @if($kanban == true)
-            <button class="btn btn-info projeto-sprints" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Subprojetos'><i class="fa fa-refresh" ></i></button>
-            <button class="btn bg-maroon projeto-historias" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Agrupamentos' id='hist-proj'><i class="fa fa-book"></i></button>
+              @permission('ver-sprints')
+                <button class="btn btn-info projeto-sprints" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Subprojetos'><i class="fa fa-refresh" ></i></button>
+                <button class="btn bg-maroon projeto-historias" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Agrupamentos' id='hist-proj'><i class="fa fa-book"></i></button>
+              @endauth
             @endif
-            <button class="btn bg-olive projeto-disciplinas" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Disciplinas'><i class="fa fa-bookmark"></i></i></button>
-            <button class="btn btn-github projeto-etapas" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Etapas'><i class="fa fa-map-signs"></i></button>
+            @permission('ver-disciplinas')
+              <button class="btn bg-olive projeto-disciplinas" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Disciplinas'><i class="fa fa-bookmark"></i></i></button>
+            @endauth
+            @permission('ver-etapas')
+              <button class="btn btn-github projeto-etapas" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Etapas'><i class="fa fa-map-signs"></i></button>
+            @endauth
             @if($kanban == true)
-            <button class="btn btn-danger projeto-delete" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Excluir'><i class="fa fa-trash"></i></button>
+              @permission('deletar-projetos')
+                <button class="btn btn-danger projeto-delete" data-id="{{$projeto->id}}" data-toggle="tooltip" data-html="true" title='Excluir'><i class="fa fa-trash"></i></button>
+              @endauth
             @endif
-            <span class='dropdown'>
-                <button class="btn btn-default projeto-config dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-cogs"></i>
-                  &nbsp;
-                  <i class="fa fa-caret-down"></i>
-                </button>
-                <ul class="dropdown-menu">
-                  <li><a href="#" id="drop-estagio" data-id="{{$projeto->id}}">Estágios do Projeto</a></li>
-                  <li><a href="#" id="drop-st-projeto" data-id="{{$projeto->id}}">Status Disponíveis</a></li>
-                  <li><a href="#" id="drop-st-tarefa" data-id="{{$projeto->id}}">Status das Tarefas</a></li>
-                  <li><a href="#" id="drop-tarefa" data-id="{{$projeto->id}}">Tipos de Tarefas</a></li>
-                </ul>
-            </span>
+            @permission('config-geral')
+              <span class='dropdown'>
+                  <button class="btn btn-default projeto-config dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-cogs"></i>
+                    &nbsp;
+                    <i class="fa fa-caret-down"></i>
+                  </button>
+                  <ul class="dropdown-menu">
+                    <li><a href="#" id="drop-estagio" data-id="{{$projeto->id}}">Estágios do Projeto</a></li>
+                    <li><a href="#" id="drop-st-projeto" data-id="{{$projeto->id}}">Status Disponíveis</a></li>
+                    <li><a href="#" id="drop-st-tarefa" data-id="{{$projeto->id}}">Status das Tarefas</a></li>
+                    <li><a href="#" id="drop-tarefa" data-id="{{$projeto->id}}">Tipos de Tarefas</a></li>
+                  </ul>
+              </span>
+            @endauth
             <button data-dismiss="modal" aria-hidden="true" class="btn btn-google pull-right" data-toggle="tooltip" data-html="true" title='Fechar Janela'><i class="fa fa-times"></i></button>
             
             <input type="hidden" id="PD{{$projeto->id}}">

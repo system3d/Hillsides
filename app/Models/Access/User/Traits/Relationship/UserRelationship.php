@@ -94,6 +94,28 @@ trait UserRelationship
         return Cache::has('user-is-online-' . $this->id);
     }
 
+    public function equipesLider(){
+        $eqs = [];
+        foreach($this->equipes as $e){
+            if($e->responsavel_id == $this->id)
+                array_push($eqs, $e);
+        }
+        return collect($eqs);
+    }
+
+    public function handleLider(){
+        $lider = false;
+        foreach($this->equipes as $e){
+            if($e->responsavel_id === $this->id)
+                $lider = true;
+        }
+        if($lider){
+            $this->attachRole(3);
+        }else{
+            $this->detachRole(3);
+        }
+    }
+
     /**
      * @return mixed
      */

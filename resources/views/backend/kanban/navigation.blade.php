@@ -16,10 +16,14 @@
           <div class="form-group">
             <a href="#" class="btn btn-primary" id='loadProjInfoKanban' data-id='{{$projeto->id}}'>
               <i class="fa fa-folder"></i>&nbsp;&nbsp;Projeto</a>
+            @permission('ver-sprints')
              <a href="#" class="btn btn-warning projeto-sprints" id='loadProjSprintKanban' data-id='{{$projeto->id}}'>
               <i class="fa fa-refresh"></i>&nbsp;&nbsp;SubProj.</a>
+            @endauth
+            @permission('ver-sprints')
             <a href="#" class="btn btn-info" id='hist-proj' data-id='{{$projeto->id}}'>
               <i class="fa fa-book"></i>&nbsp;&nbsp;Agrup.</a>
+            @endauth
             <a href="#" class="btn btn-success" id='novaTarefaKanban' data-id='{{$projeto->id}}'>
               <i class="fa fa-external-link"></i>&nbsp;&nbsp;Nova Tarefa</a>
 

@@ -33,14 +33,31 @@
         @endif
     </div>
 @elseif (\Session::get('flash_danger'))
-    <div class="alert alert-danger">
-    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-        @if(is_array(json_decode(\Session::get('flash_danger'), true)))
+<!--     <div class="alert alert-danger">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button> -->
+        <!-- @if(is_array(json_decode(\Session::get('flash_danger'), true))) -->
+            <!-- {!! implode('', \Session::get('flash_danger')->all(':message<br/>')) !!} -->
+        <!-- @else -->
+            <!-- {!! \Session::get('flash_danger') !!} -->
+        <!-- @endif -->
+    <!-- </div> -->
+
+
+    <div class="jq-toast-wrap" style="left: 50%;margin-left: -125px; top: 20px;">
+        <div class="jq-toast-single jq-has-icon jq-icon-error" style="text-align: left; display: block;">
+            <span class="jq-toast-loader"></span>
+            <span class="close-jq-toast-single close-message-toast">×</span>
+            <h2 class="jq-toast-heading"> </h2>
+             @if(is_array(json_decode(\Session::get('flash_danger'), true)))
             {!! implode('', \Session::get('flash_danger')->all(':message<br/>')) !!}
-        @else
-            {!! \Session::get('flash_danger') !!}
-        @endif
+            @else
+                {!! \Session::get('flash_danger') !!}
+            @endif
+        </div>
     </div>
+
+
+
 @elseif (\Session::get('flash_message'))
     <div class="alert alert-info">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>

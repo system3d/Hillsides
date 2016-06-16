@@ -12,6 +12,10 @@ $(document).ready(function() {
 
   setInterval(refreshToken, 300000);
 
+  $(document).on('click', '.close-message-toast', function(e){
+    $(this).closest('.jq-toast-wrap').remove();
+  })
+
   $('#fa-estagios-sidebar').click(function(event) {
     $('#set-est-side').toggleClass('hidden');
     $(this).find('.fa-sidebar').toggleClass('fa-plus-square fa-minus-square');
