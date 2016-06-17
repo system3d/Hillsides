@@ -108,8 +108,9 @@ class EquipesController extends Controller
     $id = $check['id'];
     unset($check['id']);
     $new = equipe::find($id);
+    $oldResp = $new->responsavel;
     $userRole = user::find($check['responsavel_id']); 
-    $userRole->handleLider();
+    
     if($new->responsavel_id != $check['responsavel_id']){
       // $oldResp = user::find($new->responsavel_id);
       // $new->users()->detach($oldResp);
@@ -119,6 +120,8 @@ class EquipesController extends Controller
       }
     }
     $new->update($check);
+    $userRole->handleLider();
+    $oldResp->handleLider();
     if($new) return '%success&Equipe Atualizada com Sucesso';
     else return '%error&Erro ao Atualizar Equipe';
   }

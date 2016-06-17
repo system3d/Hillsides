@@ -29,4 +29,8 @@ class Etapa extends Model
 	public function projeto() {
 		return $this->belongsTo('App\Projeto');
 	}
+
+	public function tarefas() {
+		return $this->hasMany('App\Tarefa');
+	}
 }

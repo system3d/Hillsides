@@ -79,12 +79,23 @@
           <div class="col-md-4">
                <div class="form-group">
                <label for="historia" class="control-label">Atribuída A:</label>
+               @if(isAllowed('criar-tarefas') || isAllowed('add-task-equipe-lider'))
                  <select class="form-control" required="" style='width:100%' name='assignee_id'>
                   <option value="0">Ninguém</option>
-                   @foreach($users as $user)
-                    <option value="{{$user->id}}" <?php if((int) $dados['user'] == $user->id) echo 'selected'; ?>>{{$user->name}}</option>
-                   @endforeach
+                  @if(isAllowed('criar-tarefas'))
+                     @foreach($users as $user)
+                      <option value="{{$user->id}}" <?php if((int) $dados['user'] == $user->id) echo 'selected'; ?>>{{$user->name}}</option>
+                     @endforeach
+                  @elseif(isAllowed('add-task-equipe-lider'))
+                    @foreach(access()->user()->responsible() as $user)
+                      <option value="{{$user->id}}" <?php if((int) $dados['user'] == $user->id) echo 'selected'; ?>>{{$user->name}}</option>
+                     @endforeach
+                  @endif
                  </select>
+                @else
+                  <p class='form-control-static'>{{access()->user()->name}}</p>
+                  <input type='hidden' name='assignee_id' value='{{access()->user()->id}}'>
+                @endif
             </div>
 
              <div class="form-group">
@@ -106,11 +117,13 @@
                    @endforeach
                  </select>
             </div>
+            @role(1)
             <div class="form-group">
               <i>
                 Você pode criar Disciplinas e Etapas, assim como atribuir equipes ao projeto, na página <a target='_blank' href="{{url('projetos')}}">Meus Projetos</a>.
               </i>
             </div>
+            @endauth
           </div>
         </div> 
 

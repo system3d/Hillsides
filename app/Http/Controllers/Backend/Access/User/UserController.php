@@ -89,7 +89,7 @@ class UserController extends Controller
             $request->only('assignees_roles'),
             $request->only('permission_user')
         );
-        $updat = userr::where('email',$email)->update(array('locatario_id' => access()->user()->locatario_id));
+        $updat = userr::where('email',$email)->update(array('user_id' => access()->user()->id ,'locatario_id' => access()->user()->locatario_id));
         return redirect()->route('admin.access.users.index')->withFlashSuccess(trans('alerts.backend.users.created'));
     }
 

@@ -24,14 +24,19 @@
 	@endif
       <br/><br/>
 	<div class="form-group">
+        @if(isAllowed('editar-equipes'))
             <button type="button" class="btn btn-primary info-edit-equipe" id="EDI{{$equipe->id}}">Editar</button>
+        @endif
+        @if(isAllowed('deletar-equipes'))
             <button class="btn btn-danger equipe-delete" id="DEI{{$equipe->id}}">Excluir</button>
+        @endif
             <a href='#'data-dismiss="modal" aria-hidden="true" class="btn btn-warning">Voltar</a>
             <input type="hidden" id="EX{{$equipe->id}}">
         </div>
 	</div>
        <div class="col-md-6">
         <div class="form-group">
+        @if( (isAllowed('editar-equipes')) || ( (isAllowed('add-user-equipe-lider')) && ($equipe->responsavel_id === access()->user()->id) ) )
            <a href="#" id='equipe-novo-membro' class='btn btn-block btn-primary' style='width:70%;margin-left: 15%;'>Adicionar Membro</a>
            <div id="novo-membro-wrapper" class='hidden row'>
              @if(access()->user()->locatario->users->count() - count($membros) > 0)
@@ -39,9 +44,11 @@
             <br>
                <select name="membro" id="novo-membro" class="form-control chosen-select" data-equipe-id="{{$equipe->id}}">
                   @foreach(access()->user()->locatario->users as $user)
+                  @if(isAllowed('editar-equipes') || $user->user_id === access()->user()->id)
                     @if(!in_array($user->id, $membros))
-                      <option value="{{$user->id}}">{{$user->name}}</option>
+                        <option value="{{$user->id}}">{{$user->name}}</option>
                     @endif
+                  @endif
                   @endforeach
               </select>
             </div>
@@ -58,7 +65,7 @@
             </div>
             @endif
           </div>
-          
+          @endif
        </div>
 	     @if(isset($equipe->users->first()->id))
 	     	<label class="control-label">Membros:</label>
@@ -77,11 +84,13 @@
             <div class="col-md-10">
               <p>{{$user->name}} <br> <small>{{$user->roles->first()->name}}</small></p>
             </div>
+            @if(isAllowed('editar-equipes') || (isAllowed('add-user-equipe-lider') && $equipe->responsavel_id === access()->user()->id))
             <div class="col-md-2">
               
               <a href="#" data-equipe-id="{{$equipe->id}}" data-toggle="tooltip" data-html="true" title='Remover Membro' data-id='{{$user->id}}' class="btn btn-danger btn-xs remover-membro"><i class="fa fa-trash"></i></a>
              
             </div>
+            @endif
           </div>
        </div>
         @endif

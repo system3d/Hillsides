@@ -33,4 +33,8 @@ class Sprint extends Model
 	public function historias() {
 		return $this->hasMany('App\Historia');
 	}
+
+	public function tarefas() {
+		return $this->hasMany('App\Tarefa');
+	}
 }

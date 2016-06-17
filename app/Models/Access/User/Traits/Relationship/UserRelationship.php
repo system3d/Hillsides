@@ -3,6 +3,7 @@
 namespace App\Models\Access\User\Traits\Relationship;
 
 use App\Models\Access\User\SocialLogin;
+use App\Projeto as proj;
 use Cache;
 
 /**
@@ -35,6 +36,10 @@ trait UserRelationship
 
     public function locatario() {
         return $this->belongsTo('App\Locatario');
+    }
+
+    public function creator() {
+        return $this->belongsTo('App\Models\Access\User\User', 'user_id');
     }
 
     public function clientes() {
@@ -94,6 +99,14 @@ trait UserRelationship
         return Cache::has('user-is-online-' . $this->id);
     }
 
+    public function equipesIds(){
+        $eqs = [];
+        foreach($this->equipes as $e){
+            array_push($eqs, $e->id);
+        }
+        return $eqs;
+    }
+
     public function equipesLider(){
         $eqs = [];
         foreach($this->equipes as $e){
@@ -105,15 +118,114 @@ trait UserRelationship
 
     public function handleLider(){
         $lider = false;
+        $this->detachRole(3);
         foreach($this->equipes as $e){
-            if($e->responsavel_id === $this->id)
+            if($e->responsavel_id == $this->id)
                 $lider = true;
         }
-        if($lider){
+        if($lider === true){
             $this->attachRole(3);
-        }else{
-            $this->detachRole(3);
         }
+    }
+
+    public function equipesResponsible(){
+        $equipos = [];
+        foreach($this->equipes as $e){
+            if($e->responsavel_id === $this->id){
+                array_push($equipos, $e);
+            }
+        }
+        return collect($equipos);
+    }
+
+    public function responsible(){
+        $assignees = [];
+        $assigneesID = [];
+        foreach($this->equipesResponsible() as $e){
+            foreach($e->users as $m){
+                if(!in_array($m->id, $assigneesID)){
+                    array_push($assignees, $m);
+                    array_push($assigneesID, $m->id);
+                }
+            }
+        }
+        return collect($assignees);
+    }
+
+    public function comradesId(){
+        $comrades = [];
+        foreach($this->equipes as $e){
+            foreach($e->users as $m){
+                if(!in_array($m->id, $comrades)){
+                    array_push($comrades, $m->id);
+                }
+            }
+        }
+        return $comrades;
+    }
+
+    public function sprintsProjeto($pid){
+        $projeto = proj::find($pid);
+        $haveIt = [];
+        $sprits = [];
+        $comradesId = $this->comradesId();
+        foreach($projeto->sprints as $sprint){
+           foreach($sprint->tarefas as $tarefa){
+              if(in_array($tarefa->assignee_id,$comradesId) && !in_array($sprint->id,$haveIt)){
+                array_push($haveIt, $sprint->id);
+                array_push($sprits, $sprint);
+              }
+           }
+        }
+        return collect($sprits);
+    }
+
+    public function historiasProjeto($pid){
+        $projeto = proj::find($pid);
+        $haveIt = [];
+        $storys = [];
+        $comradesId = $this->comradesId();
+        foreach($projeto->historias() as $historias){
+           foreach($historias->tarefas as $tarefa){
+              if(in_array($tarefa->assignee_id,$comradesId) && !in_array($historias->id,$haveIt)){
+                array_push($haveIt, $historias->id);
+                array_push($storys, $historias);
+              }
+           }
+        }
+        return collect($storys);
+    }
+
+    public function etapasProjeto($pid){
+        $projeto = proj::find($pid);
+        $haveIt = [];
+        $etaps = [];
+        $comradesId = $this->comradesId();
+        foreach($projeto->etapas as $etapas){
+           foreach($etapas->tarefas as $tarefa){
+              if(in_array($tarefa->assignee_id,$comradesId) && !in_array($etapas->id,$haveIt)){
+                array_push($haveIt, $etapas->id);
+                array_push($etaps, $etapas);
+              }
+           }
+        }
+        return collect($etaps);
+    }
+
+    public function discProjeto($pid){
+        $projeto = proj::find($pid);
+        $haveIt = [];
+        $discs = [];
+        $comradesId = $this->comradesId();
+        foreach($projeto->disciplinas as $disc){
+           foreach($disc->tarefas as $tarefa){
+              if(in_array($tarefa->assignee_id,$comradesId) && !in_array($disc->id,$haveIt)){
+                array_push($haveIt, $etapas->id);
+                array_push($discs, $disc);
+              }
+           }
+        }
+        return collect($discs);
     }
 
     /**

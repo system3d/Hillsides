@@ -54,8 +54,8 @@ class ClienteController extends Controller
       case 'equipes':
         $new = equipe::create($check);
         $resp = user::find($check['responsavel_id']);
-        $resp->handleLider();
         $new->users()->attach($resp);
+        $resp->handleLider();
           if(isset($new->id)) return('%success&Equipe Cadastrada com Sucesso&E&'.$new->id);
           else return('%error&Erro ao Cadastrar Equipe');
         break;
