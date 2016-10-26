@@ -2,9 +2,22 @@
 
 @section('content')
 
+<style media="screen">
+  body{
+    background-color: #333 !important;
+  }
+  .hillsides-title{
+    font-size: 65px !important;
+    text-align: center;
+    color: #fff;
+    font-weight: bold;
+    font-family: Helvetica;
+  }
+</style>
+
     <div class="login-box">
       <div  style='width:100%'>
-       {{ Html::image('img/logo-Steel4web-600.png', 'Steel4Web', array('class' => 'loginIMG', 'style' => 'width:100%;padding-bottom:20px')) }}
+       <h1 class="hillsides-title">Hillsides</h1>
       </div><!-- /.login-logo -->
       <div class="login-box-body">
         @include('includes.partials.messages')
@@ -27,7 +40,7 @@
                                 <div class="checkbox">
                                     <label>
                                         {!! Form::checkbox('remember') !!} {{ 'Mantenha-me Conectado' }}
-                                        
+
                                     </label>
 
                                     {!! Form::submit(trans('Login'), ['class' => 'btn btn-primary btn-flat', 'style' => 'float:right']) !!}

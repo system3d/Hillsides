@@ -36,7 +36,7 @@ class ChatController extends Controller
 					}elseif(isset($user->lastActivity->data)){
 						$lastActivityObj =  timeDiff($user->lastActivity->data);
 						if($lastActivityObj['t'] < 86000){
-		                $statuses[$x]['html'] = 'Visto(a) por último à '; 
+		                $statuses[$x]['html'] = 'Visto(a) por último à ';
 		                if($lastActivityObj['h'] > 0){
 		                	if($lastActivityObj['h'] == 1)
 		                  		$statuses[$x]['html'] .= $lastActivityObj['h'].' hora';
@@ -159,9 +159,9 @@ class ChatController extends Controller
             })->orderBy('created_at','desc')->first();
           if(isset($messages->created_at))
             $user->last = $messages->created_at;
+            $unreads = msg::select('id')->where('sender_id',$riv)->where('receiver_id',$sid)->where('status',0)->get();
+            $user->unreads = $unreads->count();
         }
-        $unreads = msg::select('id')->where('sender_id',$riv)->where('receiver_id',$sid)->where('status',0)->get();
-        $user->unreads = $unreads->count();
       }
     return json_encode($users);
   }
